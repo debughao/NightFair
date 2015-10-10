@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.text.TextUtils;
 
 /**
  * 跟网络相关的工具类
@@ -73,6 +74,12 @@ public class NetUtils
 		intent.setComponent(cm);
 		intent.setAction("android.intent.action.VIEW");
 		activity.startActivityForResult(intent, 0);
+	}
+	public static String getHttpException(String arg1) {
+		int end = TextUtils.indexOf(arg1, ":");
+		String httpException = TextUtils.substring(arg1, 0, end);
+		return httpException;
+		
 	}
 
 }

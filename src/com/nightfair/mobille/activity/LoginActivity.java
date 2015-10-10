@@ -12,7 +12,9 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.util.ActivityUtils;
+import com.nightfair.mobille.util.ErrCodeUtils;
 import com.nightfair.mobille.util.MD5Util;
+import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.SPUtils;
 import com.nightfair.mobille.view.ClearEditText;
 
@@ -98,11 +100,11 @@ public class LoginActivity extends Activity implements OnClickListener {
 		password = et_login_password.getText().toString().trim();
 		if (TextUtils.isEmpty(username)) {
 			et_login_user.setShakeAnimation();
-			ActivityUtils.showToast(mContent, "登录名不能为空");
+			ActivityUtils.showShortToast(mContent, "登录名不能为空");
 			return;
 		} else if (TextUtils.isEmpty(password)) {
 			et_login_password.setShakeAnimation();
-			ActivityUtils.showToast(mContent, "密码不能为空");
+			ActivityUtils.showShortToast(mContent, "密码不能为空");
 			return;
 		} else {
 			RequestParams params = new RequestParams();
@@ -110,11 +112,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 			params.addBodyParameter("userName", username);
 			params.addBodyParameter("userpassword", MD5Util.MD5(password));
 			HttpUtils http = new HttpUtils();
+			http.configTimeout(3000);
 			http.send(HttpMethod.POST, ApiUrl.LoginApiUrl, params, new RequestCallBack<String>() {
 
 				@Override
-				public void onFailure(HttpException arg0, String arg1) {
-					Toast.makeText(mContent, "网路断开了", Toast.LENGTH_LONG).show();
+				public void onFailure(HttpException arg0, String arg1) {				
+					System.out.println(arg1);
+					if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
+						ActivityUtils.showShortToast(mContent, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
+					else
+						ActivityUtils.showShortToast(mContent, ErrCodeUtils.NORMAL_LOGIN_NONNETWORK);
 				}
 
 				@Override

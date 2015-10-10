@@ -22,6 +22,7 @@ public class SplashActivity extends BaseActivity {
 	private TextView mTvVersion;
 	private RelativeLayout mRvSplash;
 	private ImageView mIvLogo;
+	public static boolean isLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

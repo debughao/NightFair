@@ -57,7 +57,15 @@ public class ActivityUtils {
 		Intent intent =new Intent(context, cls);
 		context.startActivity(intent);
 	}
-	public static void showToast(Context context, String msg){
+	public static void showLongToast(Context context, String msg){
+		if(mToast == null){
+			mToast = Toast.makeText(context, msg, Toast.LENGTH_LONG);
+		}else{
+			mToast.setText(msg);
+		}
+		mToast.show();
+	}
+	public static void showShortToast(Context context, String msg){
 		if(mToast == null){
 			mToast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
 		}else{
@@ -65,4 +73,5 @@ public class ActivityUtils {
 		}
 		mToast.show();
 	}
+
 }
