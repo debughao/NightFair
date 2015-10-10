@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ll_login_normal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_color"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/bt_login_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_normal_bg"
+            android:gravity="center_vertical"
+            android:text="@string/tv_login_register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_login_already"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/title_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <com.nightfair.mobille.widget.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/demo"
+            app:border_color="@color/user_image_circle"
+            app:border_width="2dp" />
+
+        <TextView
+            style="@style/user_nickname_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_nickname" />
+    </LinearLayout>
+
+    <com.nightfair.mobille.widget.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_coupon"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_coupon"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_coupon" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_coupon"
+                        android:text="@string/personal_item_coupon" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_collection"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_collection"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_collection" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_collection"
+                        android:text="@string/personal_item_collectiion" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_comment"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_comment"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_comment" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_comment"
+                        android:text="@string/personal_item_comment" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_recommend"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_recommend"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_recommend" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/personal_item_image_recommend"
+                        android:text="@string/personal_item_recommend" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_feedback"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_feedback"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_feedback" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_feedback"
+                        android:text="@string/personal_item_feedback" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_update"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_update"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_update" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_update"
+                        android:text="@string/personal_item_update" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_about"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_about"
+                        style="@style/baseStyle"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_about" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_about"
+                        android:text="@string/personal_item_about" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <TextView
+                    android:id="@+id/personal_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/tv_logout"
+                    android:textColor="@color/sub_color"
+                    android:textSize="@dimen/title" >
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </com.nightfair.mobille.widget.ReboundScrollView>
+
+</LinearLayout>

@@ -1,0 +1,204 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_login"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/transparent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_rect_gray" >
+
+            <ImageView
+                android:id="@+id/iv_login_user"
+                style="@style/baseStyle"
+                android:layout_width="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_user" />
+
+            <com.nightfair.mobille.view.ClearEditText
+                android:id="@+id/et_login_user"
+                style="@style/personal_item_text"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="45dp"
+                android:layout_toRightOf="@id/iv_login_user"
+                android:background="@null"
+                android:hint="@string/tv_hint_login_user"
+                android:singleLine="true"
+                android:text="15737954106"
+                android:textColorHint="@color/tab_title_normal_color"
+                android:textSize="@dimen/c_text_size" >
+            </com.nightfair.mobille.view.ClearEditText>
+
+            <ImageView
+                android:id="@+id/iv_login_more"
+                style="@style/login_image_right"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_more_account_normal" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/login_rect_gray" >
+
+            <ImageView
+                android:id="@+id/iv_login_password"
+                style="@style/baseStyle"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_password" />
+
+            <com.nightfair.mobille.view.ClearEditText
+                android:id="@+id/et_login_password"
+                style="@style/personal_item_text"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="50dp"
+                android:layout_toRightOf="@id/iv_login_password"
+                android:background="@null"
+                android:hint="@string/tv_hint_login_password"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:singleLine="true"
+                android:text="123456abc"
+                android:textColorHint="@color/tab_title_normal_color"
+                android:textSize="@dimen/c_text_size" >
+            </com.nightfair.mobille.view.ClearEditText>
+
+            <ImageView
+                android:id="@+id/iv_login_eye"
+                style="@style/login_image_right"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_pwd_hide" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bt_login_check"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_ok_bg"
+            android:orientation="vertical"
+            android:text="@string/bt_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp" >
+
+            <TextView
+                android:id="@+id/tv_forget_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/text_login_forget_password"
+                android:textColor="@color/white"
+                android:textSize="@dimen/a_text_size" />
+
+            <TextView
+                android:id="@+id/tv_quick_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="@string/text_quick_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/a_text_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp" >
+
+            <TextView
+                android:id="@+id/tv_login_auth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/text_auth_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/b_text_size" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1px"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/tv_login_auth"
+                android:background="@color/divider" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1px"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/tv_login_auth"
+                android:background="@color/divider" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/iv_authlogin_tencent"
+                style="@style/baseStyle"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_auth_tencent" />
+
+            <ImageView
+                android:id="@+id/iv_authlogin_sina"
+                style="@style/baseStyle"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_auth_sina" />
+
+            <ImageView
+                android:id="@+id/iv_authlogin_weixin"
+                style="@style/baseStyle"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_auth_weixin" />
+
+            <ImageView
+                android:id="@+id/iv_authlogin_baidu"
+                style="@style/baseStyle"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_auth_baidu" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

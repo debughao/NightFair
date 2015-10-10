@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NightFairMobille</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">标题</string>
+    <string name="title_right">标题右</string>
+    <string name="tab_title_index">主页</string>
+    <string name="tab_title_nearby">附近</string>
+    <string name="tab_title_chat">聊天</string>
+    <string name="tab_title_personal">我的</string>
+    <string name="text_title_bar_person">个人中心</string>
+    <string name="text_title_bar_cancel">取消</string>
+    <string name="text_title_bar_login">登录</string>
+    <string name="text_title_bar_register">注册</string>
+    <string name="text_login_forget_password">忘记密码？</string>
+    <string name="text_quick_login">快速登录</string>
+    <string name="tv_login_register">登录/注册</string>
+    <string name="tv_logout">退出登录</string>
+    <string name="user_nickname">请输入昵称</string>
+    <string name="personal_item_coupon">我的优惠券</string>
+    <string name="personal_item_collectiion">我的收藏</string>
+    <string name="personal_item_comment">我的评价</string>
+    <string name="personal_item_recommend">推荐我们</string>
+    <string name="personal_item_feedback">意见反馈</string>
+    <string name="personal_item_update">检查更新</string>
+    <string name="personal_item_about">关于我们</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_personal__coupon_">Personal_Coupon_Activity</string>
+    <string name="title_activity_personal__collecyion_">Personal_Collecyion_Activity</string>
+    <string name="tv_hint_login_user">手机号/邮箱/用户名</string>
+    <string name="tv_hint_login_password">请输入密码</string>
+    <string name="bt_login">登录</string>
+    <string name="text_auth_login">第三方登录</string>
+    <string name="nightfair">夜夜通</string>
+
+</resources>

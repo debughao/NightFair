@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="40dp"
+    android:background="@color/title_color"
+    android:orientation="horizontal" >
+
+    <TextView
+        style="@style/title_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:text="@string/text_title_bar_person"
+        android:textSize="@dimen/c_text_size" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp" >
+
+        <ImageView
+            android:id="@+id/iv_title_bar_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:contentDescription="@null"
+            android:src="@drawable/titlebar_message" />
+
+        <ImageView
+            android:id="@+id/iv_title_bar_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/titlebar_setting" />
+    </LinearLayout>
+
+</RelativeLayout>

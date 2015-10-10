@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="bg">#f2f2f2</color>
+    <color name="title_color">#e75858</color>
+    <color name="tab_title_normal_color">#9e9e9f</color>
+    <color name="sub_color">#ff6633</color>
+    <color name="user_image_circle">#f18282</color>
+    <color name="divider">#D8D8D8</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#60000000</color>
+    <color name="transparent2">#90000000</color>
+    <color name="text_title_right">#ca9d00</color>
+    <!-- 微信黑色字 -->
+    <color name="black_text">#353535</color>
+
+</resources>

@@ -1,0 +1,62 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="MyAppTheme" parent="android:Theme.Light">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="title_bar_text">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/title</item>
+    </style>
+
+    <style name="user_nickname_text">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:textSize">@dimen/a_text_size</item>
+        <item name="android:drawableRight">@drawable/user_image_ringht</item>
+    </style>
+
+    <style name="baseStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="personal_item_image_right" parent="baseStyle">
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="personal_item_text" parent="baseStyle">
+        <item name="android:textSize">@dimen/c_text_size</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>      
+    </style>
+
+    <style name="login_image_right" parent="baseStyle">
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+</resources>
