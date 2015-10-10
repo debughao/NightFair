@@ -13,6 +13,7 @@
     <string name="text_title_bar_person">个人中心</string>
     <string name="text_title_bar_cancel">取消</string>
     <string name="text_title_bar_login">登录</string>
+    <string name="tt_bar_ps_detail">编辑资料</string>
     <string name="text_title_bar_register">注册</string>
     <string name="text_login_forget_password">忘记密码？</string>
     <string name="text_quick_login">快速登录</string>
@@ -34,5 +35,18 @@
     <string name="bt_login">登录</string>
     <string name="text_auth_login">第三方登录</string>
     <string name="nightfair">夜夜通</string>
+    <string name="title_activity_personal_detail_">Personal_detail_Activity</string>
+    <string name="text_personaldetail_face">头像</string>
+    <string name="text_personaldetail_nickname">昵称</string>
+    <string name="text_personaldetail_sex">性别</string>
+    <string name="text_personaldetail_age">年龄</string>
+    <string name="text_personaldetail_hometown">故乡</string>
+    <string name="text_personaldetail_address">所在地</string>
+    <string name="text_personaldetail_autograph">个人签名</string>
+    <string name="tt_bar_ps_compelte">完成</string>
+    <string name="et_ps_detail_nickname_hint">回忆往首</string>
+    <string name="et_ps_detail_sex_hint">男</string>
+    <string name="et_ps_detail_age_hint">22</string>
+    <string name="text_ps_detail_hometown">地球-中国-河南</string>
 
 </resources>

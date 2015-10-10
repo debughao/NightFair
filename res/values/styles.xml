@@ -2,13 +2,13 @@
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
         -->
     </style>
 
@@ -42,15 +42,36 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="baseStyle1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
     <style name="personal_item_image_right" parent="baseStyle">
         <item name="android:layout_alignParentRight">true</item>
     </style>
 
-    <style name="personal_item_text" parent="baseStyle">
+    <style name="personal_item_text">
         <item name="android:textSize">@dimen/c_text_size</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">10dp</item>      
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="personal_detail_text" parent="baseStyle">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:textSize">@dimen/c_text_size</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
+
+    <style name="personal_detail_edit" parent="baseStyle">
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColorHint">@color/tab_title_normal_color</item>
+        <item name="android:textSize">@dimen/c_text_size</item>
+        <item name="android:focusable">false</item>
     </style>
 
     <style name="login_image_right" parent="baseStyle">

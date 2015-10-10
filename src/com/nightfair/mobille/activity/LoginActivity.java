@@ -10,6 +10,7 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
@@ -19,7 +20,7 @@ import com.nightfair.mobille.util.SPUtils;
 import com.nightfair.mobille.view.ClearEditText;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -31,7 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("ResourceAsColor")
-public class LoginActivity extends Activity implements OnClickListener {
+public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private TextView tv_login_cancel;
 	private ClearEditText et_login_user;
@@ -116,7 +117,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 			http.send(HttpMethod.POST, ApiUrl.LoginApiUrl, params, new RequestCallBack<String>() {
 
 				@Override
-				public void onFailure(HttpException arg0, String arg1) {				
+				public void onFailure(HttpException arg0, String arg1) {
 					System.out.println(arg1);
 					if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
 						ActivityUtils.showShortToast(mContent, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
@@ -134,7 +135,10 @@ public class LoginActivity extends Activity implements OnClickListener {
 						if ("200".equals(resultStatus)) {
 							SPUtils.put(mContent, "name", username);
 							SPUtils.put(mContent, "password", password);
-							SplashActivity.isLogin=true;
+							SplashActivity.isLogin = true;
+							Intent intent =new Intent();
+							intent.setFlags(getTaskId());
+					
 							finish();
 						} else {
 							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();
@@ -146,6 +150,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 				}
 			});
 		}
+	}
+
+	@Override
+	public void finish() {		
+        flag=1;
+		super.finish();
 	}
 
 }

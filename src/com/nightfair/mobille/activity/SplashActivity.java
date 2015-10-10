@@ -6,27 +6,30 @@ import com.nightfair.mobille.util.VersionUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-/**
- * 闪屏页面
- *
- * @author tangqi
- * @data 2015年8月15日下午10:10:51
- */
 public class SplashActivity extends BaseActivity {
 	private TextView mTvVersion;
 	private RelativeLayout mRvSplash;
 	private ImageView mIvLogo;
+	/**
+	 * 判断用户是否登录
+	 */
 	public static boolean isLogin;
+	/**
+	 * 判断哪个页面执行finish方法
+	 */
+	public static int requestCode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_splash);
 		initView();
 		startAnimation();

@@ -36,6 +36,7 @@
         android:visibility="gone" >
 
         <com.nightfair.mobille.widget.CircleImageView
+            android:id="@+id/iv_personal_face"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="32dp"
@@ -77,10 +78,10 @@
                     android:id="@+id/personal_item_coupon"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginBottom="18dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    android:layout_marginTop="18dp" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_coupon"
@@ -296,6 +297,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_personal_logout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -306,7 +308,7 @@
                 android:visibility="gone" >
 
                 <TextView
-                    android:id="@+id/personal_logout"
+                    android:id="@+id/tv_personal_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"

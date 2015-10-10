@@ -1,0 +1,274 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <com.nightfair.mobille.widget.ReboundScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_face"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="5dp" >
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_face" />
+
+                    <ImageView
+                        android:id="@+id/iv_ps_detail_right"
+                        style="@style/personal_item_image_right"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+
+                    <com.nightfair.mobille.widget.CircleImageView
+                        android:id="@+id/iv_personal_face"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_toLeftOf="@id/iv_ps_detail_right"
+                        android:src="@drawable/demo"
+                        app:border_color="@color/user_image_circle2"
+                        app:border_width="2dp" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_nicakname"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_nickname"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_nickname" />
+
+                    <EditText
+                        android:id="@+id/et_ps_detail_nickname"
+                        style="@style/personal_detail_edit"
+                        android:layout_toRightOf="@id/tv_ps_detail_nickname"
+                        android:hint="@string/et_ps_detail_nickname_hint"
+                        android:maxLength="13"
+                        android:text="" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_sex"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_sex"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_sex" />
+
+                    <TextView
+                        android:id="@+id/tvv_ps_detail_sex"
+                        style="@style/personal_detail_edit"
+                        android:layout_toRightOf="@id/tv_ps_detail_sex"
+                        android:text="" />
+                     <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_age"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_age"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_age" />
+
+                    <TextView
+                        android:id="@+id/tvv_ps_detail_age"
+                        style="@style/personal_detail_text"
+                        android:layout_toRightOf="@id/tv_ps_detail_age"
+                        android:text="" />
+                     <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_hometown"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_hometown"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_hometown" />
+
+                    <TextView
+                        android:id="@+id/et_ps_detail_hometown"
+                        style="@style/personal_detail_edit"
+                        android:layout_toRightOf="@id/tv_ps_detail_hometown"
+                        android:text="@string/text_ps_detail_hometown" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_address"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_address"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_address" />
+
+                    <TextView
+                        android:id="@+id/et_ps_detail_address"
+                        style="@style/personal_detail_edit"
+                      android:layout_marginLeft="12dp"
+                        android:layout_toRightOf="@id/tv_ps_detail_address"
+                        android:text="@string/text_ps_detail_hometown" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_autograph"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_autograph"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_autograph" />
+
+                    <EditText
+                        android:id="@+id/et_ps_detail_autograph"
+                        style="@style/personal_detail_edit"
+                        android:layout_toRightOf="@id/tv_ps_detail_autograph"
+                        android:inputType="textMultiLine" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+            </LinearLayout>
+        </LinearLayout>
+    </com.nightfair.mobille.widget.ReboundScrollView>
+
+</LinearLayout>

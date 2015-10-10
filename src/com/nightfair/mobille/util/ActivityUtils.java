@@ -53,6 +53,17 @@ public class ActivityUtils {
 		tintManager.setStatusBarTintDrawable(drawable);
 		
 	}
+	public static void setActionBarByColor(Activity activity,int layoutId,int colorId){
+		ActivityUtils.setActionBarLayout(activity.getActionBar(),activity, layoutId);
+		ActivityUtils.setTranslucentStatus(activity.getWindow(), true);
+		ActivityUtils.setStatusBarColor(colorId, activity);
+	}
+	public static void setActionBarByDrawable(Activity activity,int layoutId,Drawable drawable){
+		ActivityUtils.setActionBarLayout(activity.getActionBar(),activity, layoutId);
+		ActivityUtils.setTranslucentStatus(activity.getWindow(), true);
+		ActivityUtils.setStatusBarDrawable(drawable, activity);
+	}
+	
 	public static void startActivity(Context context, Class<?> cls) {
 		Intent intent =new Intent(context, cls);
 		context.startActivity(intent);

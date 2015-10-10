@@ -1,13 +1,14 @@
 package com.nightfair.mobille.activity;
 
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.util.ActivityUtils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -15,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @SuppressLint("ResourceAsColor")
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private MainTab_Index mTab01;
 	private MainTab_Nearby mTab02;
@@ -34,6 +35,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	 * 用于对Fragment进行管理
 	 */
 	private FragmentManager fragmentManager;
+	private long mExitTime;
+	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -203,8 +206,17 @@ public class MainActivity extends Activity implements OnClickListener {
 	}
 
 	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		System.out.println(keyCode);
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if ((System.currentTimeMillis() - mExitTime) > TIME_DIFF) {
+				ActivityUtils.showShortToast(MainActivity.this, "再按一次退出程序");
+				mExitTime = System.currentTimeMillis();
+			} else {
+				System.exit(0);
+			}
+			return true;
+		} 
+		return super.onKeyDown(keyCode, event);
 	}
 }
