@@ -134,6 +134,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 						if ("200".equals(resultStatus)) {
 							SPUtils.put(mContent, "name", username);
 							SPUtils.put(mContent, "password", password);
+							SplashActivity.isLogin=true;
 							finish();
 						} else {
 							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();

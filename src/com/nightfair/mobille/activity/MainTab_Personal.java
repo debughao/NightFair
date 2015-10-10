@@ -1,6 +1,7 @@
 package com.nightfair.mobille.activity;
 
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FragmentUtils;
 
 import android.app.Fragment;
@@ -58,4 +59,11 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 
 	}
 
+	@Override
+	public void onResume() {
+		if (SplashActivity.isLogin) {
+			ActivityUtils.showShortToast(getActivity(), "登录成功");	
+		}	
+		super.onResume();
+	}
 }
