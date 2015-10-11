@@ -44,7 +44,7 @@
     <string name="text_personaldetail_address">所在地</string>
     <string name="text_personaldetail_autograph">个人签名</string>
     <string name="tt_bar_ps_compelte">完成</string>
-    <string name="et_ps_detail_nickname_hint">回忆往首</string>
+    <string name="et_ps_detail_nickname_text">回忆往首</string>
     <string name="et_ps_detail_sex_hint">男</string>
     <string name="et_ps_detail_age_hint">22</string>
     <string name="text_ps_detail_hometown">地球-中国-河南</string>

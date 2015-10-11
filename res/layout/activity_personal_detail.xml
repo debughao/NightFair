@@ -82,13 +82,13 @@
                         android:layout_centerVertical="true"
                         android:text="@string/text_personaldetail_nickname" />
 
-                    <EditText
+                    <com.nightfair.mobille.view.MyEditText
                         android:id="@+id/et_ps_detail_nickname"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_nickname"
-                        android:hint="@string/et_ps_detail_nickname_hint"
                         android:maxLength="13"
-                        android:text="" />
+                        android:text="@string/et_ps_detail_nickname_text" >
+                    </com.nightfair.mobille.view.MyEditText>
                 </RelativeLayout>
 
                 <View
@@ -116,7 +116,8 @@
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_sex"
                         android:text="" />
-                     <ImageView
+
+                    <ImageView
                         style="@style/personal_item_image_right"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
@@ -147,7 +148,8 @@
                         style="@style/personal_detail_text"
                         android:layout_toRightOf="@id/tv_ps_detail_age"
                         android:text="" />
-                     <ImageView
+
+                    <ImageView
                         style="@style/personal_item_image_right"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
@@ -221,7 +223,7 @@
                     <TextView
                         android:id="@+id/et_ps_detail_address"
                         style="@style/personal_detail_edit"
-                      android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="12dp"
                         android:layout_toRightOf="@id/tv_ps_detail_address"
                         android:text="@string/text_ps_detail_hometown" />
 

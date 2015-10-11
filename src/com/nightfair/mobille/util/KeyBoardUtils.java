@@ -20,6 +20,8 @@ public class KeyBoardUtils {
 	 *            上下文
 	 */
 	public static void openKeybord(EditText mEditText, Context mContext) {
+		mEditText.setFocusableInTouchMode(true);
+		mEditText.requestFocus();
 		InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(mEditText, InputMethodManager.RESULT_SHOWN);
 		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);

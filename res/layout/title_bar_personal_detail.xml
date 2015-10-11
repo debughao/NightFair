@@ -25,14 +25,15 @@
         android:textSize="@dimen/c_text_size" />
 
     <TextView
-        android:id="@+id/tv_ps_detail_complete"
-        style="@style/title_bar_text"
+        android:id="@+id/tv_ps_detail_complete"      
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp"
+        android:textColor="@color/not_click_white"
         android:text="@string/tt_bar_ps_compelte"
+         android:enabled="false"
         android:textSize="@dimen/c_text_size" />
 
 </RelativeLayout>

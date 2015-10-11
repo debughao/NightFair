@@ -8,7 +8,8 @@
     <color name="user_image_circle">#f18282</color>
      <color name="user_image_circle2">#f1ffff</color>
     <color name="divider">#D8D8D8</color>
-    <color name="white">#ffffff</color>
+    <color name="white">#ffffffff</color>
+    <color name="not_click_white">#90ffffff</color>
     <color name="transparent">#60000000</color>
     <color name="transparent2">#90000000</color>
     <color name="text_title_right">#ca9d00</color>
