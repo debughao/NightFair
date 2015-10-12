@@ -1,5 +1,7 @@
 package com.nightfair.mobille.widget;
 
+import com.nightfair.mobille.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.AttributeSet;
@@ -11,8 +13,8 @@ import android.widget.RelativeLayout;
 public class ClipImageLayout extends RelativeLayout
 {
 
-	private ClipZoomImageView mZoomImageView;
-	private ClipImageBorderView mClipImageView;
+	public static ClipZoomImageView mZoomImageView;
+	private static ClipImageBorderView mClipImageView;
 
 	/**
 	 * 这里测试，直接写死了大小，真正使用过程中，可以提取为自定义属性
@@ -33,8 +35,8 @@ public class ClipImageLayout extends RelativeLayout
 		/**
 		 * 这里测试，直接写死了图片，真正使用过程中，可以提取为自定义属性
 		 */
-//		mZoomImageView.setImageDrawable(getResources().getDrawable(
-//				R.drawable.a));
+		mZoomImageView.setImageDrawable(getResources().getDrawable(
+				R.drawable.demo));
 		
 		this.addView(mZoomImageView, lp);
 		this.addView(mClipImageView, lp);

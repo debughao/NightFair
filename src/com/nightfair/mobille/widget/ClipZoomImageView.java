@@ -8,7 +8,6 @@ import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -19,16 +18,9 @@ import android.view.View.OnTouchListener;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-/**
- * http://blog.csdn.net/lmj623565791/article/details/39761281
- * 
- * @author zhy
- * 
- */
 @SuppressLint("ClickableViewAccessibility")
-public class ClipZoomImageView extends ImageView implements
-		OnScaleGestureListener, OnTouchListener,
-		ViewTreeObserver.OnGlobalLayoutListener
+public class ClipZoomImageView extends ImageView
+		implements OnScaleGestureListener, OnTouchListener, ViewTreeObserver.OnGlobalLayoutListener
 
 {
 
@@ -67,45 +59,36 @@ public class ClipZoomImageView extends ImageView implements
 	private boolean isCanDrag;
 	private int lastPointerCount;
 
-	public ClipZoomImageView(Context context)
-	{
+	public ClipZoomImageView(Context context) {
 		this(context, null);
 	}
 
-	public ClipZoomImageView(Context context, AttributeSet attrs)
-	{
+	public ClipZoomImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		setScaleType(ScaleType.MATRIX);
-		mGestureDetector = new GestureDetector(context,
-				new SimpleOnGestureListener()
-				{
-					@Override
-					public boolean onDoubleTap(MotionEvent e)
-					{
-						if (isAutoScale == true)
-							return true;
+		mGestureDetector = new GestureDetector(context, new SimpleOnGestureListener() {
+			@Override
+			public boolean onDoubleTap(MotionEvent e) {
+				if (isAutoScale == true)
+					return true;
 
-						float x = e.getX();
-						float y = e.getY();
-						if (getScale() < SCALE_MID)
-						{
-							ClipZoomImageView.this.postDelayed(
-									new AutoScaleRunnable(SCALE_MID, x, y), 16);
-							isAutoScale = true;
-						} else
-						{
-							ClipZoomImageView.this.postDelayed(
-									new AutoScaleRunnable(initScale, x, y), 16);
-							isAutoScale = true;
-						}
+				float x = e.getX();
+				float y = e.getY();
+				if (getScale() < SCALE_MID) {
+					ClipZoomImageView.this.postDelayed(new AutoScaleRunnable(SCALE_MID, x, y), 16);
+					isAutoScale = true;
+				} else {
+					ClipZoomImageView.this.postDelayed(new AutoScaleRunnable(initScale, x, y), 16);
+					isAutoScale = true;
+				}
 
-						return true;
-					}
-				});
+				return true;
+			}
+		});
 		mScaleGestureDetector = new ScaleGestureDetector(context, this);
 		this.setOnTouchListener(this);
-		
+
 	}
 
 	/**
@@ -114,8 +97,7 @@ public class ClipZoomImageView extends ImageView implements
 	 * @author zhy
 	 * 
 	 */
-	private class AutoScaleRunnable implements Runnable
-	{
+	private class AutoScaleRunnable implements Runnable {
 		static final float BIGGER = 1.07f;
 		static final float SMALLER = 0.93f;
 		private float mTargetScale;
@@ -132,24 +114,20 @@ public class ClipZoomImageView extends ImageView implements
 		 * 
 		 * @param targetScale
 		 */
-		public AutoScaleRunnable(float targetScale, float x, float y)
-		{
+		public AutoScaleRunnable(float targetScale, float x, float y) {
 			this.mTargetScale = targetScale;
 			this.x = x;
 			this.y = y;
-			if (getScale() < mTargetScale)
-			{
+			if (getScale() < mTargetScale) {
 				tmpScale = BIGGER;
-			} else
-			{
+			} else {
 				tmpScale = SMALLER;
 			}
 
 		}
 
 		@Override
-		public void run()
-		{
+		public void run() {
 			// 进行缩放
 			mScaleMatrix.postScale(tmpScale, tmpScale, x, y);
 			checkBorder();
@@ -158,8 +136,7 @@ public class ClipZoomImageView extends ImageView implements
 			final float currentScale = getScale();
 			// 如果值在合法范围内，继续缩放
 			if (((tmpScale > 1f) && (currentScale < mTargetScale))
-					|| ((tmpScale < 1f) && (mTargetScale < currentScale)))
-			{
+					|| ((tmpScale < 1f) && (mTargetScale < currentScale))) {
 				ClipZoomImageView.this.postDelayed(this, 16);
 			} else
 			// 设置为目标的缩放比例
@@ -175,8 +152,7 @@ public class ClipZoomImageView extends ImageView implements
 	}
 
 	@Override
-	public boolean onScale(ScaleGestureDetector detector)
-	{
+	public boolean onScale(ScaleGestureDetector detector) {
 		float scale = getScale();
 		float scaleFactor = detector.getScaleFactor();
 
@@ -186,25 +162,20 @@ public class ClipZoomImageView extends ImageView implements
 		/**
 		 * 缩放的范围控制
 		 */
-		if ((scale < SCALE_MAX && scaleFactor > 1.0f)
-				|| (scale > initScale && scaleFactor < 1.0f))
-		{
+		if ((scale < SCALE_MAX && scaleFactor > 1.0f) || (scale > initScale && scaleFactor < 1.0f)) {
 			/**
 			 * 最大值最小值判断
 			 */
-			if (scaleFactor * scale < initScale)
-			{
+			if (scaleFactor * scale < initScale) {
 				scaleFactor = initScale / scale;
 			}
-			if (scaleFactor * scale > SCALE_MAX)
-			{
+			if (scaleFactor * scale > SCALE_MAX) {
 				scaleFactor = SCALE_MAX / scale;
 			}
 			/**
 			 * 设置缩放比例
 			 */
-			mScaleMatrix.postScale(scaleFactor, scaleFactor,
-					detector.getFocusX(), detector.getFocusY());
+			mScaleMatrix.postScale(scaleFactor, scaleFactor, detector.getFocusX(), detector.getFocusY());
 			checkBorder();
 			setImageMatrix(mScaleMatrix);
 		}
@@ -217,13 +188,11 @@ public class ClipZoomImageView extends ImageView implements
 	 * 
 	 * @return
 	 */
-	private RectF getMatrixRectF()
-	{
+	private RectF getMatrixRectF() {
 		Matrix matrix = mScaleMatrix;
 		RectF rect = new RectF();
 		Drawable d = getDrawable();
-		if (null != d)
-		{
+		if (null != d) {
 			rect.set(0, 0, d.getIntrinsicWidth(), d.getIntrinsicHeight());
 			matrix.mapRect(rect);
 		}
@@ -231,19 +200,16 @@ public class ClipZoomImageView extends ImageView implements
 	}
 
 	@Override
-	public boolean onScaleBegin(ScaleGestureDetector detector)
-	{
+	public boolean onScaleBegin(ScaleGestureDetector detector) {
 		return true;
 	}
 
 	@Override
-	public void onScaleEnd(ScaleGestureDetector detector)
-	{
+	public void onScaleEnd(ScaleGestureDetector detector) {
 	}
 
 	@Override
-	public boolean onTouch(View v, MotionEvent event)
-	{
+	public boolean onTouch(View v, MotionEvent event) {
 
 		if (mGestureDetector.onTouchEvent(event))
 			return true;
@@ -253,8 +219,7 @@ public class ClipZoomImageView extends ImageView implements
 		// 拿到触摸点的个数
 		final int pointerCount = event.getPointerCount();
 		// 得到多个触摸点的x与y均值
-		for (int i = 0; i < pointerCount; i++)
-		{
+		for (int i = 0; i < pointerCount; i++) {
 			x += event.getX(i);
 			y += event.getY(i);
 		}
@@ -264,38 +229,31 @@ public class ClipZoomImageView extends ImageView implements
 		/**
 		 * 每当触摸点发生变化时，重置mLasX , mLastY
 		 */
-		if (pointerCount != lastPointerCount)
-		{
+		if (pointerCount != lastPointerCount) {
 			isCanDrag = false;
 			mLastX = x;
 			mLastY = y;
 		}
 
 		lastPointerCount = pointerCount;
-		switch (event.getAction())
-		{
+		switch (event.getAction()) {
 		case MotionEvent.ACTION_MOVE:
 			float dx = x - mLastX;
 			float dy = y - mLastY;
 
-			if (!isCanDrag)
-			{
+			if (!isCanDrag) {
 				isCanDrag = isCanDrag(dx, dy);
 			}
-			if (isCanDrag)
-			{
-				if (getDrawable() != null)
-				{
+			if (isCanDrag) {
+				if (getDrawable() != null) {
 
 					RectF rectF = getMatrixRectF();
 					// 如果宽度小于屏幕宽度，则禁止左右移动
-					if (rectF.width() <= getWidth() - mHorizontalPadding * 2)
-					{
+					if (rectF.width() <= getWidth() - mHorizontalPadding * 2) {
 						dx = 0;
 					}
 					// 如果高度小于屏幕高度，则禁止上下移动
-					if (rectF.height() <= getHeight() - mVerticalPadding * 2)
-					{
+					if (rectF.height() <= getHeight() - mVerticalPadding * 2) {
 						dy = 0;
 					}
 					mScaleMatrix.postTranslate(dx, dy);
@@ -321,23 +279,20 @@ public class ClipZoomImageView extends ImageView implements
 	 * 
 	 * @return
 	 */
-	public final float getScale()
-	{
+	public final float getScale() {
 		mScaleMatrix.getValues(matrixValues);
 		return matrixValues[Matrix.MSCALE_X];
 	}
 
 	@Override
-	protected void onAttachedToWindow()
-	{
+	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 		getViewTreeObserver().addOnGlobalLayoutListener(this);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	protected void onDetachedFromWindow()
-	{
+	protected void onDetachedFromWindow() {
 		super.onDetachedFromWindow();
 		getViewTreeObserver().removeGlobalOnLayoutListener(this);
 	}
@@ -352,10 +307,8 @@ public class ClipZoomImageView extends ImageView implements
 	private int mVerticalPadding;
 
 	@Override
-	public void onGlobalLayout()
-	{
-		if (once)
-		{
+	public void onGlobalLayout() {
+		if (once) {
 			Drawable d = getDrawable();
 			if (d == null)
 				return;
@@ -368,23 +321,16 @@ public class ClipZoomImageView extends ImageView implements
 			int dw = d.getIntrinsicWidth();
 			int dh = d.getIntrinsicHeight();
 			float scale = 1.0f;
-			if (dw < getWidth() - mHorizontalPadding * 2
-					&& dh > getHeight() - mVerticalPadding * 2)
-			{
+			if (dw < getWidth() - mHorizontalPadding * 2 && dh > getHeight() - mVerticalPadding * 2) {
 				scale = (getWidth() * 1.0f - mHorizontalPadding * 2) / dw;
 			}
 
-			if (dh < getHeight() - mVerticalPadding * 2
-					&& dw > getWidth() - mHorizontalPadding * 2)
-			{
+			if (dh < getHeight() - mVerticalPadding * 2 && dw > getWidth() - mHorizontalPadding * 2) {
 				scale = (getHeight() * 1.0f - mVerticalPadding * 2) / dh;
 			}
 
-			if (dw < getWidth() - mHorizontalPadding * 2
-					&& dh < getHeight() - mVerticalPadding * 2)
-			{
-				float scaleW = (getWidth() * 1.0f - mHorizontalPadding * 2)
-						/ dw;
+			if (dw < getWidth() - mHorizontalPadding * 2 && dh < getHeight() - mVerticalPadding * 2) {
+				float scaleW = (getWidth() * 1.0f - mHorizontalPadding * 2) / dw;
 				float scaleH = (getHeight() * 1.0f - mVerticalPadding * 2) / dh;
 				scale = Math.max(scaleW, scaleH);
 			}
@@ -393,8 +339,7 @@ public class ClipZoomImageView extends ImageView implements
 			SCALE_MID = initScale * 2;
 			SCALE_MAX = initScale * 4;
 			mScaleMatrix.postTranslate((width - dw) / 2, (height - dh) / 2);
-			mScaleMatrix.postScale(scale, scale, getWidth() / 2,
-					getHeight() / 2);
+			mScaleMatrix.postScale(scale, scale, getWidth() / 2, getHeight() / 2);
 			// 图片移动至屏幕中心
 			setImageMatrix(mScaleMatrix);
 			once = false;
@@ -407,22 +352,18 @@ public class ClipZoomImageView extends ImageView implements
 	 * 
 	 * @return
 	 */
-	public Bitmap clip()
-	{
-		Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(),
-				Bitmap.Config.ARGB_8888);
+	public Bitmap clip() {
+		Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(bitmap);
 		draw(canvas);
-		return Bitmap.createBitmap(bitmap, mHorizontalPadding,
-				mVerticalPadding, getWidth() - 2 * mHorizontalPadding,
+		return Bitmap.createBitmap(bitmap, mHorizontalPadding, mVerticalPadding, getWidth() - 2 * mHorizontalPadding,
 				getWidth() - 2 * mHorizontalPadding);
 	}
 
 	/**
 	 * 边界检测
 	 */
-	private void checkBorder()
-	{
+	private void checkBorder() {
 
 		RectF rect = getMatrixRectF();
 		float deltaX = 0;
@@ -430,30 +371,22 @@ public class ClipZoomImageView extends ImageView implements
 
 		int width = getWidth();
 		int height = getHeight();
-		Log.e(TAG, "rect.width() =  " + rect.width()
-				+ " , width - 2 * mHorizontalPadding ="
-				+ (width - 2 * mHorizontalPadding));
+		
 
 		// 如果宽或高大于屏幕，则控制范围 ; 这里的0.001是因为精度丢失会产生问题，但是误差一般很小，所以我们直接加了一个0.01
-		if (rect.width() + 0.01 >= width - 2 * mHorizontalPadding)
-		{
-			if (rect.left > mHorizontalPadding)
-			{
+		if (rect.width() + 0.01 >= width - 2 * mHorizontalPadding) {
+			if (rect.left > mHorizontalPadding) {
 				deltaX = -rect.left + mHorizontalPadding;
 			}
-			if (rect.right < width - mHorizontalPadding)
-			{
+			if (rect.right < width - mHorizontalPadding) {
 				deltaX = width - mHorizontalPadding - rect.right;
 			}
 		}
-		if (rect.height() + 0.01 >= height - 2 * mVerticalPadding)
-		{
-			if (rect.top > mVerticalPadding)
-			{
+		if (rect.height() + 0.01 >= height - 2 * mVerticalPadding) {
+			if (rect.top > mVerticalPadding) {
 				deltaY = -rect.top + mVerticalPadding;
 			}
-			if (rect.bottom < height - mVerticalPadding)
-			{
+			if (rect.bottom < height - mVerticalPadding) {
 				deltaY = height - mVerticalPadding - rect.bottom;
 			}
 		}
@@ -468,13 +401,11 @@ public class ClipZoomImageView extends ImageView implements
 	 * @param dy
 	 * @return
 	 */
-	private boolean isCanDrag(float dx, float dy)
-	{
+	private boolean isCanDrag(float dx, float dy) {
 		return Math.sqrt((dx * dx) + (dy * dy)) >= mTouchSlop;
 	}
 
-	public void setHorizontalPadding(int mHorizontalPadding)
-	{
+	public void setHorizontalPadding(int mHorizontalPadding) {
 		this.mHorizontalPadding = mHorizontalPadding;
 	}
 

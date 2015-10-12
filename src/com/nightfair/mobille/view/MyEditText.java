@@ -1,20 +1,22 @@
 package com.nightfair.mobille.view;
 
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.util.KeyBoardUtils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewParent;
 import android.widget.EditText;
 
-
-@SuppressLint("ResourceAsColor")
+@SuppressLint({ "ResourceAsColor", "ClickableViewAccessibility" })
 public class MyEditText extends EditText implements OnFocusChangeListener, TextWatcher {
 
 	/**
@@ -22,7 +24,6 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 	 */
 	private boolean isfoucs;
 	private int num;
-	
 
 	public MyEditText(Context context) {
 		this(context, null);
@@ -31,7 +32,7 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 
 	public MyEditText(Context context, AttributeSet attrs) {
 		// 这里构造方法也很重要，不加这个很多属性不能再XML里面定义
-		
+
 		this(context, attrs, android.R.attr.editTextStyle);
 		init();
 
@@ -40,19 +41,19 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 	public MyEditText(Context context, AttributeSet attrs, int defStyle) {
 
 		super(context, attrs, defStyle);
-	
+
 		init();
 	}
 
 	private void init() {
-		
+
 		this.setFocusable(false);
 		// 设置焦点改变的监听
 		setOnFocusChangeListener(this);
 		// 设置输入框里面内容发生改变的监听
 		addTextChangedListener(this);
 		//
-		
+
 	}
 
 	/**
@@ -72,7 +73,7 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 	 */
 	@Override
 	public void onTextChanged(CharSequence s, int start, int count, int after) {
-	
+
 	}
 
 	@Override
@@ -85,5 +86,10 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		KeyBoardUtils.openKeybord(this, this.getContext());
+		return super.onTouchEvent(event);
+	}
 
 }

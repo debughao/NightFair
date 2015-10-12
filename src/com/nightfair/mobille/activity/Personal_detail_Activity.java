@@ -1,23 +1,31 @@
 package com.nightfair.mobille.activity;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.config.ApiUrl;
+import com.nightfair.mobille.config.FilePath;
 import com.nightfair.mobille.util.ActivityUtils;
+import com.nightfair.mobille.util.Base64Coder;
 import com.nightfair.mobille.util.KeyBoardUtils;
+import com.nightfair.mobille.util.MD5Util;
+import com.nightfair.mobille.util.NetWorkUtil;
 import com.nightfair.mobille.view.MyEditText;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +33,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -42,7 +51,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	private MyEditText et_nickname;
 	private RelativeLayout rl_nicakname;
 	private TextView tv_complete;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -125,18 +134,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 				.setNegativeButton("相册", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.dismiss();
-
 						Intent intent = new Intent(Intent.ACTION_PICK, null);
-
-						/**
-						 * 下面这句话，与其它方式写是一样的效果，如果：
-						 * intent.setData(MediaStore.Images.Media.
-						 * EXTERNAL_CONTENT_URI);
-						 * intent.setType(""image/*");设置数据类型
-						 * 如果朋友们要限制上传到服务器的图片类型时可以直接写如：
-						 * "image/jpeg 、 image/png等的类型"
-						 * 这个地方小马有个疑问，希望高手解答下：就是这个数据URI与类型为什么要分两种形式来写呀？有什么区别？
-						 */
 						intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
 						startActivityForResult(intent, 1);
 
@@ -144,16 +142,10 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 				}).setPositiveButton("拍照", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
 						dialog.dismiss();
-						/**
-						 * 下面这句还是老样子，调用快速拍照功能，至于为什么叫快速拍照，大家可以参考如下官方
-						 * 文档，you_sdk_path/docs/guide/topics/media/camera.html
-						 * 我刚看的时候因为太长就认真看，其实是错的，这个里面有用的太多了，所以大家不要认为
-						 * 官方文档太长了就不看了，其实是错的，这个地方小马也错了，必须改正
-						 */
-						Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+						Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
 						// 下面这句指定调用相机拍照后的照片存储的路径
-						intent.putExtra(MediaStore.EXTRA_OUTPUT,
-								Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "head.jpg")));
+						intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
+								new File(FilePath.getCameraStore(mContent), MD5Util.MD5("headface") + ".png")));
 						startActivityForResult(intent, 2);
 					}
 				}).show();
@@ -164,27 +156,61 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
+		System.out.println(requestCode + "-->" + resultCode + "-->" + data);
 		switch (requestCode) {
 		// 直接从相册获取时
 		case 1:
-			System.out.println("相册"+data);
-			/* photoZoom(); */
-			System.out.println(data.getData());
+
+			if (data != null) {
+				System.out.println(data.getData());
+				photoZoom(data.getData().toString());
+			} else {
+				System.out.println("无选择");
+			}
+
 			break;
 		// 调用相机拍照时
 		case 2:
-			System.out.println("相机"+data);
+			if (resultCode == -1) {
+				photoZoom(FilePath.getCameraStore(mContent) + File.separator + MD5Util.MD5("headface") + ".png");
+			} else {
+				System.out.println("并无拍照");
+			}
 			break;
+		// 裁剪后的图片上传
+		case 3:
+			ActivityUtils.showShortToast(mContent, "裁剪成功");
 
+			byte[] bytes=data.getByteArrayExtra("data");
+			final String picStr = new String(Base64Coder.encodeLines(bytes));
+			
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					List<NameValuePair> params = new ArrayList<NameValuePair>();
+					params.add(new BasicNameValuePair("picStr", picStr));
+					params.add(new BasicNameValuePair("picName", "dengzi"));
+					final String result = NetWorkUtil.httpPost(ApiUrl.UserUploadHd,params);
+					runOnUiThread(new Runnable() {
+						public void run() {
+							Toast.makeText(mContent, result, Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+			}).start();
+			
+			break;
 		default:
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-	private void photoZoom() {
-
+	private void photoZoom(String path) {
+		/* Bitmap bitmap = BitmapFactory.decodeFile(path); */
+		Intent intent = new Intent("com.nightfair.camera.action.CROP");
+		intent.putExtra("path", path);
+		startActivityForResult(intent, 3);
 	}
 
 	@Override

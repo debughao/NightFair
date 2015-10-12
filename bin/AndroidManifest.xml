@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="20" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -24,36 +24,45 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait" >
-           
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" 
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" 
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".activity.Personal_Coupon_Activity"
-            android:screenOrientation="portrait" 
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
             android:name=".activity.Personal_Collecyion_Activity"
-            android:screenOrientation="portrait" 
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name="com.nightfair.mobille.activity.Personal_detail_Activity"
-            android:screenOrientation="portrait" 
+            android:name=".activity.Personal_detail_Activity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.nightfair.mobille.activity.CutFaceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.nightfair.camera.action.CROP" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>
