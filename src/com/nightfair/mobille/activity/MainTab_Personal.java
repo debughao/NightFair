@@ -3,6 +3,8 @@ package com.nightfair.mobille.activity;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FragmentUtils;
+
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -94,9 +96,9 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	}
 
 	private void refreshView() {
-		ll_login_normal.setVisibility(8);// 隐藏未登录界面
-		ll_login_already.setVisibility(0);// 显示登录后界面
-		ll_personal_logout.setVisibility(0);// 显示注销界面
+		ll_login_normal.setVisibility(View.GONE);// 隐藏未登录界面
+		ll_login_already.setVisibility(View.VISIBLE);// 显示登录后界面
+		ll_personal_logout.setVisibility(View.VISIBLE);// 显示注销界面
 	}
 
 }

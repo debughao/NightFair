@@ -22,6 +22,7 @@ import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.config.FilePath;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.Base64Coder;
+import com.nightfair.mobille.util.FileUtils;
 import com.nightfair.mobille.util.KeyBoardUtils;
 import com.nightfair.mobille.util.MD5Util;
 import com.nightfair.mobille.view.MyEditText;
@@ -37,10 +38,12 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -63,7 +66,10 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	private RelativeLayout rl_nicakname;
 	private TextView tv_complete;
 	private ImageView iv_face;
-	private Dialog loadingDialog;
+	private Dialog dialog;
+	private TextView tv_sex;
+	private RelativeLayout rl_sex;
+	private RelativeLayout rl_age;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,11 +84,13 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		tv_cancal = (TextView) findViewById(R.id.tv_ps_detail_cancel);
 		et_nickname = (MyEditText) findViewById(R.id.et_ps_detail_nickname);
 		rl_nicakname = (RelativeLayout) findViewById(R.id.personal_detail_nicakname);
+		rl_sex=(RelativeLayout) findViewById(R.id.personal_detail_sex);
+		rl_age=(RelativeLayout) findViewById(R.id.personal_detail_age);                 
 		tv_complete = (TextView) findViewById(R.id.tv_ps_detail_complete);
 		iv_face = (ImageView) findViewById(R.id.iv_personal_face);
-		mySetOnClickListener(tv_cancal, Rl_face, rl_nicakname, tv_complete);
-
-		setTextChangedListener(et_nickname);
+		tv_sex=(TextView) findViewById(R.id.tvv_ps_detail_sex);
+		mySetOnClickListener(tv_cancal, Rl_face, rl_nicakname, tv_complete,rl_sex,rl_age);
+		setTextChangedListener(et_nickname,tv_sex);
 	}
 
 	/**
@@ -136,10 +144,22 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 			finish();
 			break;
 		case R.id.personal_detail_face:
-			ShowPickDialog();
+			showPhotoDialog();
 			break;
 		case R.id.personal_detail_nicakname:
 			KeyBoardUtils.openKeybord(et_nickname, mContext);
+			break;
+		case R.id.personal_detail_sex:
+			showSexDialog();
+			break;
+		case R.id.openCamera:// 打开相机
+			openCamera();
+			break;
+		case R.id.openPhones:// 打开图库
+			openPhones();
+			break;
+		case R.id.cancel:// 取消
+			dialog.cancel();
 			break;
 		default:
 			break;
@@ -147,29 +167,67 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 
 	}
 
-	/**
-	 * 选择提示对话框
-	 */
-	private void ShowPickDialog() {
-		new AlertDialog.Builder(this).setTitle("设置头像...")
-				.setNegativeButton("相册", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-						Intent intent = new Intent(Intent.ACTION_PICK, null);
-						intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-						startActivityForResult(intent, 1);
+	private void openPhones() {
+		dialog.dismiss();
+		Intent intent = new Intent(Intent.ACTION_PICK, null);
+		intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+		startActivityForResult(intent, 1);
+	}
 
-					}
-				}).setPositiveButton("拍照", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						dialog.dismiss();
-						Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
-						// 下面这句指定调用相机拍照后的照片存储的路径
-						intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
-								new File(FilePath.getCameraStore(mContext), MD5Util.MD5("headface") + ".png")));
-						startActivityForResult(intent, 2);
-					}
-				}).show();
+	private void openCamera() {
+		dialog.dismiss();
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+		// 下面这句指定调用相机拍照后的照片存储的路径
+		intent.putExtra(MediaStore.EXTRA_OUTPUT,
+				Uri.fromFile(new File(FilePath.getCameraStore(mContext), MD5Util.MD5("headface") + ".png")));
+		startActivityForResult(intent, 2);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void showPhotoDialog() {
+		View view = getLayoutInflater().inflate(R.layout.photo_choose_dialog, null);
+		view.findViewById(R.id.openCamera).setOnClickListener(this);
+		view.findViewById(R.id.openPhones).setOnClickListener(this);
+		view.findViewById(R.id.cancel).setOnClickListener(this);
+		dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+		dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		Window window = dialog.getWindow();
+		// 设置显示动画
+		window.setWindowAnimations(R.style.main_menu_animstyle);
+		WindowManager.LayoutParams wl = window.getAttributes();
+		wl.x = 0;
+		wl.y = getWindowManager().getDefaultDisplay().getHeight();
+		// 以下这两句是为了保证按钮可以水平满屏
+		wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		// 设置显示位置
+		dialog.onWindowAttributesChanged(wl);
+		// 设置点击外围解散
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
+	}
+
+	private void showSexDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+		builder.setIcon(R.drawable.ic_launcher);
+		builder.setTitle("请选择性别");
+		final String[] sex = { "男", "女", "未知性别" };	
+		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				String selected_sex=sex[which];
+				
+			}
+		});
+		builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		builder.show();
+
 	}
 
 	/**
@@ -192,8 +250,8 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 			break;
 		// 调用相机拍照时
 		case 2:
-			
-			if (resultCode == -1) {
+
+			if (resultCode == RESULT_OK) {
 				photoZoom(FilePath.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
 			} else {
 				System.out.println("并无拍照");
@@ -202,61 +260,43 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		// 裁剪后的图片上传
 		case 3:
 			// ActivityUtils.showShortToast(mContent, "裁剪成功");
-			showLoadingDialog();
-			final byte[] b = data.getByteArrayExtra("data");
-			final String picStr = new String(Base64Coder.encodeLines(b));
-			/*
-			 * 非xutils的http post上传
-			 */
-			// new Thread(new Runnable() {
-			// @Override
-			// public void run() {
-			// List<NameValuePair> params = new ArrayList<NameValuePair>();
-			// params.add(new BasicNameValuePair("picStr", picStr));
-			// final String result = NetWorkUtil.httpPost(ApiUrl.UserUploadHd,
-			// params);
-			//
-			// runOnUiThread(new Runnable() {
-			// public void run() {
-			// Toast.makeText(mContent, result, Toast.LENGTH_SHORT).show();
-			// }
-			// });
-			// }
-			// }).start();
-			/*
-			 * xutils的http post上传
-			 */
+			if (resultCode == RESULT_OK) {
+				final byte[] b = data.getByteArrayExtra("data");
+				final String picStr = new String(Base64Coder.encodeLines(b));
+				RequestParams params = new RequestParams();// 默认utf-8 编码
+				// 看样子NameValuePair是http里面的对象，查了多个网页只找到他的用法，apache官方文档也没有太多介绍
+				// 暂时先记着他的用法就可以，具体用法请自行百度。
+				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
 
-			RequestParams params = new RequestParams();// 默认utf-8 编码
-			// 看样子NameValuePair是http里面的对象，查了多个网页只找到他的用法，apache官方文档也没有太多介绍
-			// 暂时先记着他的用法就可以，具体用法请自行百度。
-			List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-		
-			params2.add(new BasicNameValuePair("picStr", picStr));
-			params.addBodyParameter(params2);
-			HttpUtils http = new HttpUtils();
-			http.send(HttpMethod.POST, ApiUrl.UserUploadHd, params, new RequestCallBack<String>() {
-				@Override
-				public void onFailure(HttpException arg0, String arg1) {
-					System.out.println("头像上传成功");
-				}
-
-				@Override
-				public void onSuccess(ResponseInfo<String> arg0) {
-					System.out.println("成功");
-					loadingDialog.dismiss();
-					Toast.makeText(mContext, "头像上传成功", Toast.LENGTH_SHORT).show();
-					Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
-					if (null != bitmap) {
-						iv_face.setImageBitmap(bitmap);
+				params2.add(new BasicNameValuePair("picStr", picStr));
+				params.addBodyParameter(params2);
+				HttpUtils http = new HttpUtils();
+				http.send(HttpMethod.POST, ApiUrl.UserUploadHd, params, new RequestCallBack<String>() {
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						System.out.println("头像上传成功");
 					}
-				}
 
-				@Override
-				public void onLoading(long total, long current, boolean isUploading) {
-					super.onLoading(total, current, isUploading);
-				}
-			});
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+						System.out.println("成功");
+						Toast.makeText(mContext, "头像上传成功", Toast.LENGTH_SHORT).show();
+						Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+						if (null != bitmap) {
+							iv_face.setImageBitmap(bitmap);
+							FileUtils.writeSDCard(FilePath.getHeadStore(mContext), MD5Util.MD5("headface") + ".png",
+									bitmap);
+						}
+					}
+
+					@Override
+					public void onLoading(long total, long current, boolean isUploading) {
+						super.onLoading(total, current, isUploading);
+					}
+				});
+			} else {
+				System.out.println("并无拍照");
+			}
 			break;
 		default:
 			break;
@@ -270,7 +310,8 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	 * 
 	 * @Description: 裁剪图片处理
 	 * 
-	 * @param path 图片路径
+	 * @param path
+	 *            图片路径
 	 * 
 	 * @return void 返回类型
 	 */
@@ -280,17 +321,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		intent.putExtra("path", path);
 		startActivityForResult(intent, 3);
 	}
-	private void showLoadingDialog() {
-		if (loadingDialog != null) {
-			loadingDialog.show();
-			return;
-		}
-		loadingDialog = new Dialog(mContext, R.style.dialog_loading);
-		View view = LayoutInflater.from(this.mContext).inflate(R.layout.dialog_loading, null);
-		loadingDialog.setContentView(view, new ViewGroup.LayoutParams(-2, -1));
-		loadingDialog.setCancelable(true);
-		loadingDialog.show();
-	}
+
 	@Override
 	public void finish() {
 		flag = 2;

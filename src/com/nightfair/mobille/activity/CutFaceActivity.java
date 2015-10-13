@@ -13,6 +13,7 @@ import com.nightfair.mobille.widget.ClipImageLayout;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
@@ -68,6 +69,7 @@ public class CutFaceActivity extends BaseActivity implements OnClickListener {
 		// 获得图片的宽和高，并不把图片加载到内存中
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = false;
+		options.inPreferredConfig=Config.ARGB_8888;
 		BitmapFactory.decodeFile(path, options);
 		options.inSampleSize = ImageSizeUtil.caculateInSampleSize(options, width, height);
 		// 使用获得到的InSampleSize再次解析图片
