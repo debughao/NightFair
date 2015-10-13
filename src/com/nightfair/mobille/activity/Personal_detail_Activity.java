@@ -7,7 +7,13 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
@@ -18,19 +24,24 @@ import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.Base64Coder;
 import com.nightfair.mobille.util.KeyBoardUtils;
 import com.nightfair.mobille.util.MD5Util;
-import com.nightfair.mobille.util.NetWorkUtil;
 import com.nightfair.mobille.view.MyEditText;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,23 +53,24 @@ import android.widget.Toast;
  * @author debughao
  * @date 2015年10月10日21:43:50
  */
-@SuppressLint("ResourceAsColor")
+@SuppressLint({ "ResourceAsColor", "InflateParams" })
 public class Personal_detail_Activity extends BaseActivity implements OnClickListener {
-	private Personal_detail_Activity mContent;
+	private Personal_detail_Activity mContext;
 	private TextView tv_cancal;
 	@ViewInject(R.id.personal_detail_face)
 	private RelativeLayout Rl_face;
 	private MyEditText et_nickname;
 	private RelativeLayout rl_nicakname;
 	private TextView tv_complete;
-	
+	private ImageView iv_face;
+	private Dialog loadingDialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal_detail);
-		mContent = this;
+		mContext = this;
 		ViewUtils.inject(this);
-		ActivityUtils.setActionBarByColor(mContent, R.layout.title_bar_personal_detail, R.color.title_color);
+		ActivityUtils.setActionBarByColor(mContext, R.layout.title_bar_personal_detail, R.color.title_color);
 		inintView();
 	}
 
@@ -67,10 +79,19 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		et_nickname = (MyEditText) findViewById(R.id.et_ps_detail_nickname);
 		rl_nicakname = (RelativeLayout) findViewById(R.id.personal_detail_nicakname);
 		tv_complete = (TextView) findViewById(R.id.tv_ps_detail_complete);
+		iv_face = (ImageView) findViewById(R.id.iv_personal_face);
 		mySetOnClickListener(tv_cancal, Rl_face, rl_nicakname, tv_complete);
 
 		setTextChangedListener(et_nickname);
 	}
+
+	/**
+	 * 
+	 * @Title: setTextChangedListener
+	 * 
+	 * @Description: 监听文本内容有无改变
+	 * 
+	 */
 
 	private void setTextChangedListener(TextView... v) {
 		for (TextView view : v) {
@@ -118,7 +139,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 			ShowPickDialog();
 			break;
 		case R.id.personal_detail_nicakname:
-			KeyBoardUtils.openKeybord(et_nickname, mContent);
+			KeyBoardUtils.openKeybord(et_nickname, mContext);
 			break;
 		default:
 			break;
@@ -145,7 +166,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 						Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
 						// 下面这句指定调用相机拍照后的照片存储的路径
 						intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(
-								new File(FilePath.getCameraStore(mContent), MD5Util.MD5("headface") + ".png")));
+								new File(FilePath.getCameraStore(mContext), MD5Util.MD5("headface") + ".png")));
 						startActivityForResult(intent, 2);
 					}
 				}).show();
@@ -171,34 +192,71 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 			break;
 		// 调用相机拍照时
 		case 2:
+			
 			if (resultCode == -1) {
-				photoZoom(FilePath.getCameraStore(mContent) + File.separator + MD5Util.MD5("headface") + ".png");
+				photoZoom(FilePath.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
 			} else {
 				System.out.println("并无拍照");
 			}
 			break;
 		// 裁剪后的图片上传
 		case 3:
-			ActivityUtils.showShortToast(mContent, "裁剪成功");
+			// ActivityUtils.showShortToast(mContent, "裁剪成功");
+			showLoadingDialog();
+			final byte[] b = data.getByteArrayExtra("data");
+			final String picStr = new String(Base64Coder.encodeLines(b));
+			/*
+			 * 非xutils的http post上传
+			 */
+			// new Thread(new Runnable() {
+			// @Override
+			// public void run() {
+			// List<NameValuePair> params = new ArrayList<NameValuePair>();
+			// params.add(new BasicNameValuePair("picStr", picStr));
+			// final String result = NetWorkUtil.httpPost(ApiUrl.UserUploadHd,
+			// params);
+			//
+			// runOnUiThread(new Runnable() {
+			// public void run() {
+			// Toast.makeText(mContent, result, Toast.LENGTH_SHORT).show();
+			// }
+			// });
+			// }
+			// }).start();
+			/*
+			 * xutils的http post上传
+			 */
 
-			byte[] bytes=data.getByteArrayExtra("data");
-			final String picStr = new String(Base64Coder.encodeLines(bytes));
-			
-			new Thread(new Runnable() {
+			RequestParams params = new RequestParams();// 默认utf-8 编码
+			// 看样子NameValuePair是http里面的对象，查了多个网页只找到他的用法，apache官方文档也没有太多介绍
+			// 暂时先记着他的用法就可以，具体用法请自行百度。
+			List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+		
+			params2.add(new BasicNameValuePair("picStr", picStr));
+			params.addBodyParameter(params2);
+			HttpUtils http = new HttpUtils();
+			http.send(HttpMethod.POST, ApiUrl.UserUploadHd, params, new RequestCallBack<String>() {
 				@Override
-				public void run() {
-					List<NameValuePair> params = new ArrayList<NameValuePair>();
-					params.add(new BasicNameValuePair("picStr", picStr));
-					params.add(new BasicNameValuePair("picName", "dengzi"));
-					final String result = NetWorkUtil.httpPost(ApiUrl.UserUploadHd,params);
-					runOnUiThread(new Runnable() {
-						public void run() {
-							Toast.makeText(mContent, result, Toast.LENGTH_SHORT).show();
-						}
-					});
+				public void onFailure(HttpException arg0, String arg1) {
+					System.out.println("头像上传成功");
 				}
-			}).start();
-			
+
+				@Override
+				public void onSuccess(ResponseInfo<String> arg0) {
+					System.out.println("成功");
+					loadingDialog.dismiss();
+					Toast.makeText(mContext, "头像上传成功", Toast.LENGTH_SHORT).show();
+					Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+					if (null != bitmap) {
+						iv_face.setImageBitmap(bitmap);
+					}
+				}
+
+				@Override
+				public void onLoading(long total, long current, boolean isUploading) {
+					super.onLoading(total, current, isUploading);
+				}
+			});
 			break;
 		default:
 			break;
@@ -206,13 +264,33 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
+	/**
+	 * 
+	 * @Title: photoZoom
+	 * 
+	 * @Description: 裁剪图片处理
+	 * 
+	 * @param path 图片路径
+	 * 
+	 * @return void 返回类型
+	 */
 	private void photoZoom(String path) {
 		/* Bitmap bitmap = BitmapFactory.decodeFile(path); */
 		Intent intent = new Intent("com.nightfair.camera.action.CROP");
 		intent.putExtra("path", path);
 		startActivityForResult(intent, 3);
 	}
-
+	private void showLoadingDialog() {
+		if (loadingDialog != null) {
+			loadingDialog.show();
+			return;
+		}
+		loadingDialog = new Dialog(mContext, R.style.dialog_loading);
+		View view = LayoutInflater.from(this.mContext).inflate(R.layout.dialog_loading, null);
+		loadingDialog.setContentView(view, new ViewGroup.LayoutParams(-2, -1));
+		loadingDialog.setCancelable(true);
+		loadingDialog.show();
+	}
 	@Override
 	public void finish() {
 		flag = 2;

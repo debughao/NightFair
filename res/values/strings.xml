@@ -50,5 +50,6 @@
     <string name="text_ps_detail_hometown">地球-中国-河南</string>
     <string name="title_activity_cut_face">CutFaceActivity</string>
     <string name="text_face_use">使用</string>
+    <string name="text_loading">正在上传头像</string>
 
 </resources>

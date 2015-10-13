@@ -80,7 +80,7 @@ public class CutFaceActivity extends BaseActivity implements OnClickListener {
 		if (v.getId() == R.id.tv_face_cancel) {
 			finish();
 		} else if (v.getId() == R.id.btn_face_ok) {
-			Bitmap bitmap = mClipImageLayout.clip();			
+			Bitmap bitmap = mClipImageLayout.clip();//图片裁剪			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 			byte[] datas = baos.toByteArray();

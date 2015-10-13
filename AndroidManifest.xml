@@ -24,6 +24,11 @@
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginActivity"
@@ -49,11 +54,6 @@
             android:name=".activity.Personal_detail_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.nightfair.mobille.activity.CutFaceActivity"
