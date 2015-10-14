@@ -115,7 +115,7 @@
                         android:id="@+id/tvv_ps_detail_sex"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_sex"
-                        android:text="" />
+                        android:text="@string/text_personal_sex" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -145,9 +145,41 @@
 
                     <TextView
                         android:id="@+id/tvv_ps_detail_age"
-                        style="@style/personal_detail_text"
+                        style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_age"
-                        android:text="" />
+                        android:text="@string/text_personal_age" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_detail_star"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="15dp" >
+
+                    <TextView
+                        android:id="@+id/tv_ps_detail_star"
+                        style="@style/personal_detail_text"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_personaldetail_star" />
+
+                    <TextView
+                        android:id="@+id/tvv_ps_detail_star"
+                        style="@style/personal_detail_edit"
+                        android:layout_toRightOf="@id/tv_ps_detail_star"
+                        android:text="@string/text_personal_star" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -225,7 +257,7 @@
                         style="@style/personal_detail_edit"
                         android:layout_marginLeft="12dp"
                         android:layout_toRightOf="@id/tv_ps_detail_address"
-                        android:text="@string/text_ps_detail_hometown" />
+                        android:text="@string/text_ps_detail_address" />
 
                     <ImageView
                         style="@style/personal_item_image_right"

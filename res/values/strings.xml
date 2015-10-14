@@ -40,16 +40,27 @@
     <string name="text_personaldetail_nickname">昵称</string>
     <string name="text_personaldetail_sex">性别</string>
     <string name="text_personaldetail_age">年龄</string>
+    <string name="text_personaldetail_star">星座</string>
     <string name="text_personaldetail_hometown">故乡</string>
     <string name="text_personaldetail_address">所在地</string>
     <string name="text_personaldetail_autograph">个人签名</string>
     <string name="tt_bar_ps_compelte">完成</string>
-    <string name="et_ps_detail_nickname_text">回忆往首</string>
+    <string name="et_ps_detail_nickname_text">请填写的昵称</string>
     <string name="et_ps_detail_sex_hint">男</string>
     <string name="et_ps_detail_age_hint">22</string>
-    <string name="text_ps_detail_hometown">地球-中国-河南</string>
+    <string name="text_ps_detail_hometown">请填写你的故乡</string>
+    <string name="text_ps_detail_address">请填写你的所在地</string>
     <string name="title_activity_cut_face">CutFaceActivity</string>
     <string name="text_face_use">使用</string>
     <string name="text_loading">正在上传头像</string>
+    <string name="choose_title">请选择性别：</string>
+    <string name="choose_age_title">选择出生日期，系统将会自动转换为年龄及星座：</string>
+    <string name="choose_man">男</string>
+    <string name="choose_women">女</string>
+    <string name="choose_sercet">保密</string>
+    <string name="text_personal_age">请选择你的年龄</string>
+    <string name="text_personal_star">请选择你的星座</string>
+    <string name="text_personal_sex">请选择你的性别</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>

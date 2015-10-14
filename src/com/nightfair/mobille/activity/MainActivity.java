@@ -148,6 +148,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			ActivityUtils.setActionBarLayout(getActionBar(), MainActivity.this, R.layout.title_bar_personal);
 			ActivityUtils.setTranslucentStatus(getWindow(), true);
 			ActivityUtils.setStatusBarColor(R.color.title_color, this);
+			
 			if (mTab04 == null) {
 				// 如果SettingFragment为空，则创建一个并添加到界面上
 				mTab04 = new MainTab_Personal();
