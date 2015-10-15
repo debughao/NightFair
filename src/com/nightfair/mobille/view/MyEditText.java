@@ -1,28 +1,19 @@
 package com.nightfair.mobille.view;
 
-import com.nightfair.mobille.R;
 import com.nightfair.mobille.util.KeyBoardUtils;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.view.ViewParent;
 import android.widget.EditText;
 
 @SuppressLint({ "ResourceAsColor", "ClickableViewAccessibility" })
 public class MyEditText extends EditText implements OnFocusChangeListener, TextWatcher {
 
-	/**
-	 * 控件是否有焦点
-	 */
-	private boolean isfoucs;
 	private int num;
 
 	public MyEditText(Context context) {
@@ -61,7 +52,6 @@ public class MyEditText extends EditText implements OnFocusChangeListener, TextW
 	 */
 	@Override
 	public void onFocusChange(View v, boolean hasFocus) {
-		this.isfoucs = hasFocus;
 		if (hasFocus) {
 			num = getText().length();
 			this.setSelection(num);

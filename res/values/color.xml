@@ -17,6 +17,7 @@
     <color name="translucent">#cc808080</color>
     <!-- 微信黑色字 -->
     <color name="black_text">#353535</color>
+     <!--省市区三级联动 分割线 -->
     <color name="province_line_border">#C7C7C7</color>
 
 </resources>

@@ -24,7 +24,6 @@ public class ClipZoomImageView extends ImageView
 
 {
 
-	private static final String TAG = ClipZoomImageView.class.getSimpleName();
 	public static float SCALE_MAX = 4.0f;
 	private static float SCALE_MID = 2.0f;
 
@@ -371,7 +370,6 @@ public class ClipZoomImageView extends ImageView
 
 		int width = getWidth();
 		int height = getHeight();
-		
 
 		// 如果宽或高大于屏幕，则控制范围 ; 这里的0.001是因为精度丢失会产生问题，但是误差一般很小，所以我们直接加了一个0.01
 		if (rect.width() + 0.01 >= width - 2 * mHorizontalPadding) {

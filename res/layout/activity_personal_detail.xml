@@ -86,8 +86,8 @@
                         android:id="@+id/et_ps_detail_nickname"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_nickname"
-                        android:maxLength="13"
-                        android:text="@string/et_ps_detail_nickname_text" >
+                        android:hint="@string/et_ps_detail_nickname_text"
+                        android:maxLength="13" >
                     </com.nightfair.mobille.view.MyEditText>
                 </RelativeLayout>
 
@@ -115,7 +115,7 @@
                         android:id="@+id/tvv_ps_detail_sex"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_sex"
-                        android:text="@string/text_personal_sex" />
+                        android:hint="@string/text_personal_sex" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -147,7 +147,7 @@
                         android:id="@+id/tvv_ps_detail_age"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_age"
-                        android:text="@string/text_personal_age" />
+                        android:hint="@string/text_personal_age" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -179,7 +179,7 @@
                         android:id="@+id/tvv_ps_detail_star"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_star"
-                        android:text="@string/text_personal_star" />
+                        android:hint="@string/text_personal_star" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -221,10 +221,10 @@
                         android:text="@string/text_personaldetail_hometown" />
 
                     <TextView
-                        android:id="@+id/et_ps_detail_hometown"
+                        android:id="@+id/tvv_ps_detail_hometown"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_hometown"
-                        android:text="@string/text_ps_detail_hometown" />
+                        android:hint="@string/text_ps_detail_hometown" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -253,11 +253,11 @@
                         android:text="@string/text_personaldetail_address" />
 
                     <TextView
-                        android:id="@+id/et_ps_detail_address"
+                        android:id="@+id/tvv_ps_detail_address"
                         style="@style/personal_detail_edit"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="34dp"
                         android:layout_toRightOf="@id/tv_ps_detail_address"
-                        android:text="@string/text_ps_detail_address" />
+                        android:hint="@string/text_ps_detail_address" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -285,14 +285,17 @@
                         android:layout_centerVertical="true"
                         android:text="@string/text_personaldetail_autograph" />
 
-                    <EditText
+                    <TextView
                         android:id="@+id/et_ps_detail_autograph"
                         style="@style/personal_detail_edit"
+                        android:layout_marginLeft="19dp"
                         android:layout_toRightOf="@id/tv_ps_detail_autograph"
-                        android:inputType="textMultiLine" />
+                        android:hint="@string/text_ps_detail_autograph"
+                       />
 
                     <ImageView
                         style="@style/personal_item_image_right"
+                        android:layout_centerVertical="true"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
                 </RelativeLayout>

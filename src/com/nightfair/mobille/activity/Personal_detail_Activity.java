@@ -19,16 +19,23 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
-import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.base.CascadeCityActivity;
 import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.config.FilePath;
+import com.nightfair.mobille.dialog.AutoGraphDialog;
+import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.Base64Coder;
 import com.nightfair.mobille.util.FileUtils;
 import com.nightfair.mobille.util.KeyBoardUtils;
 import com.nightfair.mobille.util.MD5Util;
+import com.nightfair.mobille.util.StringUtils;
 import com.nightfair.mobille.view.CustomDatePicker;
 import com.nightfair.mobille.view.MyEditText;
+import com.nightfair.mobille.widget.OnWheelChangedListener;
+import com.nightfair.mobille.widget.WheelView;
+import com.nightfair.mobille.widget.adapter.ArrayWheelAdapter;
+
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -40,19 +47,21 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.DatePicker.OnDateChangedListener;
 
 /**
  * 
@@ -62,7 +71,7 @@ import android.widget.DatePicker.OnDateChangedListener;
  * @date 2015年10月10日21:43:50
  */
 @SuppressLint({ "ResourceAsColor", "InflateParams", "HandlerLeak" })
-public class Personal_detail_Activity extends BaseActivity implements OnClickListener {
+public class Personal_detail_Activity extends CascadeCityActivity implements OnClickListener, OnWheelChangedListener {
 	private Personal_detail_Activity mContext;
 	private TextView tv_cancal;
 	@ViewInject(R.id.personal_detail_face)
@@ -81,6 +90,15 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	private RelativeLayout rl_autograph;
 	private TextView tv_age;
 	private TextView tv_star;
+	private TextView tv_hometown;
+	private TextView tv_address;
+	private WheelView mViewProvince;
+	private WheelView mViewCity;
+	private WheelView mViewDistrict;
+	private String mAddress;
+	private int addressFlag;
+	private String hometown;
+	private String address;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -126,8 +144,10 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		tv_sex = (TextView) findViewById(R.id.tvv_ps_detail_sex);
 		tv_age = (TextView) findViewById(R.id.tvv_ps_detail_age);
 		tv_star = (TextView) findViewById(R.id.tvv_ps_detail_star);
+		tv_hometown = (TextView) findViewById(R.id.tvv_ps_detail_hometown);
+		tv_address = (TextView) findViewById(R.id.tvv_ps_detail_address);
 		mySetOnClickListener(tv_cancal, Rl_face, rl_nicakname, rl_age, rl_sex, rl_star, rl_hometown, rl_autograph,
-				tv_complete, rl_address, tv_complete);
+				tv_complete, rl_address, tv_complete,rl_autograph);
 		setTextChangedListener(et_nickname, tv_sex, tv_age, tv_star);
 	}
 
@@ -184,26 +204,30 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		case R.id.personal_detail_face:
 			showPhotoDialog();
 			break;
-		case R.id.personal_detail_nicakname:
+		case R.id.personal_detail_nicakname:// 昵称
 			KeyBoardUtils.openKeybord(et_nickname, mContext);
 			break;
-		case R.id.personal_detail_sex:
+		case R.id.personal_detail_sex:// 性别
 			showSexDialog();
 			break;
-		case R.id.personal_detail_age:
+		case R.id.personal_detail_age:// 年龄
 			showAgeStarDialog();
 			break;
-		case R.id.personal_detail_star:
+		case R.id.personal_detail_star:// 星座
 			showAgeStarDialog();
 			break;
-		case R.id.personal_detail_hometown:
-			showSexDialog();
+		case R.id.personal_detail_hometown:// 故乡
+			addressFlag = 0;
+			hometown = tv_hometown.getText().toString().trim();
+			showCityDialog();
 			break;
-		case R.id.personal_detail_address:
-			showSexDialog();
+		case R.id.personal_detail_address:// 所在地
+			address = tv_address.getText().toString().trim();
+			addressFlag = 1;
+			showCityDialog();			
 			break;
-		case R.id.personal_detail_autograph:
-			showSexDialog();
+		case R.id.personal_detail_autograph:// 签名
+			showAutographDialog();
 			break;
 		case R.id.openCamera:// 打开相机
 			openCamera();
@@ -236,9 +260,15 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		startActivityForResult(intent, 2);
 	}
 
+	/**
+	 * @Title: showPhotoDialog
+	 * 
+	 * @Description: TODO(处理照片选择)
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	private void showPhotoDialog() {
-		View view = getLayoutInflater().inflate(R.layout.photo_choose_dialog, null);
+		View view = getLayoutInflater().inflate(R.layout.dialog_photo_choose, null);
 		view.findViewById(R.id.openCamera).setOnClickListener(this);
 		view.findViewById(R.id.openPhones).setOnClickListener(this);
 		view.findViewById(R.id.cancel).setOnClickListener(this);
@@ -260,10 +290,16 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		dialog.show();
 	}
 
+	/**
+	 * @Title: showPhotoDialog
+	 * 
+	 * @Description: TODO(处理性别选择)
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	private void showSexDialog() {
 
-		View view = getLayoutInflater().inflate(R.layout.sex_choose_dialog, null);
+		View view = getLayoutInflater().inflate(R.layout.dialog_sex_choose, null);
 		view.findViewById(R.id.open_man).setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -314,9 +350,15 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		dialog.show();
 	}
 
+	/**
+	 * @Title: showPhotoDialog
+	 * 
+	 * @Description: TODO(处理年龄及星座选择)
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	private void showAgeStarDialog() {
-		View view = getLayoutInflater().inflate(R.layout.age_star_choose_dialog, null);
+		View view = getLayoutInflater().inflate(R.layout.dialog_age_star_choose, null);
 		dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
 		dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		CustomDatePicker datePicker = (CustomDatePicker) view.findViewById(R.id.cdp_age);
@@ -357,17 +399,105 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	}
 
 	/**
+	 * @Title: showPhotoDialog
+	 * 
+	 * @Description: TODO(处理地理位置选择)
+	 * 
+	 */
+	@SuppressWarnings("deprecation")
+	private void showCityDialog() {
+		View view = getLayoutInflater().inflate(R.layout.dialog_city_choose, null);
+		dialog = new Dialog(this, R.style.transparentFrameWindowStyle);
+		dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		Window window = dialog.getWindow();
+		window.setWindowAnimations(R.style.main_menu_animstyle);
+		WindowManager.LayoutParams wl = window.getAttributes();
+		wl.x = 0;
+		wl.y = getWindowManager().getDefaultDisplay().getHeight();
+		wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		mViewProvince = (WheelView) view.findViewById(R.id.id_province);
+		mViewCity = (WheelView) view.findViewById(R.id.id_city);
+		mViewDistrict = (WheelView) view.findViewById(R.id.id_district);
+		Button mBtnConfirm = (Button) view.findViewById(R.id.city_cancel);
+		mBtnConfirm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mAddress = mCurrentProviceName + "-" + mCurrentCityName + "-" + mCurrentDistrictName;
+				if (!TextUtils.isEmpty(mAddress)) {
+					switch (addressFlag) {
+					case 0:
+						tv_hometown.setText(mAddress);
+						dialog.dismiss();
+						break;
+					case 1:
+						tv_address.setText(mAddress);
+						dialog.dismiss();
+						break;
+					default:
+						break;
+					}
+				}
+				dialog.dismiss();
+			}
+		});
+		initdata();
+		setUpListener();
+		setUpData();
+		dialog.onWindowAttributesChanged(wl);
+		dialog.setCanceledOnTouchOutside(true);
+		dialog.show();
+	}
+
+	/**
+	 * @Title: showAutographDialog
+	 * 
+	 * @Description: TODO(处理个人签名填写)
+	 * 
+	 */
+	@SuppressWarnings("deprecation")
+	private void showAutographDialog() {
+//		AutoGraphDialog dialog = new AutoGraphDialog(mContext,new OnConfirmListener() {
+//			
+//			@Override
+//			public void onConfirm(String result) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		dialog.show();
+		View view = getLayoutInflater().inflate(R.layout.dialog_autograph, null);
+		dialog = new Dialog(this, R.style.Theme_Light_FullScreenDialogAct);
+		dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		Window window = dialog.getWindow();
+		window.setWindowAnimations(R.style.main_menu_animstyle);
+		WindowManager.LayoutParams wl = window.getAttributes();
+		wl.x = 0;
+		wl.y = getWindowManager().getDefaultDisplay().getHeight();
+		wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		wl.height = ViewGroup.LayoutParams.MATCH_PARENT;
+		Button mBtnConfirm = (Button) view.findViewById(R.id.autograph_cancel);
+		mBtnConfirm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				/*KeyBoardUtils.openKeybord(mEditText, mContext);*/
+				dialog.dismiss();
+			}
+		});
+		dialog.onWindowAttributesChanged(wl);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.show();
+	}
+	/**
 	 * 处理选择照片事件
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		System.out.println(requestCode + "-->" + resultCode + "-->" + data);
 		switch (requestCode) {
 		// 直接从相册获取时
 		case 1:
 
 			if (data != null) {
-				System.out.println(data.getData());
 				photoZoom(data.getData().toString());
 			} else {
 				System.out.println("无选择");
@@ -434,7 +564,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	 * 
 	 * @Title: photoZoom
 	 * 
-	 * @Description: 裁剪图片处理
+	 * @Description:TODO(裁剪图片处理）
 	 * 
 	 * @param path
 	 *            图片路径
@@ -448,6 +578,16 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		startActivityForResult(intent, 3);
 	}
 
+	/**
+	 * 
+	 * @Title: calculateDatePoor
+	 * 
+	 * @Description: TODO(计算年龄)
+	 * 
+	 * @param birthyear
+	 * 
+	 * @return String 返回类型
+	 */
 	public static final String calculateDatePoor(Calendar birthyear) {
 		int age = 0;
 		Calendar c = Calendar.getInstance();
@@ -475,7 +615,7 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 	}
 
 	/**
-	 * 通过日期来确定星座
+	 * @Description:TODO(通过日期来确定星座)
 	 * 
 	 * @param mouth
 	 * @param day
@@ -518,4 +658,88 @@ public class Personal_detail_Activity extends BaseActivity implements OnClickLis
 		super.finish();
 	}
 
+	@Override
+	public void onChanged(WheelView wheel, int oldValue, int newValue) {
+		if (wheel == mViewProvince) {
+			updateCities(0, 0);
+		} else if (wheel == mViewCity) {
+			updateAreas(0);
+		} else if (wheel == mViewDistrict) {
+			mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
+			mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
+		}
+
+	}
+
+	private void setUpListener() {
+		// 添加change事件
+		mViewProvince.addChangingListener(this);
+		// 添加change事件
+		mViewCity.addChangingListener(this);
+		// 添加change事件
+		mViewDistrict.addChangingListener(this);
+	}
+
+	private void setUpData() {
+		
+		mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(mContext, mProvinceDatas));
+		// 设置可见条目数量
+		mViewProvince.setVisibleItems(7);
+		mViewCity.setVisibleItems(7);
+		mViewDistrict.setVisibleItems(7);
+		mViewProvince.setCurrentItem(pPosition);
+		updateCities(cPosition, aPosition);
+	}
+
+	/**
+	 * 根据当前的省，更新市WheelView的信息
+	 */
+	private void updateCities(int cPosition, int aPosition) {
+		int pCurrent = mViewProvince.getCurrentItem();
+		mCurrentProviceName = mProvinceDatas[pCurrent];
+		String[] cities = mCitisDatasMap.get(mCurrentProviceName);
+		if (cities == null) {
+			cities = new String[] { "" };
+		}
+		mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(this, cities));
+		mViewCity.setCurrentItem(cPosition);
+		updateAreas(aPosition);
+	}
+
+	/**
+	 * 根据当前的市，更新区WheelView的信息
+	 */
+	private void updateAreas(int aPosition) {
+		int pCurrent = mViewCity.getCurrentItem();
+		mCurrentCityName = mCitisDatasMap.get(mCurrentProviceName)[pCurrent];
+		String[] areas = mDistrictDatasMap.get(mCurrentCityName);
+		if (areas == null) {
+			areas = new String[] { "" };
+		}
+		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
+		mViewDistrict.setCurrentItem(aPosition);
+	}
+
+	private void initdata() {
+			initProvinceDatas();
+		if (addressFlag == 0) {
+			if(!TextUtils.isEmpty(hometown)){
+			String[] hometown1 = StringUtils.convertStrToArry(hometown);			
+			pPosition=StringUtils.getPosition(hometown1[0], mProvinceDatas);
+			cPosition=StringUtils.getPosition(hometown1[1], mCitisDatasMap.get(hometown1[0]));
+			aPosition=StringUtils.getPosition(hometown1[2], mDistrictDatasMap.get(hometown1[1]));		
+			}else{
+				System.out.println("空------------------空");
+			}
+		} else if (addressFlag == 1) {
+			if(!TextUtils.isEmpty(address)){
+			String[] address1 = StringUtils.convertStrToArry(address);			
+			pPosition=StringUtils.getPosition(address1[0], mProvinceDatas);
+			cPosition=StringUtils.getPosition(address1[1], mCitisDatasMap.get(address1[0]));
+			aPosition=StringUtils.getPosition(address1[2], mDistrictDatasMap.get(address1[1]));	
+			}else{
+				System.out.println("空------------------空");
+			}
+		}		
+	}
 }

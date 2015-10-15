@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="5dip" >
+
+    <Button
+        android:id="@+id/open_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_gallery_normal"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="10dip"
+        android:text="@string/choose_city_title"
+        android:textColor="@color/sub_color"
+        android:textSize="@dimen/c_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1.5dip"
+        android:background="@color/sub_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_camera_normal"
+        android:orientation="horizontal"
+        android:padding="2dp" >
+
+        <com.nightfair.mobille.widget.WheelView
+            android:id="@+id/id_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </com.nightfair.mobille.widget.WheelView>
+
+        <com.nightfair.mobille.widget.WheelView
+            android:id="@+id/id_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </com.nightfair.mobille.widget.WheelView>
+
+        <com.nightfair.mobille.widget.WheelView
+            android:id="@+id/id_district"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </com.nightfair.mobille.widget.WheelView>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/city_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/photo_cancel_selector"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:text="@string/tt_bar_ps_compelte"
+        android:textSize="16sp" />
+
+</LinearLayout>

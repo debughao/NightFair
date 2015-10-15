@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.nightfair.mobille"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00000000"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/open_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_gallery_normal"
+        android:gravity="center_vertical|left"
+        android:padding="10dp"
+        android:text="@string/choose_autograph_title"
+        android:textColor="@color/sub_color"
+        android:textSize="@dimen/a_text_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/sub_color" />
+
+    <com.nightfair.mobille.view.HintEditText
+        android:id="@+id/het_autograph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_camera_normal"
+        app:maxLength="127" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/photo_cancel_selector" >
+
+        <Button
+            android:id="@+id/autograph_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/autograph_cancal_selector"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/dialog_cancal"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/sub_color" />
+
+        <Button
+            android:id="@+id/autograph_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/autograph_ok_selector"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:text="@string/dialog_ok"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>
