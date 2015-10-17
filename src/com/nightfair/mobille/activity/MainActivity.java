@@ -2,6 +2,10 @@ package com.nightfair.mobille.activity;
 
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.fragment.MainTab_Chat;
+import com.nightfair.mobille.fragment.MainTab_Index;
+import com.nightfair.mobille.fragment.MainTab_Nearby;
+import com.nightfair.mobille.fragment.MainTab_Personal;
 import com.nightfair.mobille.util.ActivityUtils;
 
 import android.annotation.SuppressLint;

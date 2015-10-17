@@ -23,6 +23,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.base.CascadeCityActivity;
 import com.nightfair.mobille.bean.BuyerInfo;
 import com.nightfair.mobille.config.ApiUrl;
@@ -45,6 +46,7 @@ import com.nightfair.mobille.widget.WheelView;
 import com.nightfair.mobille.widget.adapter.ArrayWheelAdapter;
 import android.R.string;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -106,7 +108,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	private WheelView mViewDistrict;
 	private String mAddress;
 	private int addressFlag;
-	private String user_id = "201503";
+	private String user_id;
 	private String nickname;
 	private String sex;
 	private String age;
@@ -123,6 +125,8 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		setContentView(R.layout.activity_personal_detail);
 		mContext = this;
 		ViewUtils.inject(this);
+		Intent intent = getIntent();
+		user_id = intent.getStringExtra("user_id");
 		ActivityUtils.setActionBarByColor(mContext, R.layout.title_bar_personal_detail, R.color.title_color);
 		inintView();
 		inintUserInfo();
@@ -219,7 +223,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			break;
 		case R.id.tv_ps_detail_complete:
 			UpdateInfo();
-			/* finish(); */
+			 finish(); 
 			break;
 		case R.id.personal_detail_face:
 			showPhotoDialog();
@@ -243,7 +247,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			break;
 		case R.id.personal_detail_address:// 所在地
 			addressFlag = 1;
-			address = tv_address.getText().toString().trim();			
+			address = tv_address.getText().toString().trim();
 			showCityDialog();
 			break;
 		case R.id.personal_detail_autograph:// 签名
@@ -268,9 +272,8 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", ApiUrl.Key);
 		params.addBodyParameter("action", "get");
-		params.addBodyParameter("user_id", user_id);
-		HttpUtils httpUtils = new HttpUtils();		
-		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate,params, new RequestCallBack<String>() {
+		HttpUtils httpUtils 	=BaseApplication.httpUtils;
+		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
@@ -279,13 +282,11 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
-				System.out.println("个人质料111111"+arg0.result);
 				if (!TextUtils.isEmpty(arg0.result) && arg0.result != "") {
 					Gson gson = new Gson();
 					try {
 						JSONObject jsonObject = new JSONObject(arg0.result);
 						String result = jsonObject.optString("info");
-						System.out.println("个人质料2222"+result);
 						buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
 						}.getType());
 						tv_nickname.setText(buyerInfo.getNickname());
@@ -327,7 +328,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", ApiUrl.Key);
 		params.addBodyParameter("action", "info");
-		params.addBodyParameter("user_id", user_id);
 		params.addBodyParameter("nickname", nickname);
 		params.addBodyParameter("sex", sex);
 		params.addBodyParameter("age", age);
@@ -335,7 +335,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		params.addBodyParameter("hometown", hometown);
 		params.addBodyParameter("address", address);
 		params.addBodyParameter("autograph", autograph);
-		HttpUtils httpUtils = new HttpUtils();
+		HttpUtils httpUtils = BaseApplication.httpUtils;
 		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
 
 			@Override
@@ -354,6 +354,9 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 					String result = jsonObject.getString("result");
 					if (status == 200) {
 						ToastUtil.show(mContext, result);
+						Intent intent = new Intent();
+						intent.putExtra("data", "2323");
+						setResult(Activity.RESULT_OK, intent);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -739,7 +742,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
 		mViewDistrict.setCurrentItem(aPosition);
 		int dCurrent = mViewDistrict.getCurrentItem();
-		mCurrentDistrictName=mDistrictDatasMap.get(mCurrentCityName)[dCurrent];
+		mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[dCurrent];
 	}
 
 	private void initdata() {
@@ -747,22 +750,22 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		if (addressFlag == 0) {
 			if (!TextUtils.isEmpty(hometown)) {
 				String[] hometown1 = StringUtils.convertStrToArry(hometown);
-				System.out.println("故乡"+hometown);
+				// System.out.println("故乡"+hometown);
 				pPosition = StringUtils.getPosition(hometown1[0], mProvinceDatas);
 				cPosition = StringUtils.getPosition(hometown1[1], mCitisDatasMap.get(hometown1[0]));
 				aPosition = StringUtils.getPosition(hometown1[2], mDistrictDatasMap.get(hometown1[1]));
-				System.out.println("故乡"+pPosition+"--->"+cPosition+"--->"+cPosition);
+				// System.out.println("故乡"+pPosition+"--->"+cPosition+"--->"+cPosition);
 			} else {
 				System.out.println("空------------------空");
 			}
 		} else if (addressFlag == 1) {
 			if (!TextUtils.isEmpty(address)) {
 				String[] address1 = StringUtils.convertStrToArry(address);
-				System.out.println("所在地"+address);
+				// System.out.println("所在地"+address);
 				pPosition = StringUtils.getPosition(address1[0], mProvinceDatas);
 				cPosition = StringUtils.getPosition(address1[1], mCitisDatasMap.get(address1[0]));
 				aPosition = StringUtils.getPosition(address1[2], mDistrictDatasMap.get(address1[1]));
-				System.out.println("所在地"+pPosition+"--->"+cPosition+"--->"+cPosition);
+				// System.out.println("所在地"+pPosition+"--->"+cPosition+"--->"+cPosition);
 			} else {
 				System.out.println("空------------------空");
 			}
@@ -806,10 +809,9 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
 				params.addBodyParameter("action", "headface");
 				params.addBodyParameter("key", ApiUrl.Key);
-				params.addBodyParameter("user_id", user_id);
 				params2.add(new BasicNameValuePair("picStr", picStr));
 				params.addBodyParameter(params2);
-				HttpUtils http = new HttpUtils();
+				HttpUtils http 	=BaseApplication.httpUtils;
 				http.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {

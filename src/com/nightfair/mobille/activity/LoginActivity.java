@@ -11,6 +11,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
@@ -18,9 +19,7 @@ import com.nightfair.mobille.util.MD5Util;
 import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.SPUtils;
 import com.nightfair.mobille.view.ClearEditText;
-
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -112,7 +111,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			params.addBodyParameter("key", ApiUrl.Key);
 			params.addBodyParameter("userName", username);
 			params.addBodyParameter("userpassword", MD5Util.MD5(password));
-			HttpUtils http = new HttpUtils();
+			final HttpUtils http = BaseApplication.httpUtils;
 			http.configTimeout(3000);
 			http.send(HttpMethod.POST, ApiUrl.LoginApiUrl, params, new RequestCallBack<String>() {
 
@@ -131,14 +130,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					try {
 						JSONObject jsonObject = new JSONObject(arg0.result.toString());
 						resultStatus = jsonObject.get("status").toString();
-						System.out.println(resultStatus);
 						if ("200".equals(resultStatus)) {
 							SPUtils.put(mContent, "name", username);
 							SPUtils.put(mContent, "password", password);
 							SplashActivity.isLogin = true;
-							Intent intent =new Intent();
-							intent.setFlags(getTaskId());
-					
 							finish();
 						} else {
 							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();
@@ -153,8 +148,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	@Override
-	public void finish() {		
-        flag=1;
+	public void finish() {
+		flag = 1;
 		super.finish();
 	}
 
