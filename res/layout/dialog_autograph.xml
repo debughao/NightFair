@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/photo_gallery_normal"
         android:gravity="center_vertical|left"
-        android:padding="10dp"
+        android:padding="15dp"
         android:text="@string/choose_autograph_title"
         android:textColor="@color/sub_color"
         android:textSize="@dimen/a_text_size" />
@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/autograph_ok_selector"
-            android:paddingBottom="10dip"
-            android:paddingTop="10dip"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:text="@string/dialog_ok"
             android:textSize="16sp" />
     </LinearLayout>

@@ -84,12 +84,15 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
         <!-- 半透明 -->
         <item name="android:windowBackground">@color/translucent</item>
     </style>
     <!-- 头像选择框   弹出框 -->
     <style name="transparentFrameWindowStyle" parent="android:style/Theme.Dialog">
         <item name="android:windowBackground">@drawable/photo_choose_bg</item>
+         <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
     <style name="main_menu_animstyle">

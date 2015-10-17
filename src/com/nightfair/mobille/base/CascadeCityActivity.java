@@ -67,6 +67,7 @@ public class CascadeCityActivity extends BaseActivity {
 	 * 解析省市区的XML数据
 	 */
 	protected void initProvinceDatas() {
+		
 		List<Province> provinceList = null;
 		AssetManager asset = getAssets();
 		try {
@@ -80,9 +81,7 @@ public class CascadeCityActivity extends BaseActivity {
 			input.close();
 			// 获取解析出来的数据
 			provinceList = handler.getDataList();
-			
-			//  初始化默认选中的省、市、区(实际并不起作用）
-		/*	if (provinceList != null && !provinceList.isEmpty()) {
+			if (provinceList != null && !provinceList.isEmpty()) {
 				mCurrentProviceName = provinceList.get(0).getName();
 				List<City> cityList = provinceList.get(0).getCityList();
 				if (cityList != null && !cityList.isEmpty()) {
@@ -91,8 +90,8 @@ public class CascadeCityActivity extends BaseActivity {
 					mCurrentDistrictName = districtList.get(0).getName();
 					mCurrentZipCode = districtList.get(0).getZipcode();
 				}
-			}*/
-			// */
+			}
+			
 			mProvinceDatas = new String[provinceList.size()];
 			for (int i = 0; i < provinceList.size(); i++) {
 				// 遍历所有省的数据

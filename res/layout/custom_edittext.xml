@@ -11,7 +11,7 @@
         android:focusable="true"
         android:gravity="top|left"
         android:inputType=""
-        android:minLines="7" />
+        android:minLines="8" />
 
     <TextView
         android:id="@+id/text"

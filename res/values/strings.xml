@@ -67,5 +67,6 @@
     <string name="text_personal_star">请选择你的星座</string>
     <string name="text_personal_sex">请选择你的性别</string>
     <string name="title_activity_test">TestActivity</string>
+   <string name="toast_message">消息提醒</string>
 
 </resources>

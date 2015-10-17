@@ -286,12 +286,11 @@
                         android:text="@string/text_personaldetail_autograph" />
 
                     <TextView
-                        android:id="@+id/et_ps_detail_autograph"
+                        android:id="@+id/tvv_ps_detail_autograph"
                         style="@style/personal_detail_edit"
                         android:layout_marginLeft="19dp"
                         android:layout_toRightOf="@id/tv_ps_detail_autograph"
-                        android:hint="@string/text_ps_detail_autograph"
-                       />
+                        android:hint="@string/text_ps_detail_autograph" />
 
                     <ImageView
                         style="@style/personal_item_image_right"

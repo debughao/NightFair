@@ -10,6 +10,7 @@
 	<classpathentry exported="true" kind="lib" path="libs/umeng-feedback-v5.4.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/umeng-analytics-v5.5.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/umeng-update-v2.6.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

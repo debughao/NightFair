@@ -8,7 +8,11 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -20,22 +24,26 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.CascadeCityActivity;
+import com.nightfair.mobille.bean.BuyerInfo;
 import com.nightfair.mobille.config.ApiUrl;
 import com.nightfair.mobille.config.FilePath;
 import com.nightfair.mobille.dialog.AutoGraphDialog;
 import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.Base64Coder;
+import com.nightfair.mobille.util.ErrCodeUtils;
 import com.nightfair.mobille.util.FileUtils;
 import com.nightfair.mobille.util.KeyBoardUtils;
 import com.nightfair.mobille.util.MD5Util;
+import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.StringUtils;
+import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.CustomDatePicker;
 import com.nightfair.mobille.view.MyEditText;
 import com.nightfair.mobille.widget.OnWheelChangedListener;
 import com.nightfair.mobille.widget.WheelView;
 import com.nightfair.mobille.widget.adapter.ArrayWheelAdapter;
-
+import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
@@ -76,7 +84,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	private TextView tv_cancal;
 	@ViewInject(R.id.personal_detail_face)
 	private RelativeLayout Rl_face;
-	private MyEditText et_nickname;
 	private RelativeLayout rl_nicakname;
 	private TextView tv_complete;
 	private ImageView iv_face;
@@ -88,17 +95,27 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	private RelativeLayout rl_hometown;
 	private RelativeLayout rl_address;
 	private RelativeLayout rl_autograph;
+	private MyEditText tv_nickname;
 	private TextView tv_age;
 	private TextView tv_star;
 	private TextView tv_hometown;
 	private TextView tv_address;
+	private TextView tv_autograph;
 	private WheelView mViewProvince;
 	private WheelView mViewCity;
 	private WheelView mViewDistrict;
 	private String mAddress;
 	private int addressFlag;
+	private String user_id = "201503";
+	private String nickname;
+	private String sex;
+	private String age;
+	private String star;
 	private String hometown;
 	private String address;
+	private String autograph;
+	private String image;
+	private BuyerInfo buyerInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +125,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		ViewUtils.inject(this);
 		ActivityUtils.setActionBarByColor(mContext, R.layout.title_bar_personal_detail, R.color.title_color);
 		inintView();
+		inintUserInfo();
 	}
 
 	final Handler handler = new Handler() {
@@ -131,7 +149,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 
 	private void inintView() {
 		tv_cancal = (TextView) findViewById(R.id.tv_ps_detail_cancel);
-		et_nickname = (MyEditText) findViewById(R.id.et_ps_detail_nickname);
+		tv_nickname = (MyEditText) findViewById(R.id.et_ps_detail_nickname);
 		rl_nicakname = (RelativeLayout) findViewById(R.id.personal_detail_nicakname);
 		rl_sex = (RelativeLayout) findViewById(R.id.personal_detail_sex);
 		rl_age = (RelativeLayout) findViewById(R.id.personal_detail_age);
@@ -146,9 +164,10 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		tv_star = (TextView) findViewById(R.id.tvv_ps_detail_star);
 		tv_hometown = (TextView) findViewById(R.id.tvv_ps_detail_hometown);
 		tv_address = (TextView) findViewById(R.id.tvv_ps_detail_address);
+		tv_autograph = (TextView) findViewById(R.id.tvv_ps_detail_autograph);
 		mySetOnClickListener(tv_cancal, Rl_face, rl_nicakname, rl_age, rl_sex, rl_star, rl_hometown, rl_autograph,
-				tv_complete, rl_address, tv_complete,rl_autograph);
-		setTextChangedListener(et_nickname, tv_sex, tv_age, tv_star);
+				tv_complete, rl_address, tv_complete, rl_autograph);
+		setTextChangedListener(tv_nickname, tv_sex, tv_age, tv_star, tv_hometown, tv_address, tv_autograph);
 	}
 
 	/**
@@ -199,13 +218,14 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			finish();
 			break;
 		case R.id.tv_ps_detail_complete:
-			finish();
+			UpdateInfo();
+			/* finish(); */
 			break;
 		case R.id.personal_detail_face:
 			showPhotoDialog();
 			break;
 		case R.id.personal_detail_nicakname:// 昵称
-			KeyBoardUtils.openKeybord(et_nickname, mContext);
+			KeyBoardUtils.openKeybord(tv_nickname, mContext);
 			break;
 		case R.id.personal_detail_sex:// 性别
 			showSexDialog();
@@ -222,9 +242,9 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			showCityDialog();
 			break;
 		case R.id.personal_detail_address:// 所在地
-			address = tv_address.getText().toString().trim();
 			addressFlag = 1;
-			showCityDialog();			
+			address = tv_address.getText().toString().trim();			
+			showCityDialog();
 			break;
 		case R.id.personal_detail_autograph:// 签名
 			showAutographDialog();
@@ -241,6 +261,105 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		default:
 			break;
 		}
+
+	}
+
+	private void inintUserInfo() {
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("key", ApiUrl.Key);
+		params.addBodyParameter("action", "get");
+		params.addBodyParameter("user_id", user_id);
+		HttpUtils httpUtils = new HttpUtils();		
+		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate,params, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				System.out.println("个人质料111111"+arg0.result);
+				if (!TextUtils.isEmpty(arg0.result) && arg0.result != "") {
+					Gson gson = new Gson();
+					try {
+						JSONObject jsonObject = new JSONObject(arg0.result);
+						String result = jsonObject.optString("info");
+						System.out.println("个人质料2222"+result);
+						buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
+						}.getType());
+						tv_nickname.setText(buyerInfo.getNickname());
+						tv_age.setText(buyerInfo.getAge());
+						tv_sex.setText(buyerInfo.getSex());
+						tv_star.setText(buyerInfo.getStar());
+						tv_hometown.setText(buyerInfo.getHometown());
+						tv_address.setText(buyerInfo.getAddress());
+						tv_autograph.setText(buyerInfo.getAutograph());
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+	}
+
+	/**
+	 * 
+	 * @Title: UpdateInfo
+	 * 
+	 * @Description: TODO(更新个人资料)
+	 * @param 参数
+	 * @return void 返回类型
+	 * 
+	 */
+	private void UpdateInfo() {
+		nickname = tv_nickname.getText().toString().trim();
+		sex = tv_sex.getText().toString();
+		age = tv_age.getText().toString();
+		star = tv_star.getText().toString();
+		hometown = tv_hometown.getText().toString();
+		address = tv_address.getText().toString();
+		autograph = tv_autograph.getText().toString();
+		/**
+		 * buyerInfo保存本地数据库
+		 */
+		buyerInfo = new BuyerInfo(user_id, nickname, sex, age, star, hometown, address, autograph, image);
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("key", ApiUrl.Key);
+		params.addBodyParameter("action", "info");
+		params.addBodyParameter("user_id", user_id);
+		params.addBodyParameter("nickname", nickname);
+		params.addBodyParameter("sex", sex);
+		params.addBodyParameter("age", age);
+		params.addBodyParameter("star", star);
+		params.addBodyParameter("hometown", hometown);
+		params.addBodyParameter("address", address);
+		params.addBodyParameter("autograph", autograph);
+		HttpUtils httpUtils = new HttpUtils();
+		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
+
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
+					ToastUtil.showCenter(mContext, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
+				else
+					ToastUtil.showCenter(mContext, ErrCodeUtils.NORMAL_LOGIN_NONNETWORK);
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				try {
+					JSONObject jsonObject = new JSONObject(arg0.result);
+					int status = jsonObject.getInt("status");
+					String result = jsonObject.getString("result");
+					if (status == 200) {
+						ToastUtil.show(mContext, result);
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 
 	}
 
@@ -419,7 +538,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		mViewProvince = (WheelView) view.findViewById(R.id.id_province);
 		mViewCity = (WheelView) view.findViewById(R.id.id_city);
 		mViewDistrict = (WheelView) view.findViewById(R.id.id_district);
-		Button mBtnConfirm = (Button) view.findViewById(R.id.city_cancel);
+		Button mBtnConfirm = (Button) view.findViewById(R.id.city_ok);
 		mBtnConfirm.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -455,109 +574,16 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	 * @Description: TODO(处理个人签名填写)
 	 * 
 	 */
-	@SuppressWarnings("deprecation")
 	private void showAutographDialog() {
-//		AutoGraphDialog dialog = new AutoGraphDialog(mContext,new OnConfirmListener() {
-//			
-//			@Override
-//			public void onConfirm(String result) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
-//		dialog.show();
-		View view = getLayoutInflater().inflate(R.layout.dialog_autograph, null);
-		dialog = new Dialog(this, R.style.Theme_Light_FullScreenDialogAct);
-		dialog.setContentView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-		Window window = dialog.getWindow();
-		window.setWindowAnimations(R.style.main_menu_animstyle);
-		WindowManager.LayoutParams wl = window.getAttributes();
-		wl.x = 0;
-		wl.y = getWindowManager().getDefaultDisplay().getHeight();
-		wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-		wl.height = ViewGroup.LayoutParams.MATCH_PARENT;
-		Button mBtnConfirm = (Button) view.findViewById(R.id.autograph_cancel);
-		mBtnConfirm.setOnClickListener(new OnClickListener() {
+		AutoGraphDialog dialog = new AutoGraphDialog(mContext, autograph, new OnConfirmListener() {
+
 			@Override
-			public void onClick(View v) {
-				/*KeyBoardUtils.openKeybord(mEditText, mContext);*/
-				dialog.dismiss();
+			public void onConfirm(String result) {
+				tv_autograph.setText(result);
 			}
 		});
-		dialog.onWindowAttributesChanged(wl);
 		dialog.setCanceledOnTouchOutside(false);
 		dialog.show();
-	}
-	/**
-	 * 处理选择照片事件
-	 */
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		// 直接从相册获取时
-		case 1:
-
-			if (data != null) {
-				photoZoom(data.getData().toString());
-			} else {
-				System.out.println("无选择");
-			}
-
-			break;
-		// 调用相机拍照时
-		case 2:
-
-			if (resultCode == RESULT_OK) {
-				photoZoom(FilePath.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
-			} else {
-				System.out.println("并无拍照");
-			}
-			break;
-		// 裁剪后的图片上传
-		case 3:
-			// ActivityUtils.showShortToast(mContent, "裁剪成功");
-			if (resultCode == RESULT_OK) {
-				final byte[] b = data.getByteArrayExtra("data");
-				final String picStr = new String(Base64Coder.encodeLines(b));
-				RequestParams params = new RequestParams();// 默认utf-8 编码
-				// 看样子NameValuePair是http里面的对象，查了多个网页只找到他的用法，apache官方文档也没有太多介绍
-				// 暂时先记着他的用法就可以，具体用法请自行百度。
-				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
-
-				params2.add(new BasicNameValuePair("picStr", picStr));
-				params.addBodyParameter(params2);
-				HttpUtils http = new HttpUtils();
-				http.send(HttpMethod.POST, ApiUrl.UserUploadHd, params, new RequestCallBack<String>() {
-					@Override
-					public void onFailure(HttpException arg0, String arg1) {
-						System.out.println("头像上传成功");
-					}
-
-					@Override
-					public void onSuccess(ResponseInfo<String> arg0) {
-						System.out.println("成功");
-						Toast.makeText(mContext, "头像上传成功", Toast.LENGTH_SHORT).show();
-						Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
-						if (null != bitmap) {
-							iv_face.setImageBitmap(bitmap);
-							FileUtils.writeSDCard(FilePath.getHeadStore(mContext), MD5Util.MD5("headface") + ".png",
-									bitmap);
-						}
-					}
-
-					@Override
-					public void onLoading(long total, long current, boolean isUploading) {
-						super.onLoading(total, current, isUploading);
-					}
-				});
-			} else {
-				System.out.println("并无拍照");
-			}
-			break;
-		default:
-			break;
-		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	/**
@@ -653,12 +679,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	}
 
 	@Override
-	public void finish() {
-		flag = 2;
-		super.finish();
-	}
-
-	@Override
 	public void onChanged(WheelView wheel, int oldValue, int newValue) {
 		if (wheel == mViewProvince) {
 			updateCities(0, 0);
@@ -681,7 +701,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	}
 
 	private void setUpData() {
-		
+
 		mViewProvince.setViewAdapter(new ArrayWheelAdapter<String>(mContext, mProvinceDatas));
 		// 设置可见条目数量
 		mViewProvince.setVisibleItems(7);
@@ -718,28 +738,127 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		}
 		mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(this, areas));
 		mViewDistrict.setCurrentItem(aPosition);
+		int dCurrent = mViewDistrict.getCurrentItem();
+		mCurrentDistrictName=mDistrictDatasMap.get(mCurrentCityName)[dCurrent];
 	}
 
 	private void initdata() {
-			initProvinceDatas();
+		initProvinceDatas();
 		if (addressFlag == 0) {
-			if(!TextUtils.isEmpty(hometown)){
-			String[] hometown1 = StringUtils.convertStrToArry(hometown);			
-			pPosition=StringUtils.getPosition(hometown1[0], mProvinceDatas);
-			cPosition=StringUtils.getPosition(hometown1[1], mCitisDatasMap.get(hometown1[0]));
-			aPosition=StringUtils.getPosition(hometown1[2], mDistrictDatasMap.get(hometown1[1]));		
-			}else{
+			if (!TextUtils.isEmpty(hometown)) {
+				String[] hometown1 = StringUtils.convertStrToArry(hometown);
+				System.out.println("故乡"+hometown);
+				pPosition = StringUtils.getPosition(hometown1[0], mProvinceDatas);
+				cPosition = StringUtils.getPosition(hometown1[1], mCitisDatasMap.get(hometown1[0]));
+				aPosition = StringUtils.getPosition(hometown1[2], mDistrictDatasMap.get(hometown1[1]));
+				System.out.println("故乡"+pPosition+"--->"+cPosition+"--->"+cPosition);
+			} else {
 				System.out.println("空------------------空");
 			}
 		} else if (addressFlag == 1) {
-			if(!TextUtils.isEmpty(address)){
-			String[] address1 = StringUtils.convertStrToArry(address);			
-			pPosition=StringUtils.getPosition(address1[0], mProvinceDatas);
-			cPosition=StringUtils.getPosition(address1[1], mCitisDatasMap.get(address1[0]));
-			aPosition=StringUtils.getPosition(address1[2], mDistrictDatasMap.get(address1[1]));	
-			}else{
+			if (!TextUtils.isEmpty(address)) {
+				String[] address1 = StringUtils.convertStrToArry(address);
+				System.out.println("所在地"+address);
+				pPosition = StringUtils.getPosition(address1[0], mProvinceDatas);
+				cPosition = StringUtils.getPosition(address1[1], mCitisDatasMap.get(address1[0]));
+				aPosition = StringUtils.getPosition(address1[2], mDistrictDatasMap.get(address1[1]));
+				System.out.println("所在地"+pPosition+"--->"+cPosition+"--->"+cPosition);
+			} else {
 				System.out.println("空------------------空");
 			}
-		}		
+		}
+	}
+
+	/**
+	 * 处理选择照片事件
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		// 直接从相册获取时
+		case 1:
+
+			if (data != null) {
+				photoZoom(data.getData().toString());
+			} else {
+				System.out.println("无选择");
+			}
+
+			break;
+		// 调用相机拍照时
+		case 2:
+
+			if (resultCode == RESULT_OK) {
+				photoZoom(FilePath.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
+			} else {
+				System.out.println("并无拍照");
+			}
+			break;
+		// 裁剪后的图片上传
+		case 3:
+			// ActivityUtils.showShortToast(mContent, "裁剪成功");
+			if (resultCode == RESULT_OK) {
+				final byte[] b = data.getByteArrayExtra("data");
+				final String picStr = new String(Base64Coder.encodeLines(b));
+				RequestParams params = new RequestParams();// 默认utf-8 编码
+				// 看样子NameValuePair是http里面的对象，查了多个网页只找到他的用法，apache官方文档也没有太多介绍
+				// 暂时先记着他的用法就可以，具体用法请自行百度。
+				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
+				params.addBodyParameter("action", "headface");
+				params.addBodyParameter("key", ApiUrl.Key);
+				params.addBodyParameter("user_id", user_id);
+				params2.add(new BasicNameValuePair("picStr", picStr));
+				params.addBodyParameter(params2);
+				HttpUtils http = new HttpUtils();
+				http.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
+							ActivityUtils.showShortToast(mContext, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
+						else
+							ActivityUtils.showShortToast(mContext, ErrCodeUtils.NORMAL_LOGIN_NONNETWORK);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> arg0) {
+
+						try {
+							JSONObject jsonObject = new JSONObject(arg0.result);
+							System.out.println(jsonObject);
+							int status = jsonObject.getInt("status");
+							String result = jsonObject.getString("result");
+							if (status == 200) {
+								Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+								Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+								if (null != bitmap) {
+									iv_face.setImageBitmap(bitmap);
+									FileUtils.writeSDCard(FilePath.getHeadStore(mContext),
+											MD5Util.MD5("headface") + ".png", bitmap);
+								}
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+
+					@Override
+					public void onLoading(long total, long current, boolean isUploading) {
+						super.onLoading(total, current, isUploading);
+					}
+				});
+			} else {
+				System.out.println("并无拍照");
+			}
+			break;
+		default:
+			break;
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void finish() {
+		flag = 2;
+		super.finish();
 	}
 }
