@@ -3,16 +3,22 @@ package com.nightfair.mobille.bean;
 import java.io.Serializable;
 
 import com.lidroid.xutils.db.annotation.Column;
+import com.lidroid.xutils.db.annotation.Foreign;
+import com.lidroid.xutils.db.annotation.Table;
 
+/**
+ * 
+ * @ClassName: Buyer
+ * @Description: TODO(用户信息表)
+ * @author debughao
+ * @date 2015年10月18日
+ */
+
+@Table(name = "buyerInfo") // 建议加上注解， 混淆后表名不受影响
 public class BuyerInfo extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 买家用户id
-	 */
-	@Column(column = "user_id")
-	private String user_id;
 	/**
 	 * 买家昵称
 	 */
@@ -55,22 +61,20 @@ public class BuyerInfo extends BaseEntity implements Serializable {
 	 */
 	@Column(column = "image")
 	private String image;
+	/**
+	 * 外键关联
+	 */
+	@Foreign(column = "user_id", foreign = "id")
+	public Buyer buyer;
 
 	public BuyerInfo() {
 
 	}
 
-	@Override
-	public String toString() {
-		return "BuyerInfo [user_id=" + user_id + ", nickname=" + nickname + ", sex=" + sex + ", age=" + age + ", star="
-				+ star + ", hometown=" + hometown + ", address=" + address + ", autograph=" + autograph + ", image="
-				+ image + "]";
-	}
-
-	public BuyerInfo(String user_id, String nickname, String sex, String age, String star, String hometown,
-			String address, String autograph, String image) {
+	public BuyerInfo(String nickname, String sex, String age, String star, String hometown, String address,
+			String autograph, String image) {
 		super();
-		this.user_id = user_id;
+
 		this.nickname = nickname;
 		this.sex = sex;
 		this.age = age;
@@ -81,13 +85,13 @@ public class BuyerInfo extends BaseEntity implements Serializable {
 		this.image = image;
 	}
 
-	public String getUser_id() {
-		return user_id;
+	@Override
+	public String toString() {
+		return "BuyerInfo [ nickname=" + nickname + ", sex=" + sex + ", age=" + age
+				+ ", star=" + star + ", hometown=" + hometown + ", address=" + address + ", autograph=" + autograph
+				+ ", image=" + image + ", buyer=" + buyer + "]";
 	}
 
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
 
 	public String getNickname() {
 		return nickname;

@@ -10,9 +10,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -20,14 +17,15 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.base.CascadeCityActivity;
 import com.nightfair.mobille.bean.BuyerInfo;
-import com.nightfair.mobille.config.ApiUrl;
-import com.nightfair.mobille.config.FilePath;
+import com.nightfair.mobille.config.AppConstants;
+import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.dialog.AutoGraphDialog;
 import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
 import com.nightfair.mobille.util.ActivityUtils;
@@ -44,7 +42,6 @@ import com.nightfair.mobille.view.MyEditText;
 import com.nightfair.mobille.widget.OnWheelChangedListener;
 import com.nightfair.mobille.widget.WheelView;
 import com.nightfair.mobille.widget.adapter.ArrayWheelAdapter;
-import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -108,7 +105,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	private WheelView mViewDistrict;
 	private String mAddress;
 	private int addressFlag;
-	private String user_id;
 	private String nickname;
 	private String sex;
 	private String age;
@@ -125,8 +121,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		setContentView(R.layout.activity_personal_detail);
 		mContext = this;
 		ViewUtils.inject(this);
-		Intent intent = getIntent();
-		user_id = intent.getStringExtra("user_id");
 		ActivityUtils.setActionBarByColor(mContext, R.layout.title_bar_personal_detail, R.color.title_color);
 		inintView();
 		inintUserInfo();
@@ -242,12 +236,12 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			break;
 		case R.id.personal_detail_hometown:// 故乡
 			addressFlag = 0;
-			hometown = tv_hometown.getText().toString().trim();
+			hometown = buyerInfo.getHometown();
 			showCityDialog();
 			break;
 		case R.id.personal_detail_address:// 所在地
 			addressFlag = 1;
-			address = tv_address.getText().toString().trim();
+			address = buyerInfo.getAddress();
 			showCityDialog();
 			break;
 		case R.id.personal_detail_autograph:// 签名
@@ -269,39 +263,16 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	}
 
 	private void inintUserInfo() {
-		RequestParams params = new RequestParams();
-		params.addBodyParameter("key", ApiUrl.Key);
-		params.addBodyParameter("action", "get");
-		HttpUtils httpUtils 	=BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
-
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-
-			}
-
-			@Override
-			public void onSuccess(ResponseInfo<String> arg0) {
-				if (!TextUtils.isEmpty(arg0.result) && arg0.result != "") {
-					Gson gson = new Gson();
-					try {
-						JSONObject jsonObject = new JSONObject(arg0.result);
-						String result = jsonObject.optString("info");
-						buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
-						}.getType());
-						tv_nickname.setText(buyerInfo.getNickname());
-						tv_age.setText(buyerInfo.getAge());
-						tv_sex.setText(buyerInfo.getSex());
-						tv_star.setText(buyerInfo.getStar());
-						tv_hometown.setText(buyerInfo.getHometown());
-						tv_address.setText(buyerInfo.getAddress());
-						tv_autograph.setText(buyerInfo.getAutograph());
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		buyerInfo=BaseApplication.mBuyerDao.queryinfo(BaseApplication.userid);
+		if(buyerInfo!=null){
+			tv_nickname.setText(buyerInfo.getNickname());
+			tv_age.setText(buyerInfo.getAge());
+			tv_sex.setText(buyerInfo.getSex());
+			tv_star.setText(buyerInfo.getStar());
+			tv_hometown.setText(buyerInfo.getHometown());
+			tv_address.setText(buyerInfo.getAddress());
+			tv_autograph.setText(buyerInfo.getAutograph());
+		}		
 	}
 
 	/**
@@ -322,11 +293,12 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		address = tv_address.getText().toString();
 		autograph = tv_autograph.getText().toString();
 		/**
-		 * buyerInfo保存本地数据库
+		 * buyerInfo保存本地数据库,数据持久化
 		 */
-		buyerInfo = new BuyerInfo(user_id, nickname, sex, age, star, hometown, address, autograph, image);
+		buyerInfo = new BuyerInfo( nickname, sex, age, star, hometown, address, autograph, image);
+		BaseApplication.mBuyerDao.insertInfo(buyerInfo, BaseApplication.userid);
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("key", ApiUrl.Key);
+		params.addBodyParameter("key", AppConstants.Key);
 		params.addBodyParameter("action", "info");
 		params.addBodyParameter("nickname", nickname);
 		params.addBodyParameter("sex", sex);
@@ -336,7 +308,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		params.addBodyParameter("address", address);
 		params.addBodyParameter("autograph", autograph);
 		HttpUtils httpUtils = BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.UserUpdate, params, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
@@ -355,7 +327,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 					if (status == 200) {
 						ToastUtil.show(mContext, result);
 						Intent intent = new Intent();
-						intent.putExtra("data", "2323");
 						setResult(Activity.RESULT_OK, intent);
 					}
 				} catch (JSONException e) {
@@ -378,7 +349,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
 		// 下面这句指定调用相机拍照后的照片存储的路径
 		intent.putExtra(MediaStore.EXTRA_OUTPUT,
-				Uri.fromFile(new File(FilePath.getCameraStore(mContext), MD5Util.MD5("headface") + ".png")));
+				Uri.fromFile(new File(FilePathConfig.getCameraStore(mContext), MD5Util.MD5("headface") + ".png")));
 		startActivityForResult(intent, 2);
 	}
 
@@ -756,7 +727,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				aPosition = StringUtils.getPosition(hometown1[2], mDistrictDatasMap.get(hometown1[1]));
 				// System.out.println("故乡"+pPosition+"--->"+cPosition+"--->"+cPosition);
 			} else {
-				System.out.println("空------------------空");
+				System.out.println("noting get form address");
 			}
 		} else if (addressFlag == 1) {
 			if (!TextUtils.isEmpty(address)) {
@@ -767,7 +738,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				aPosition = StringUtils.getPosition(address1[2], mDistrictDatasMap.get(address1[1]));
 				// System.out.println("所在地"+pPosition+"--->"+cPosition+"--->"+cPosition);
 			} else {
-				System.out.println("空------------------空");
+				LogUtils.i("noting get form address");
 			}
 		}
 	}
@@ -784,7 +755,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			if (data != null) {
 				photoZoom(data.getData().toString());
 			} else {
-				System.out.println("无选择");
+				LogUtils.i("no did for headface choose a action");
 			}
 
 			break;
@@ -792,9 +763,9 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		case 2:
 
 			if (resultCode == RESULT_OK) {
-				photoZoom(FilePath.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
+				photoZoom(FilePathConfig.getCameraStore(mContext) + File.separator + MD5Util.MD5("headface") + ".png");
 			} else {
-				System.out.println("并无拍照");
+				LogUtils.i("no did for headface choose a action");
 			}
 			break;
 		// 裁剪后的图片上传
@@ -808,19 +779,15 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				// 暂时先记着他的用法就可以，具体用法请自行百度。
 				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
 				params.addBodyParameter("action", "headface");
-				params.addBodyParameter("key", ApiUrl.Key);
+				params.addBodyParameter("key", AppConstants.Key);
 				params2.add(new BasicNameValuePair("picStr", picStr));
 				params.addBodyParameter(params2);
 				HttpUtils http 	=BaseApplication.httpUtils;
-				http.send(HttpMethod.POST, ApiUrl.UserUpdate, params, new RequestCallBack<String>() {
+				http.send(HttpMethod.POST, AppConstants.UserUpdate, params, new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
-						if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
-							ActivityUtils.showShortToast(mContext, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
-						else
-							ActivityUtils.showShortToast(mContext, ErrCodeUtils.NORMAL_LOGIN_NONNETWORK);
+						NetUtils.coonFairException(arg1,mContext);
 					}
-
 					@Override
 					public void onSuccess(ResponseInfo<String> arg0) {
 
@@ -834,7 +801,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 								Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 								if (null != bitmap) {
 									iv_face.setImageBitmap(bitmap);
-									FileUtils.writeSDCard(FilePath.getHeadStore(mContext),
+									FileUtils.writeSDCard(FilePathConfig.getTemp(mContext),
 											MD5Util.MD5("headface") + ".png", bitmap);
 								}
 							}
@@ -849,7 +816,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 					}
 				});
 			} else {
-				System.out.println("并无拍照");
+				LogUtils.i("no did for headface take a photo");
 			}
 			break;
 		default:
@@ -860,7 +827,6 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 
 	@Override
 	public void finish() {
-		flag = 2;
 		super.finish();
 	}
 }

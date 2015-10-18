@@ -3,6 +3,8 @@ package com.nightfair.mobille.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -12,12 +14,13 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.base.BaseApplication;
-import com.nightfair.mobille.config.ApiUrl;
+import com.nightfair.mobille.bean.Buyer;
+import com.nightfair.mobille.bean.BuyerInfo;
+import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
 import com.nightfair.mobille.util.MD5Util;
 import com.nightfair.mobille.util.NetUtils;
-import com.nightfair.mobille.util.SPUtils;
 import com.nightfair.mobille.view.ClearEditText;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -50,7 +53,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		ActivityUtils.setTranslucentStatus(getWindow(), true);
 		ActivityUtils.setStatusBarDrawable(this.getResources().getDrawable(R.drawable.bg_login_actionbar), this);
 		mContent = this;
-
 		inintsView();
 	}
 
@@ -108,12 +110,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			return;
 		} else {
 			RequestParams params = new RequestParams();
-			params.addBodyParameter("key", ApiUrl.Key);
+			params.addBodyParameter("key", AppConstants.Key);
 			params.addBodyParameter("userName", username);
 			params.addBodyParameter("userpassword", MD5Util.MD5(password));
 			final HttpUtils http = BaseApplication.httpUtils;
 			http.configTimeout(3000);
-			http.send(HttpMethod.POST, ApiUrl.LoginApiUrl, params, new RequestCallBack<String>() {
+			http.send(HttpMethod.POST, AppConstants.LoginApiUrl, params, new RequestCallBack<String>() {
 
 				@Override
 				public void onFailure(HttpException arg0, String arg1) {
@@ -131,9 +133,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						JSONObject jsonObject = new JSONObject(arg0.result.toString());
 						resultStatus = jsonObject.get("status").toString();
 						if ("200".equals(resultStatus)) {
-							SPUtils.put(mContent, "name", username);
-							SPUtils.put(mContent, "password", password);
-							SplashActivity.isLogin = true;
+							int userid=jsonObject.getInt("user_id");
+							Buyer buyer=new Buyer (userid,username, password, true);							
+							String result = jsonObject.optString("info");
+							Gson gson = new Gson();
+							BuyerInfo buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
+							}.getType());	
+							buyerInfo.buyer=buyer;
+							BaseApplication.buyerInfo=buyerInfo;
+							BaseApplication.mBuyerDao.insertBuyer(buyer);
+							BaseApplication.mBuyerDao.insertInfo(buyerInfo, userid);
 							finish();
 						} else {
 							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();

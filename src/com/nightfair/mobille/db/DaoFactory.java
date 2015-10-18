@@ -1,6 +1,8 @@
 
 package com.nightfair.mobille.db;
 
+import com.nightfair.mobille.db.impl.BuyerDaoImpl;
+
 import android.content.Context;
 
 /**
@@ -28,6 +30,15 @@ public class DaoFactory {
 			}
 		}
 		return mInstance;
+	}
+	/**
+	 * 获取买家数据库
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public BuyerDao getBuyerDao(Context context) {
+		return new BuyerDaoImpl(context);
 	}
 
 }

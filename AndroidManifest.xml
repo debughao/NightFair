@@ -29,7 +29,11 @@
             android:name=".activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
-            
+              <intent-filter>
+                <action android:name="com.nightfair.buyer.action.login" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"

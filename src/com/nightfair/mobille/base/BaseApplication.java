@@ -2,8 +2,14 @@ package com.nightfair.mobille.base;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.util.PreferencesCookieStore;
+import com.nightfair.mobille.bean.BuyerInfo;
+import com.nightfair.mobille.db.BuyerDao;
+import com.nightfair.mobille.db.DaoFactory;
 import android.app.Activity;
 import android.app.Application;
 
@@ -19,9 +25,13 @@ public class BaseApplication extends Application {
 
 	private List<Activity> mActivities = new ArrayList<Activity>();
 
+	public static BuyerDao mBuyerDao;
+	public static int userid;
+	public static BuyerInfo buyerInfo;
 	public static PreferencesCookieStore cookieStore;
 
 	public static HttpUtils httpUtils;
+	public static BitmapUtils bitmapUtils;
 
 	@Override
 	public void onCreate() {
@@ -29,13 +39,18 @@ public class BaseApplication extends Application {
 		super.onCreate();
 		init();
 		httpUtils = new HttpUtils();
-		// PersistentCookieStore cookieStore = new PersistentCookieStore(this);
-		 cookieStore = new PreferencesCookieStore(this);	
-	    httpUtils.configCookieStore(cookieStore);				
+		cookieStore = new PreferencesCookieStore(this);
+		httpUtils.configCookieStore(cookieStore);
 	}
 
 	private void init() {
-		// TODO Auto-generated method stub
+		LogUtils.customTagPrefix = "xUtilsSample"; // 方便调试时过滤 adb logcat 输出
+		
+		mBuyerDao = DaoFactory.getInstance().getBuyerDao(getApplicationContext());
+		userid = mBuyerDao.queryLoginUserid();
+		if(userid!=0){
+			buyerInfo=mBuyerDao.queryinfo(userid);
+		}
 		initImageLoader();
 
 		/*

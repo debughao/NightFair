@@ -13,7 +13,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.base.BaseApplication;
-import com.nightfair.mobille.config.ApiUrl;
+import com.nightfair.mobille.config.AppConstants;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -34,10 +34,10 @@ public class Personal_Collection_Activity extends BaseActivity {
 				String name = sharedPreferences.getString("sessionid", "");
 			System.out.println(name);
 		RequestParams requestParams = new RequestParams();
-		requestParams.addBodyParameter("key", ApiUrl.Key);
+		requestParams.addBodyParameter("key", AppConstants.Key);
 		requestParams.addBodyParameter("action", "collection");
 		HttpUtils httpUtils = BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, ApiUrl.UserUpdate, requestParams, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.UserUpdate, requestParams, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {

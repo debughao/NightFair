@@ -17,10 +17,7 @@ public class SplashActivity extends BaseActivity {
 	private TextView mTvVersion;
 	private RelativeLayout mRvSplash;
 	private ImageView mIvLogo;
-	/**
-	 * 判断用户是否登录
-	 */
-	public static boolean isLogin;
+	
 	/**
 	 * 判断哪个页面执行finish方法
 	 */
