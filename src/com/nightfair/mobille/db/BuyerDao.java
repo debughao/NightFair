@@ -32,5 +32,10 @@ public interface BuyerDao {
 	 */
 
 	public abstract BuyerInfo queryinfo(int userid);
-
+	/**
+	 * 当前登录用户退出登录
+	 * 
+	 * @param user_id
+	 */
+    public  abstract void logout(int useid);
 }

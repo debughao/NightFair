@@ -35,15 +35,16 @@
         android:orientation="horizontal"
         android:visibility="gone" >
 
-        <com.nightfair.mobille.widget.CircleImageView
-            android:id="@+id/iv_personal_face"
+      <com.nightfair.mobille.widget.CircleImageView
+            android:id="@+id/iv_face"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="32dp"
             android:layout_marginTop="32dp"
-            android:src="@drawable/demo"
+            android:src="@drawable/my_dd_icon_default"
             app:border_color="@color/user_image_circle"
-            app:border_width="2dp" />
+            app:border_width="2dp" /> 
+    
 
         <TextView
             style="@style/user_nickname_text"

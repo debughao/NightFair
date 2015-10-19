@@ -103,4 +103,16 @@ public class BuyerDaoImpl implements BuyerDao {
 		return findItem;
 	}
 
+	@Override
+	public void logout(int userid) {
+		try {
+			Buyer findItem = db.findFirst(Selector.from(Buyer.class).where("islogin", "=", 1));
+			findItem.setLogin(false);
+			db.update(findItem);
+		} catch (DbException e) {
+			e.printStackTrace();
+		}
+		
+	}
+  
 }

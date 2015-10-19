@@ -10,6 +10,13 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.android.volley.VolleyError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -48,6 +55,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -217,7 +225,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			break;
 		case R.id.tv_ps_detail_complete:
 			UpdateInfo();
-			 finish(); 
+			finish();
 			break;
 		case R.id.personal_detail_face:
 			showPhotoDialog();
@@ -263,8 +271,24 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	}
 
 	private void inintUserInfo() {
-		buyerInfo=BaseApplication.mBuyerDao.queryinfo(BaseApplication.userid);
-		if(buyerInfo!=null){
+		buyerInfo = BaseApplication.mBuyerDao.queryinfo(BaseApplication.userid);
+		RequestQueue queue = Volley.newRequestQueue(mContext);
+		String image_url = BaseApplication.buyerInfo.getImage();
+		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
+			@Override
+			public void onResponse(Bitmap arg0) {
+				iv_face.setImageBitmap(arg0);
+			}
+		}, 0, 0, Config.RGB_565, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+				iv_face.setImageResource(R.drawable.my_dd_icon_default);
+			}
+		});
+		queue.add(imageRequest);
+
+		if (buyerInfo != null) {
 			tv_nickname.setText(buyerInfo.getNickname());
 			tv_age.setText(buyerInfo.getAge());
 			tv_sex.setText(buyerInfo.getSex());
@@ -272,7 +296,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			tv_hometown.setText(buyerInfo.getHometown());
 			tv_address.setText(buyerInfo.getAddress());
 			tv_autograph.setText(buyerInfo.getAutograph());
-		}		
+		}
 	}
 
 	/**
@@ -295,7 +319,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		/**
 		 * buyerInfo保存本地数据库,数据持久化
 		 */
-		buyerInfo = new BuyerInfo( nickname, sex, age, star, hometown, address, autograph, image);
+		buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
 		BaseApplication.mBuyerDao.insertInfo(buyerInfo, BaseApplication.userid);
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.Key);
@@ -782,12 +806,13 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				params.addBodyParameter("key", AppConstants.Key);
 				params2.add(new BasicNameValuePair("picStr", picStr));
 				params.addBodyParameter(params2);
-				HttpUtils http 	=BaseApplication.httpUtils;
+				HttpUtils http = BaseApplication.httpUtils;
 				http.send(HttpMethod.POST, AppConstants.UserUpdate, params, new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
-						NetUtils.coonFairException(arg1,mContext);
+						NetUtils.coonFairException(arg1, mContext);
 					}
+
 					@Override
 					public void onSuccess(ResponseInfo<String> arg0) {
 
@@ -798,11 +823,16 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 							String result = jsonObject.getString("result");
 							if (status == 200) {
 								Toast.makeText(mContext, result, Toast.LENGTH_SHORT).show();
+								String imageurl = jsonObject.getString("imageurl");
 								Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 								if (null != bitmap) {
 									iv_face.setImageBitmap(bitmap);
 									FileUtils.writeSDCard(FilePathConfig.getTemp(mContext),
 											MD5Util.MD5("headface") + ".png", bitmap);
+
+									BaseApplication.buyerInfo.setImage(imageurl);
+									BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo,
+											BaseApplication.userid);
 								}
 							}
 						} catch (JSONException e) {
