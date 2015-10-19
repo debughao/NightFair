@@ -74,7 +74,7 @@ public class BuyerDaoImpl implements BuyerDao {
 			e.printStackTrace();
 		}
 	}
-
+  
 	@Override
 	public int queryLoginUserid() {
 		int userid = 0;

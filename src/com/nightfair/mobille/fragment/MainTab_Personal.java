@@ -47,9 +47,11 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	private LinearLayout ll_login_already;
 	private LinearLayout ll_login_normal;
 	private TextView tv_logout;
+	private TextView tv_nickname;
 	private LinearLayout ll_logout;
 	private CircleImageView iv_face;
 	private RequestQueue queue;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,12 +72,14 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_login_already = (LinearLayout) personalLayout.findViewById(R.id.ll_login_already);
 		ll_logout = (LinearLayout) personalLayout.findViewById(R.id.ll_personal_logout);
 		tv_logout = (TextView) personalLayout.findViewById(R.id.tv_personal_logout);
+		tv_nickname=(TextView) personalLayout.findViewById(R.id.tv_fm_nickname);
 		iv_face = (CircleImageView) personalLayout.findViewById(R.id.iv_face);
 		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, tv_logout);
 
 	}
 
-	private void inintHeadFace() {
+	private void inintHeadFace() {	
+		tv_nickname.setText(BaseApplication.buyerInfo.getNickname());
 		String image_url = BaseApplication.buyerInfo.getImage();
 		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
 			@Override
@@ -165,13 +169,15 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
 		case 0:
-			refreshView();
-			ActivityUtils.showShortToast(getActivity(), "登录成功");
+			if (resultCode == Activity.RESULT_OK) {
+				refreshView();
+				ActivityUtils.showShortToast(getActivity(), "登录成功");
+			}
 			break;
 		case 1:
-			
+			inintHeadFace();
 			if (resultCode == Activity.RESULT_OK) {
-				inintHeadFace();
+				
 				ToastUtil.showCenter(getActivity(), "修改资料成功");
 			}
 			break;

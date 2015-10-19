@@ -12,7 +12,7 @@ public interface BuyerDao {
 	public abstract void insertBuyer(Buyer buyer);
 
 	/**
-	 * 更新个人资料
+	 * 初始化个人资料
 	 * 
 	 * @param buyerInfo
 	 */

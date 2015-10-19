@@ -272,6 +272,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 
 	private void inintUserInfo() {
 		buyerInfo = BaseApplication.mBuyerDao.queryinfo(BaseApplication.userid);
+		LogUtils.e("用户id" + BaseApplication.userid + "-->" + buyerInfo);
 		RequestQueue queue = Volley.newRequestQueue(mContext);
 		String image_url = BaseApplication.buyerInfo.getImage();
 		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
@@ -296,7 +297,13 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			tv_hometown.setText(buyerInfo.getHometown());
 			tv_address.setText(buyerInfo.getAddress());
 			tv_autograph.setText(buyerInfo.getAutograph());
+			/*
+			 * 设置完成按钮点击无动作和文本颜色（并不是不可点击)
+			 */
+			tv_complete.setTextColor(getResources().getColor(R.color.not_click_white));
+			tv_complete.setEnabled(false);
 		}
+
 	}
 
 	/**
@@ -309,18 +316,24 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	 * 
 	 */
 	private void UpdateInfo() {
-		nickname = tv_nickname.getText().toString().trim();
-		sex = tv_sex.getText().toString();
-		age = tv_age.getText().toString();
-		star = tv_star.getText().toString();
-		hometown = tv_hometown.getText().toString();
-		address = tv_address.getText().toString();
-		autograph = tv_autograph.getText().toString();
+		BaseApplication.buyerInfo.setNickname(nickname = tv_nickname.getText().toString().trim());
+		BaseApplication.buyerInfo.setSex(sex = tv_sex.getText().toString());
+		BaseApplication.buyerInfo.setAge(age = tv_age.getText().toString());
+		BaseApplication.buyerInfo.setStar(star = tv_star.getText().toString());
+		BaseApplication.buyerInfo.setHometown(hometown = tv_hometown.getText().toString());
+		BaseApplication.buyerInfo.setAddress(address = tv_address.getText().toString());
+		BaseApplication.buyerInfo.setAutograph(autograph = tv_autograph.getText().toString());
 		/**
 		 * buyerInfo保存本地数据库,数据持久化
 		 */
-		buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
-		BaseApplication.mBuyerDao.insertInfo(buyerInfo, BaseApplication.userid);
+	 buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
+		LogUtils.e("详情页" + buyerInfo + BaseApplication.userid);
+		
+		BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo,
+				BaseApplication.userid);
+	
+
+		//BaseApplication.buyerInfo = buyerInfo1;
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.Key);
 		params.addBodyParameter("action", "info");

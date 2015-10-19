@@ -23,6 +23,8 @@ import com.nightfair.mobille.util.MD5Util;
 import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.view.ClearEditText;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -140,9 +142,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 							BuyerInfo buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
 							}.getType());	
 							buyerInfo.buyer=buyer;
+							BaseApplication.userid=userid;
 							BaseApplication.buyerInfo=buyerInfo;
 							BaseApplication.mBuyerDao.insertBuyer(buyer);
 							BaseApplication.mBuyerDao.insertInfo(buyerInfo, userid);
+							 Intent intent = new Intent();
+							  setResult(Activity.RESULT_OK, intent);
 							finish();
 						} else {
 							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();

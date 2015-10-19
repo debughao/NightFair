@@ -1,9 +1,5 @@
 package com.nightfair.mobille.activity;
 
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.ParseException;
-
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -14,7 +10,6 @@ import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
