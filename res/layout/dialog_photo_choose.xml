@@ -15,13 +15,15 @@
         android:onClick="on_click"
         android:paddingBottom="10dip"
         android:paddingTop="10dip"
-        android:text="图库"
+        android:text="@string/dialog_openPhone"
+    
+        android:textColor="@color/sub_color"
         android:textSize="16sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0.5dip"
-        android:background="#DAD9DB" />
+        android:background="@color/divider" />
 
     <Button
         android:id="@+id/openCamera"
@@ -31,7 +33,8 @@
         android:onClick="on_click"
         android:paddingBottom="10dip"
         android:paddingTop="10dip"
-        android:text="拍照"
+        android:text="@string/dialog_camera"
+        android:textColor="@color/sub_color"
         android:textSize="16sp" />
 
     <Button
@@ -43,7 +46,8 @@
         android:onClick="on_click"
         android:paddingBottom="10dip"
         android:paddingTop="10dip"
-        android:text="取消"
+        android:text="@string/dialog_cancal"
+        android:textColor="@color/sub_color"
         android:textSize="16sp" />
 
 </LinearLayout>

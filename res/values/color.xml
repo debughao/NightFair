@@ -5,10 +5,15 @@
     <color name="title_color">#e75858</color>
     <color name="tab_title_normal_color">#9e9e9f</color>
     <color name="sub_color">#ff6633</color>
+    <color name="yellow">#ff9900</color>
+    <color name="egg_yellow">#f2c110</color>
+    <color name="list_decs_color">#999999</color>
     <color name="user_image_circle">#f18282</color>
     <color name="user_image_circle2">#f1ffff</color>
     <color name="divider">#D8D8D8</color>
     <color name="white">#ffffffff</color>
+    <color name="about_white">#ccffffff</color>
+    <color name="fafafa">#f0f0f0</color>
     <color name="not_click_white">#90ffffff</color>
     <color name="title_bar_face">#f0ffffff</color>
     <color name="transparent">#60000000</color>
@@ -16,8 +21,12 @@
     <color name="transparent_half">#A0000000</color>
     <color name="text_title_right">#ca9d00</color>
     <color name="translucent">#cc808080</color>
+    <color name="main_color">#21292C</color>
     <!-- 微信黑色字 -->
     <color name="black_text">#353535</color>
+    <!-- eleme 蓝 -->
+    <color name="blue">#4da6f0</color>
+
     <!-- 省市区三级联动 分割线 -->
     <color name="province_line_border">#C7C7C7</color>
 

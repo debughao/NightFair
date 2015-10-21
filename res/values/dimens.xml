@@ -18,4 +18,6 @@
 	<dimen name="wheel_text_w">140dp</dimen>
 	<!-- recharge -->
 	<dimen name="page_margin">12dp</dimen>
+	 <!-- 标题大小 -->
+    <dimen name="title_height">50dip</dimen>
 </resources>

@@ -14,13 +14,13 @@
         android:gravity="center_vertical|left"
         android:padding="15dp"
         android:text="@string/choose_autograph_title"
-        android:textColor="@color/sub_color"
+        android:textColor="@color/black_text"
         android:textSize="@dimen/a_text_size" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="@color/sub_color" />
+        android:background="@color/divider" />
 
     <com.nightfair.mobille.view.HintEditText
         android:id="@+id/het_autograph"
@@ -42,6 +42,7 @@
             android:background="@drawable/autograph_cancal_selector"
             android:paddingBottom="10dip"
             android:paddingTop="10dip"
+            android:textColor="@color/sub_color"
             android:text="@string/dialog_cancal"
             android:textSize="16sp" />
 
@@ -50,7 +51,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="6dp"
             android:layout_marginTop="6dp"
-            android:background="@color/sub_color" />
+            android:background="@color/divider" />
 
         <Button
             android:id="@+id/autograph_ok"
@@ -60,6 +61,7 @@
             android:background="@drawable/autograph_ok_selector"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
+           android:textColor="@color/sub_color"
             android:text="@string/dialog_ok"
             android:textSize="16sp" />
     </LinearLayout>

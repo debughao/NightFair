@@ -7,10 +7,11 @@
     <TextView
         android:id="@+id/tv_ps_detail_cancel"
         style="@style/title_bar_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@drawable/actionbar_selector"
+        android:clickable="true"
         android:text="@string/text_title_bar_cancel"
         android:textSize="@dimen/c_text_size" />
 
@@ -25,15 +26,16 @@
         android:textSize="@dimen/c_text_size" />
 
     <TextView
-        android:id="@+id/tv_ps_detail_complete"      
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tv_ps_detail_complete"
+       android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@drawable/actionbar_selector"
+        android:clickable="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="16dp"
-        android:textColor="@color/not_click_white"
+        android:enabled="false"
         android:text="@string/tt_bar_ps_compelte"
-         android:enabled="false"
+        android:textColor="@color/not_click_white"
         android:textSize="@dimen/c_text_size" />
 
 </RelativeLayout>

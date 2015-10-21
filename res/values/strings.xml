@@ -23,9 +23,11 @@
     <string name="personal_item_coupon">我的优惠券</string>
     <string name="personal_item_collectiion">我的收藏</string>
     <string name="personal_item_comment">我的评价</string>
+    <string name="personal_item_wallet">我的钱包</string>
     <string name="personal_item_recommend">推荐我们</string>
     <string name="personal_item_feedback">意见反馈</string>
     <string name="personal_item_update">检查更新</string>
+    <string name="setttings_now_version">当前版本V</string>
     <string name="personal_item_about">关于我们</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_personal__coupon_">Personal_Coupon_Activity</string>
@@ -46,6 +48,9 @@
     <string name="text_personaldetail_autograph">个人签名</string>
     <string name="tt_bar_ps_compelte">完成</string>
     <string name="dialog_ok">确认</string>
+    <string name="dialog_edit_cancal">放弃</string>
+    <string name="dialog_edit_title">是否放弃对资料的修改？</string>
+    <string name="dialog_edit_ok">继续编辑</string>
     <string name="dialog_cancal">取消</string>
     <string name="et_ps_detail_nickname_text">请填写的昵称</string>
     <string name="et_ps_detail_sex_hint">男</string>
@@ -60,6 +65,7 @@
     <string name="choose_age_title">选择出生日期，系统将会自动转换为年龄及星座：</string>
     <string name="choose_city_title">请选择地理位置：</string>
     <string name="choose_autograph_title">请输入个人签名，仅可输入127个字符。</string>
+    <string name="choose_cantact_title">请输入你的联系方式，方面我们与你沟通</string>
     <string name="choose_man">男</string>
     <string name="choose_women">女</string>
     <string name="choose_sercet">保密</string>
@@ -67,6 +73,33 @@
     <string name="text_personal_star">请选择你的星座</string>
     <string name="text_personal_sex">请选择你的性别</string>
     <string name="title_activity_test">TestActivity</string>
-   <string name="toast_message">消息提醒</string>
+    <string name="toast_message">消息提醒</string>
+    <string name="dialog_camera">拍照</string>
+    <string name="dialog_openPhone">图库</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="text_about_version">版本V</string>
+    <string name="text_about_agreement">用户服务协议</string>
+    <string name="text_about_copyrighta">夜夜通项目组</string>
+    <string name="text_about_copyrightb">＠2015 NightFair Project Team Co., Ltd</string>
+    <string name="actionbar_title">actionbar标题</string>
+    <string name="actionbar_title_setting">设置</string>
+    <string name="actionbar_title_about">关于夜夜通</string>
+    <string name="actionbar_title_facebook">意见反馈</string>
+    <string name="message_image_desc">Message Image</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="text_setting_update">检查更新</string>
+    <string name="text_setting_remove_photo">清除图片缓存</string>
+    <string name="text_setting_wifi">非wifi下图片质量</string>
+    <string name="text_setting_location_a">启动时自动定位到当前位置</string>
+    <string name="text_setting_location_b">关闭定位以后，每次打开应用会默认使用上一次位置</string>
+    <string name="text_setting_location_c">打开定位以后，每次打开应用会自动定位到当前位置</string>
+    <string name="text_setting_push">推送通知</string>
+    <string name="text_facebook_phone">手机号：</string>
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="text_regiser_phone">请输入注册手机号</string>
+     <string name="text_regiser_password">请输入密码</string>
+       <string name="text_regiser_code">请输入验证码</string>
+    <string name="btn_register">注册</string>
+    
 
 </resources>

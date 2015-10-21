@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="40dp"
+    android:layout_height="50dp"
     android:background="@color/title_color"
     android:orientation="horizontal" >
 
@@ -21,18 +21,23 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp" >
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_title_bar_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/actionbar_selector"
+            android:clickable="true"
             android:contentDescription="@null"
             android:src="@drawable/titlebar_message" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/iv_title_bar_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/actionbar_selector"
+            android:clickable="true"
             android:contentDescription="@null"
             android:src="@drawable/titlebar_setting" />
     </LinearLayout>

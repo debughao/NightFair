@@ -35,6 +35,7 @@ import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.dialog.AutoGraphDialog;
 import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
+import com.nightfair.mobille.dialog.CancalDialog;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.Base64Coder;
 import com.nightfair.mobille.util.ErrCodeUtils;
@@ -221,11 +222,13 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_ps_detail_cancel:
-			finish();
+			if (tv_complete.isEnabled())
+				showCancalDialog();
+			else
+				finish();
 			break;
 		case R.id.tv_ps_detail_complete:
 			UpdateInfo();
-			finish();
 			break;
 		case R.id.personal_detail_face:
 			showPhotoDialog();
@@ -262,12 +265,18 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 			openPhones();
 			break;
 		case R.id.cancel:// 取消
+
 			dialog.cancel();
 			break;
 		default:
 			break;
 		}
 
+	}
+
+	private void showCancalDialog() {
+		CancalDialog cancalDialog = new CancalDialog(mContext, mContext);
+		cancalDialog.showCenter();
 	}
 
 	private void inintUserInfo() {
@@ -326,14 +335,8 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		/**
 		 * buyerInfo保存本地数据库,数据持久化
 		 */
-	 buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
+		buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
 		LogUtils.e("详情页" + buyerInfo + BaseApplication.userid);
-		
-		BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo,
-				BaseApplication.userid);
-	
-
-		//BaseApplication.buyerInfo = buyerInfo1;
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.Key);
 		params.addBodyParameter("action", "info");
@@ -362,9 +365,11 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 					int status = jsonObject.getInt("status");
 					String result = jsonObject.getString("result");
 					if (status == 200) {
+						BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo, BaseApplication.userid);
 						ToastUtil.show(mContext, result);
 						Intent intent = new Intent();
 						setResult(Activity.RESULT_OK, intent);
+						finish();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

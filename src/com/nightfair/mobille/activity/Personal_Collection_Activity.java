@@ -52,7 +52,7 @@ public class Personal_Collection_Activity extends BaseActivity {
 
 	@Override
 	public void finish() {
-		flag = 2;
+	
 		super.finish();
 	}
 }

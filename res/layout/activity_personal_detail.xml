@@ -32,13 +32,11 @@
                     android:id="@+id/personal_detail_face"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="5dp" >
+                    android:background="@drawable/menu_option_bg" >
 
                     <TextView
                         style="@style/personal_item_text"
+                        android:layout_width="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/text_personaldetail_face" />
 
@@ -53,9 +51,9 @@
                         android:id="@+id/iv_personal_face"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="10dp"
                         android:layout_toLeftOf="@id/iv_ps_detail_right"
                         android:src="@drawable/my_dd_icon_default"
                         app:border_color="@color/user_image_circle2"
@@ -69,12 +67,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_nicakname"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_nickname"
@@ -98,12 +91,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_sex"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_sex"
@@ -130,12 +118,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_age"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_age"
@@ -162,12 +145,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_star"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_star"
@@ -207,12 +185,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_hometown"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_hometown"
@@ -239,12 +212,7 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_detail_address"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_address"
@@ -274,10 +242,9 @@
                     android:id="@+id/personal_detail_autograph"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/menu_option_bg" >
 
                     <TextView
                         android:id="@+id/tv_ps_detail_autograph"
@@ -285,18 +252,22 @@
                         android:layout_centerVertical="true"
                         android:text="@string/text_personaldetail_autograph" />
 
-                    <TextView
-                        android:id="@+id/tvv_ps_detail_autograph"
-                        style="@style/personal_detail_edit"
-                        android:layout_marginLeft="19dp"
-                        android:layout_toRightOf="@id/tv_ps_detail_autograph"
-                        android:hint="@string/text_ps_detail_autograph" />
-
                     <ImageView
+                        android:id="@+id/iv_autograph"
                         style="@style/personal_item_image_right"
                         android:layout_centerVertical="true"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
+
+                    <TextView
+                        android:id="@+id/tvv_ps_detail_autograph"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="90dp"
+                        android:layout_toLeftOf="@id/iv_autograph"
+                        android:textSize="@dimen/c_text_size"
+                        android:hint="@string/text_ps_detail_autograph" />
                 </RelativeLayout>
 
                 <View

@@ -10,6 +10,8 @@ import com.lidroid.xutils.util.PreferencesCookieStore;
 import com.nightfair.mobille.bean.BuyerInfo;
 import com.nightfair.mobille.db.BuyerDao;
 import com.nightfair.mobille.db.DaoFactory;
+import com.umeng.fb.push.FeedbackPush;
+
 import android.app.Activity;
 import android.app.Application;
 
@@ -23,7 +25,9 @@ import android.app.Application;
 
 public class BaseApplication extends Application {
 
+	private static BaseApplication mInstance;
 	private List<Activity> mActivities = new ArrayList<Activity>();
+
 
 	public static BuyerDao mBuyerDao;
 	public static int userid;
@@ -33,10 +37,19 @@ public class BaseApplication extends Application {
 	public static HttpUtils httpUtils;
 	public static BitmapUtils bitmapUtils;
 
+	// 单例模式中获取唯一的ExitApplication 实例
+	public static BaseApplication getInstance() {
+		if (null == mInstance) {
+			mInstance = new BaseApplication();
+		}
+		return mInstance;
+
+	}
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
+		FeedbackPush.getInstance(this).init(true);
 		init();
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);

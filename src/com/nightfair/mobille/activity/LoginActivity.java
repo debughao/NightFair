@@ -21,6 +21,7 @@ import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
 import com.nightfair.mobille.util.MD5Util;
 import com.nightfair.mobille.util.NetUtils;
+import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.ClearEditText;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -33,7 +34,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity implements OnClickListener {
@@ -46,6 +46,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private String password;
 	private LoginActivity mContent;
 	private ImageView iv_login_eye;
+	private TextView tv_register;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_login_user = (ClearEditText) findViewById(R.id.et_login_user);
 		et_login_password = (ClearEditText) findViewById(R.id.et_login_password);
 		bt_login_check = (Button) findViewById(R.id.bt_login_check);
+		
 		bt_login_check.setOnClickListener(this);
+		tv_register=(TextView) findViewById(R.id.tv_login_register);
+		tv_register.setOnClickListener(this);
 		iv_login_eye = (ImageView) findViewById(R.id.iv_login_eye);
 		iv_login_eye.setOnClickListener(this);
 
@@ -92,6 +96,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.iv_login_eye:
 			changePwdDisplay();
+			break;
+		case R.id.tv_login_register:
+			ActivityUtils.startActivity(mContent, RegisterActivity.class);
 			break;
 		default:
 			break;
@@ -122,10 +129,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				@Override
 				public void onFailure(HttpException arg0, String arg1) {
 					System.out.println(arg1);
-					if (NetUtils.getHttpException(arg1).equals("org.apache.http.conn.ConnectTimeoutException"))
-						ActivityUtils.showShortToast(mContent, ErrCodeUtils.NORMAL_LOGIN_TIMEOUT);
-					else
-						ActivityUtils.showShortToast(mContent, ErrCodeUtils.NORMAL_LOGIN_NONNETWORK);
+					NetUtils.coonFairException(arg1, mContent);
 				}
 
 				@Override
@@ -135,22 +139,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						JSONObject jsonObject = new JSONObject(arg0.result.toString());
 						resultStatus = jsonObject.get("status").toString();
 						if ("200".equals(resultStatus)) {
-							int userid=jsonObject.getInt("user_id");
-							Buyer buyer=new Buyer (userid,username, password, true);							
+							int userid = jsonObject.getInt("user_id");
+							Buyer buyer = new Buyer(userid, username, password, true);
 							String result = jsonObject.optString("info");
 							Gson gson = new Gson();
 							BuyerInfo buyerInfo = gson.fromJson(result, new TypeToken<BuyerInfo>() {
-							}.getType());	
-							buyerInfo.buyer=buyer;
-							BaseApplication.userid=userid;
-							BaseApplication.buyerInfo=buyerInfo;
+							}.getType());
+							buyerInfo.buyer = buyer;
+							BaseApplication.userid = userid;
+							BaseApplication.buyerInfo = buyerInfo;
 							BaseApplication.mBuyerDao.insertBuyer(buyer);
 							BaseApplication.mBuyerDao.insertInfo(buyerInfo, userid);
-							 Intent intent = new Intent();
-							  setResult(Activity.RESULT_OK, intent);
+							Intent intent = new Intent();
+							setResult(Activity.RESULT_OK, intent);
 							finish();
 						} else {
-							Toast.makeText(mContent, "用户名或者密码错误", Toast.LENGTH_LONG).show();
+							ToastUtil.showCenter(mContent, ErrCodeUtils.USERNAME_PASSWORD_ERROR);
 						}
 
 					} catch (JSONException e) {
@@ -163,7 +167,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	public void finish() {
-		flag = 1;
+
 		super.finish();
 	}
 

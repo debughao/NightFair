@@ -34,12 +34,20 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private LinearLayout mTabBtnNearby;
 	private LinearLayout mTabBtnChat;
 	private LinearLayout mTabBtnPersonal;
-
+	private ImageButton mBtnindex;
+	private ImageButton mBtnNearby;
+	private ImageButton mBtnChat;
+	private ImageButton mBtnPersonal;
+	private TextView mTvIndex;
+	private TextView mTvNearby;
+	private TextView mTvChat;
+	private TextView mTvPersonal;
 	/**
 	 * 用于对Fragment进行管理
 	 */
 	private FragmentManager fragmentManager;
 	private long mExitTime;
+
 	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
@@ -61,7 +69,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		mTabBtnNearby = (LinearLayout) findViewById(R.id.id_tab_bottom_nearby);
 		mTabBtnChat = (LinearLayout) findViewById(R.id.id_tab_bottom_chat);
 		mTabBtnPersonal = (LinearLayout) findViewById(R.id.id_tab_bottom_personal);
-
+		mTvIndex = ((TextView) mTabBtnIndex.findViewById(R.id.tv_tab_bootom_index));
+		mBtnindex = ((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index));
+		mTvPersonal = ((TextView) mTabBtnPersonal.findViewById(R.id.tv_tab_bootom_personal));
+		mBtnNearby = ((ImageButton) mTabBtnNearby.findViewById(R.id.btn_tab_bottom_nearby));
+		mTvNearby = ((TextView) mTabBtnNearby.findViewById(R.id.tv_tab_bootom_nearby));
+		mBtnPersonal = ((ImageButton) mTabBtnPersonal.findViewById(R.id.btn_tab_bottom_personal));
+		mBtnChat = ((ImageButton) mTabBtnChat.findViewById(R.id.btn_tab_bottom_chat));
+		mTvChat = ((TextView) mTabBtnChat.findViewById(R.id.tv_tab_bootom_chat));
 		mTabBtnIndex.setOnClickListener(this);
 		mTabBtnNearby.setOnClickListener(this);
 		mTabBtnChat.setOnClickListener(this);
@@ -100,10 +115,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		switch (index) {
 		case 0:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
-			((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
-					.setImageResource(R.drawable.tab_index_pressed);
-			((TextView) mTabBtnIndex.findViewById(R.id.tv_tab_bootom_index))
-					.setTextColor(getResources().getColor(R.color.title_color));
+
+			mBtnindex.setImageResource(R.drawable.tab_index_pressed);
+			mTvIndex.setTextColor(getResources().getColor(R.color.title_color));
 			if (mTab01 == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mTab01 = new MainTab_Index();
@@ -115,10 +129,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			break;
 		case 1:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
-			((ImageButton) mTabBtnNearby.findViewById(R.id.btn_tab_bottom_nearby))
-					.setImageResource(R.drawable.tab_nearby_pressed);
-			((TextView) mTabBtnNearby.findViewById(R.id.tv_tab_bootom_nearby))
-					.setTextColor(getResources().getColor(R.color.title_color));
+			mBtnNearby.setImageResource(R.drawable.tab_nearby_pressed);
+
+			mTvNearby.setTextColor(getResources().getColor(R.color.title_color));
 			if (mTab02 == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mTab02 = new MainTab_Nearby();
@@ -130,10 +143,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			break;
 		case 2:
 			// 当点击了动态tab时，改变控件的图片和文字颜色
-			((ImageButton) mTabBtnChat.findViewById(R.id.btn_tab_bottom_chat))
-					.setImageResource(R.drawable.tab_chat_pressed);
-			((TextView) mTabBtnChat.findViewById(R.id.tv_tab_bootom_chat))
-					.setTextColor(getResources().getColor(R.color.title_color));
+			mBtnChat.setImageResource(R.drawable.tab_chat_pressed);
+			mTvChat.setTextColor(getResources().getColor(R.color.title_color));
 			if (mTab03 == null) {
 				// 如果NewsFragment为空，则创建一个并添加到界面上
 				mTab03 = new MainTab_Chat();
@@ -145,14 +156,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			break;
 		case 3:
 			// 当点击了设置tab时，改变控件的图片和文字颜色
-			((ImageButton) mTabBtnPersonal.findViewById(R.id.btn_tab_bottom_personal))
-					.setImageResource(R.drawable.tab_personal_pressed);
-			((TextView) mTabBtnPersonal.findViewById(R.id.tv_tab_bootom_personal))
-					.setTextColor(getResources().getColor(R.color.title_color));
+			mBtnPersonal.setImageResource(R.drawable.tab_personal_pressed);
+			mTvPersonal.setTextColor(getResources().getColor(R.color.title_color));
 			ActivityUtils.setActionBarLayout(getActionBar(), MainActivity.this, R.layout.title_bar_personal);
 			ActivityUtils.setTranslucentStatus(getWindow(), true);
 			ActivityUtils.setStatusBarColor(R.color.title_color, this);
-			
+
 			if (mTab04 == null) {
 				// 如果SettingFragment为空，则创建一个并添加到界面上
 				mTab04 = new MainTab_Personal();
@@ -170,21 +179,14 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 * 清除掉所有的选中状态。
 	 */
 	private void resetBtn() {
-		((ImageButton) mTabBtnIndex.findViewById(R.id.btn_tab_bottom_index))
-				.setImageResource(R.drawable.tab_index_normal);
-		((TextView) mTabBtnIndex.findViewById(R.id.tv_tab_bootom_index))
-				.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
-		((ImageButton) mTabBtnNearby.findViewById(R.id.btn_tab_bottom_nearby))
-				.setImageResource(R.drawable.tab_nearby_normal);
-		((TextView) mTabBtnNearby.findViewById(R.id.tv_tab_bootom_nearby))
-				.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
-		((ImageButton) mTabBtnChat.findViewById(R.id.btn_tab_bottom_chat)).setImageResource(R.drawable.tab_chat_normal);
-		((TextView) mTabBtnChat.findViewById(R.id.tv_tab_bootom_chat))
-				.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
-		((ImageButton) mTabBtnPersonal.findViewById(R.id.btn_tab_bottom_personal))
-				.setImageResource(R.drawable.tab_personal_normal);
-		((TextView) mTabBtnPersonal.findViewById(R.id.tv_tab_bootom_personal))
-				.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
+		mBtnindex.setImageResource(R.drawable.tab_index_normal);
+		mTvIndex.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
+		mBtnNearby.setImageResource(R.drawable.tab_nearby_normal);
+		mTvNearby.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
+		mBtnChat.setImageResource(R.drawable.tab_chat_normal);
+		mTvChat.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
+		mBtnPersonal.setImageResource(R.drawable.tab_personal_normal);
+		mTvPersonal.setTextColor(getResources().getColor(R.color.tab_title_normal_color));
 	}
 
 	/**
@@ -197,15 +199,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void hideFragments(FragmentTransaction transaction) {
 		if (mTab01 != null) {
 			transaction.hide(mTab01);
+		
 		}
 		if (mTab02 != null) {
 			transaction.hide(mTab02);
+			
 		}
 		if (mTab03 != null) {
 			transaction.hide(mTab03);
+			
 		}
 		if (mTab04 != null) {
 			transaction.hide(mTab04);
+		
 		}
 
 	}
@@ -221,7 +227,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				System.exit(0);
 			}
 			return true;
-		} 
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 }

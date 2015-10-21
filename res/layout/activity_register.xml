@@ -1,0 +1,136 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_login"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/transparent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/login_rect_gray" >
+
+            <ImageView
+                android:id="@+id/iv_login_user"
+                style="@style/baseStyle"
+                android:layout_width="wrap_content"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_user" />
+
+            <com.nightfair.mobille.view.ClearEditText
+                android:id="@+id/et_login_user"
+                style="@style/personal_item_text"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_toEndOf="@id/iv_login_user"
+                android:layout_toRightOf="@id/iv_login_user"
+                android:background="@null"
+                android:hint="@string/text_regiser_phone"
+                android:singleLine="true"
+                android:textColorHint="@color/tab_title_normal_color"
+                android:textSize="@dimen/c_text_size" >
+            </com.nightfair.mobille.view.ClearEditText>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/login_rect_gray" >
+
+            <ImageView
+                android:id="@+id/iv_login_password"
+                style="@style/baseStyle"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_password" />
+
+            <com.nightfair.mobille.view.ClearEditText
+                android:id="@+id/et_login_password"
+                style="@style/personal_item_text"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_toEndOf="@id/iv_login_password"
+                android:layout_toRightOf="@id/iv_login_password"
+                android:background="@null"
+                android:hint="@string/text_regiser_password"
+                android:inputType="textPassword"
+                android:maxLength="16"
+                android:singleLine="true"
+                android:textColorHint="@color/tab_title_normal_color"
+                android:textSize="@dimen/c_text_size" >
+            </com.nightfair.mobille.view.ClearEditText>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="15dp" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/login_rect_gray"
+                android:gravity="center" >
+
+                <com.nightfair.mobille.view.ClearEditText
+                    android:id="@+id/et_register_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/text_regiser_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:singleLine="true"
+                    android:textColorHint="@color/tab_title_normal_color"
+                    android:textSize="@dimen/c_text_size" >
+                </com.nightfair.mobille.view.ClearEditText>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_ok_bg"
+                android:orientation="vertical"
+                android:text="@string/bt_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_text_size" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_login_check"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_ok_bg"
+            android:orientation="vertical"
+            android:text="@string/btn_register"
+            android:textColor="@color/white"
+            android:textSize="@dimen/button_text_size" />
+    </LinearLayout>
+
+</LinearLayout>

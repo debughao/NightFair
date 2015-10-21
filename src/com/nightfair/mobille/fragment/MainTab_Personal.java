@@ -6,15 +6,24 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
+import com.nightfair.mobile.lib.umeng.CustomActivity;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.activity.AboutActivity;
 import com.nightfair.mobille.activity.Personal_Collection_Activity;
 import com.nightfair.mobille.activity.Personal_Coupon_Activity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FragmentUtils;
+import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.ToastUtil;
+import com.nightfair.mobille.util.VersionUtil;
 import com.nightfair.mobille.widget.CircleImageView;
+import com.umeng.fb.FeedbackAgent;
+import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -41,44 +50,66 @@ import android.widget.TextView;
 public class MainTab_Personal extends Fragment implements OnClickListener {
 
 	private Button bt_login;
-	private View personalLayout;
+	private View personalView;
+	private TextView tvVersionName;
 	private RelativeLayout rl__coupon;
 	private RelativeLayout rl__collection;
 	private LinearLayout ll_login_already;
 	private LinearLayout ll_login_normal;
-	private TextView tv_logout;
 	private TextView tv_nickname;
 	private LinearLayout ll_logout;
 	private CircleImageView iv_face;
 	private RequestQueue queue;
-
+	private RelativeLayout rl_about;
+	private RelativeLayout rl__comment;
+	private RelativeLayout rl__wallet;
+	private RelativeLayout rl__recommend;
+	private RelativeLayout rl__feedback;
+	private RelativeLayout rl__update;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		personalLayout = inflater.inflate(R.layout.main_tab_personal, container, false);
+
+		if (personalView == null) {
+			personalView = inflater.inflate(R.layout.main_tab_personal, container, false);
+		}
+		// 缓存的rootView需要判断是否已经被加过parent，
+		// 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
+		ViewGroup parent = (ViewGroup) personalView.getParent();
+		if (parent != null) {
+			parent.removeView(personalView);
+		}
 		inintView();
 		queue = Volley.newRequestQueue(getActivity());
 		if (BaseApplication.userid != 0) {
 			refreshView();
 		}
-		return personalLayout;
+		return personalView;
 	}
 
 	private void inintView() {
-		bt_login = (Button) personalLayout.findViewById(R.id.bt_login_normal);
-		rl__coupon = (RelativeLayout) personalLayout.findViewById(R.id.personal_item_coupon);
-		rl__collection = (RelativeLayout) personalLayout.findViewById(R.id.personal_item_collection);
-		ll_login_normal = (LinearLayout) personalLayout.findViewById(R.id.ll_login_normal);
-		ll_login_already = (LinearLayout) personalLayout.findViewById(R.id.ll_login_already);
-		ll_logout = (LinearLayout) personalLayout.findViewById(R.id.ll_personal_logout);
-		tv_logout = (TextView) personalLayout.findViewById(R.id.tv_personal_logout);
-		tv_nickname=(TextView) personalLayout.findViewById(R.id.tv_fm_nickname);
-		iv_face = (CircleImageView) personalLayout.findViewById(R.id.iv_face);
-		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, tv_logout);
+		bt_login = (Button) personalView.findViewById(R.id.bt_login_normal);
+		rl__coupon = (RelativeLayout) personalView.findViewById(R.id.personal_item_coupon);
+		rl__collection = (RelativeLayout) personalView.findViewById(R.id.personal_item_collection);
+		rl__comment = (RelativeLayout) personalView.findViewById(R.id.personal_item_comment);
+		rl__wallet = (RelativeLayout) personalView.findViewById(R.id.personal_item_wallet);
+		rl__recommend = (RelativeLayout) personalView.findViewById(R.id.personal_item_recommend);
+		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);
+		rl__update = (RelativeLayout) personalView.findViewById(R.id.personal_item_update);
+		rl_about = (RelativeLayout) personalView.findViewById(R.id.personal_item_about);
+		ll_login_normal = (LinearLayout) personalView.findViewById(R.id.ll_login_normal);
+		ll_login_already = (LinearLayout) personalView.findViewById(R.id.ll_login_already);
+		ll_logout = (LinearLayout) personalView.findViewById(R.id.ll_personal_logout);
+		tv_nickname = (TextView) personalView.findViewById(R.id.tv_fm_nickname);
+		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);
+		tvVersionName = (TextView) personalView.findViewById(R.id.tv_version_name);
+		tvVersionName.setText(getString(R.string.setttings_now_version) + VersionUtil.getVersionName(getActivity()));
+		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, ll_logout, rl__comment, rl__wallet,
+				rl__recommend, rl__feedback, rl__update, rl_about);
 
 	}
 
-	private void inintHeadFace() {	
+	private void inintHeadFace() {
 		tv_nickname.setText(BaseApplication.buyerInfo.getNickname());
 		String image_url = BaseApplication.buyerInfo.getImage();
 		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
@@ -130,18 +161,95 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 
 			FragmentUtils.startActivity(this, Personal_Collection_Activity.class);
 			break;
+		case R.id.personal_item_about:
+			FragmentUtils.startActivity(this, AboutActivity.class);
+			break;
+		case R.id.personal_item_feedback:
+			feedback();
+			break;
 		case R.id.ll_login_already:
 			intent = new Intent("com.nightfair.buyer.action.update");
 			startActivityForResult(intent, 1);
 			break;
-		case R.id.tv_personal_logout:
+		case R.id.personal_item_update:
+			checkUpgrade();
+			break;
+		case R.id.ll_personal_logout:
 			BaseApplication.cookieStore.clear();
 			logout();
 			break;
+
 		default:
 			break;
 		}
 
+	}
+
+	/**
+	 * 用户反馈
+	 */
+	private void feedback() {
+		final FeedbackAgent fb = new FeedbackAgent(getActivity());
+		fb.sync();
+		fb.openAudioFeedback();
+		fb.openFeedbackPush();
+//		UserInfo info = fb.getUserInfo();
+//		if (info == null)
+//			info = new UserInfo();
+//		Map<String, String> contact = info.getContact();
+//		if (contact == null)
+//			contact = new HashMap<String, String>();
+//		// contact.put(KEY_UMENG_CONTACT_INFO_PLAIN_TEXT, contact_info);
+//
+//		contact.put("email", "*******");
+//		// contact.put("qq", "*******");
+//		// contact.put("phone", "*******");
+//		// contact.put("plain", "*******");
+//		info.setContact(contact);
+//
+//		// optional, setting user gender information.
+//		info.setAgeGroup(1);
+//		info.setGender("male");
+//		// info.setGender("female");
+//
+//		fb.setUserInfo(info);
+//
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				boolean result = fb.updateUserInfo();
+//			}
+//		}).start();
+		FragmentUtils.startActivity(this, CustomActivity.class);
+	}
+
+	private void checkUpgrade() {
+		// TODO Auto-generated method stub
+		if (NetUtils.isNetAvailable(getActivity())) {
+			UmengUpdateAgent.forceUpdate(getActivity());
+			UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
+				@Override
+				public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+					switch (updateStatus) {
+					case UpdateStatus.Yes:
+						ToastUtil.show(getActivity(), "软件有更新");
+						break;
+
+					case UpdateStatus.No:
+						ToastUtil.show(getActivity(), "已是最新版本");
+						break;
+
+					case UpdateStatus.NoneWifi:
+						ToastUtil.show(getActivity(), "没有wifi连接， 只在wifi下更新");
+						break;
+
+					case UpdateStatus.Timeout:
+						ToastUtil.show(getActivity(), "连接超时");
+						break;
+					}
+				}
+			});
+		}
 	}
 
 	/**
@@ -152,6 +260,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_login_normal.setVisibility(View.VISIBLE);// 显示未登录界面
 		ll_login_already.setVisibility(View.GONE);// 隐藏登录后界面
 		ll_logout.setVisibility(View.GONE);// 隐藏注销界面
+		BaseApplication.userid=0;
 		BaseApplication.cookieStore.clear();
 		BaseApplication.mBuyerDao.logout(BaseApplication.userid);
 		ToastUtil.showCenter(getActivity(), "客观你慢走，欢迎下次光临^-^");
@@ -177,7 +286,6 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		case 1:
 			inintHeadFace();
 			if (resultCode == Activity.RESULT_OK) {
-				
 				ToastUtil.showCenter(getActivity(), "修改资料成功");
 			}
 			break;

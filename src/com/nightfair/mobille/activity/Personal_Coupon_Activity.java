@@ -13,12 +13,11 @@ public class Personal_Coupon_Activity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_personal__coupon);
-		ToastUtil.showCenter(this, "当前登录用户id"+BaseApplication.userid);
+		ToastUtil.showCenter(this, "当前登录用户id" + BaseApplication.userid);
 	}
 
 	@Override
 	public void finish() {
-		flag=2;
 		super.finish();
 	}
 }

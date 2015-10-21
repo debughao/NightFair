@@ -35,7 +35,7 @@
         android:orientation="horizontal"
         android:visibility="gone" >
 
-      <com.nightfair.mobille.widget.CircleImageView
+        <com.nightfair.mobille.widget.CircleImageView
             android:id="@+id/iv_face"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -43,8 +43,7 @@
             android:layout_marginTop="32dp"
             android:src="@drawable/my_dd_icon_default"
             app:border_color="@color/user_image_circle"
-            app:border_width="2dp" /> 
-    
+            app:border_width="2dp" />
 
         <TextView
             android:id="@+id/tv_fm_nickname"
@@ -78,16 +77,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_coupon"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="18dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="18dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_coupon"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_coupon" />
 
@@ -109,16 +103,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_collection"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_collection"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_collection" />
 
@@ -140,16 +129,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_comment"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_comment"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_comment" />
 
@@ -157,6 +141,32 @@
                         style="@style/personal_item_text"
                         android:layout_toRightOf="@id/personal_item_image_comment"
                         android:text="@string/personal_item_comment" />
+
+                    <ImageView
+                        style="@style/personal_item_image_right"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_itme_right" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider" />
+
+                <RelativeLayout
+                    android:id="@+id/personal_item_wallet"
+                    style="@style/personal_item_layout" >
+
+                    <ImageView
+                        android:id="@+id/personal_item_image_wallet"
+                        style="@style/personal_item_image_left"
+                        android:contentDescription="@null"
+                        android:src="@drawable/personal_wallet" />
+
+                    <TextView
+                        style="@style/personal_item_text"
+                        android:layout_toRightOf="@id/personal_item_image_wallet"
+                        android:text="@string/personal_item_wallet" />
 
                     <ImageView
                         style="@style/personal_item_image_right"
@@ -179,16 +189,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_recommend"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_recommend"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_recommend" />
 
@@ -211,16 +216,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_feedback"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_feedback"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_feedback" />
 
@@ -242,16 +242,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_update"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_update"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_update" />
 
@@ -261,9 +256,20 @@
                         android:text="@string/personal_item_update" />
 
                     <ImageView
+                        android:id="@+id/iv_personal_update"
                         style="@style/personal_item_image_right"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
+
+                    <TextView
+                        android:id="@+id/tv_version_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/iv_personal_update"
+                        android:text="@string/setttings_now_version"
+                        android:textColor="@color/list_decs_color"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <View
@@ -273,16 +279,11 @@
 
                 <RelativeLayout
                     android:id="@+id/personal_item_about"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="15dp" >
+                    style="@style/personal_item_layout" >
 
                     <ImageView
                         android:id="@+id/personal_item_image_about"
-                        style="@style/baseStyle"
+                        style="@style/personal_item_image_left"
                         android:contentDescription="@null"
                         android:src="@drawable/personal_about" />
 
@@ -300,11 +301,11 @@
 
             <LinearLayout
                 android:id="@+id/ll_personal_logout"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg"
+                style="@style/personal_item_layout"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/menu_option_bg"
+                android:clickable="true"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone" >

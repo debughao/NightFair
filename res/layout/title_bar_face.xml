@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/transparent" >
 
+    <ImageView
+        android:id="@+id/tv_face_cancel"
+        style="@style/title_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/actionbar_selector"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_back_left" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/transparent" >
+    <Button
+        android:id="@+id/btn_face_ok"
+        style="@style/title_bar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/title_ok_bg"
+        android:text="@string/text_face_use"
+        android:textSize="@dimen/c_text_size" />
 
-        <ImageView
-            android:id="@+id/tv_face_cancel"
-            style="@style/title_bar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:contentDescription="@null"
-            android:layout_marginLeft="16dp"
-           android:src="@drawable/ic_back_left"
-             />
-        <Button
-            android:id="@+id/btn_face_ok"
-            style="@style/title_bar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@drawable/title_ok_bg"
-            android:layout_marginRight="16dp"
-            android:text="@string/text_face_use"
-            android:textSize="@dimen/c_text_size" />
-    </RelativeLayout>
-
+</RelativeLayout>
