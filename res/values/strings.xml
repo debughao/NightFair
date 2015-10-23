@@ -27,7 +27,6 @@
     <string name="personal_item_recommend">推荐我们</string>
     <string name="personal_item_feedback">意见反馈</string>
     <string name="personal_item_update">检查更新</string>
-    <string name="setttings_now_version">当前版本V</string>
     <string name="personal_item_about">关于我们</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_personal__coupon_">Personal_Coupon_Activity</string>
@@ -76,6 +75,7 @@
     <string name="toast_message">消息提醒</string>
     <string name="dialog_camera">拍照</string>
     <string name="dialog_openPhone">图库</string>
+    <!-- 关于页面 -->
     <string name="title_activity_about">AboutActivity</string>
     <string name="text_about_version">版本V</string>
     <string name="text_about_agreement">用户服务协议</string>
@@ -86,15 +86,20 @@
     <string name="actionbar_title_about">关于夜夜通</string>
     <string name="actionbar_title_facebook">意见反馈</string>
     <string name="message_image_desc">Message Image</string>
+    <!-- 设置页面 -->
     <string name="title_activity_setting">SettingActivity</string>
     <string name="text_setting_update">检查更新</string>
-    <string name="text_setting_remove_photo">清除图片缓存</string>
+    <string name="text_setting_remove_photo">清除缓存</string>
     <string name="text_setting_wifi">非wifi下图片质量</string>
     <string name="text_setting_location_a">启动时自动定位到当前位置</string>
-    <string name="text_setting_location_b">关闭定位以后，每次打开应用会默认使用上一次位置</string>
-    <string name="text_setting_location_c">打开定位以后，每次打开应用会自动定位到当前位置</string>
+    <string name="text_setting_location_b">关闭定位以后，打开应用会默认使用上一次位置</string>
+    <string name="text_setting_location_c">打开定位以后，打开应用会自动定位到当前位置</string>
     <string name="text_setting_push">推送通知</string>
     <string name="text_facebook_phone">手机号：</string>
+    <string name="text_setttings_now_version">当前版本V</string>
+    <string name="text_cache_size">0M</string>
+    <string name="text_photo_quality">普通</string>
+    <!-- 注册页面 -->
     <string name="title_activity_register">RegisterActivity</string>
     <string name="text_regiser">注册新用户</string>
     <string name="text_regiser_phone">请输入注册手机号</string>
@@ -104,5 +109,10 @@
     <string name="text_regiser_getcode">获取验证码</string>
     <string name="text_register_agreement_b">夜夜通《使用协议》</string>
     <string name="text_register_agreement_a">点击【立即注册】，即表示您同意</string>
+    <!-- 弹出框 dialog_selection -->
+    <string name="notice">提示</string>
+    <string name="cancle">取消</string>
+    <string name="confirm">确定</string>
+    <string name="loading">正在加载...</string>
 
 </resources>

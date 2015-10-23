@@ -66,7 +66,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/bg"
                 android:orientation="vertical" >
 
@@ -234,45 +234,7 @@
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
                 </RelativeLayout>
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1px"
-                    android:background="@color/divider" />
-
-                <RelativeLayout
-                    android:id="@+id/personal_item_update"
-                    style="@style/personal_item_layout" >
-
-                    <ImageView
-                        android:id="@+id/personal_item_image_update"
-                        style="@style/personal_item_image_left"
-                        android:contentDescription="@null"
-                        android:src="@drawable/personal_update" />
-
-                    <TextView
-                        style="@style/personal_item_text"
-                        android:layout_toRightOf="@id/personal_item_image_update"
-                        android:text="@string/personal_item_update" />
-
-                    <ImageView
-                        android:id="@+id/iv_personal_update"
-                        style="@style/personal_item_image_right"
-                        android:contentDescription="@null"
-                        android:src="@drawable/personal_itme_right" />
-
-                    <TextView
-                        android:id="@+id/tv_version_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@id/iv_personal_update"
-                        android:text="@string/setttings_now_version"
-                        android:textColor="@color/list_decs_color"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
-                <View
+             <View
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/divider" />

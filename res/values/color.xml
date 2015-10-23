@@ -3,6 +3,7 @@
 
     <color name="bg">#f2f2f2</color>
     <color name="title_color">#e75858</color>
+    <color name="title_color_deep">#aae75858</color>
     <color name="tab_title_normal_color">#9e9e9f</color>
     <color name="sub_color">#ff6633</color>
     <color name="yellow">#ff9900</color>
@@ -22,8 +23,9 @@
     <color name="text_title_right">#ca9d00</color>
     <color name="translucent">#cc808080</color>
     <color name="main_color">#21292C</color>
-    <!-- 微信黑色字 -->
-    <color name="black_text">#353535</color>
+    <color name="gray">#5D5D5D</color>   
+    <color name="black_text">#353535</color> <!-- 微信黑色字 -->
+    <color name="gray_bg">#EBEBEB</color><!-- 微信灰色背景 -->
     <!-- eleme 蓝 -->
     <color name="blue">#4da6f0</color>
 

@@ -49,7 +49,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private FragmentManager fragmentManager;
 	private long mExitTime;
 	private ImageView iv_setting;
-
 	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
@@ -63,6 +62,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		initViews();
 		fragmentManager = getFragmentManager();
 		setTabSelection(0);
+		// 初始化BmobSDK
 	}
 
 	private void initViews() {

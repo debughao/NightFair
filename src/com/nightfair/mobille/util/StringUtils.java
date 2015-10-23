@@ -4,10 +4,7 @@ import android.content.Context;
 import android.widget.EditText;
 
 public class StringUtils {
-	private static String reg1 = "^.*[\\d]+.*$";// 数字
-	private static String reg2 = "^.*[A-Za-z]+.*$/";// 字母
-	private static String reg3 = "^.*[_@#%&^+-/*\\/\\]+.*$";// 字符
-
+	
 	public static String[] convertStrToArry(String str) {
 		String[] strArray = null;
 		strArray = str.split("-");

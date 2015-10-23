@@ -3,7 +3,6 @@
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.util.VersionUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;

@@ -15,16 +15,9 @@ import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FragmentUtils;
-import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.ToastUtil;
-import com.nightfair.mobille.util.VersionUtil;
 import com.nightfair.mobille.widget.CircleImageView;
 import com.umeng.fb.FeedbackAgent;
-import com.umeng.update.UmengUpdateAgent;
-import com.umeng.update.UmengUpdateListener;
-import com.umeng.update.UpdateResponse;
-import com.umeng.update.UpdateStatus;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -51,7 +44,6 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 
 	private Button bt_login;
 	private View personalView;
-	private TextView tvVersionName;
 	private RelativeLayout rl__coupon;
 	private RelativeLayout rl__collection;
 	private LinearLayout ll_login_already;
@@ -101,8 +93,8 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_logout = (LinearLayout) personalView.findViewById(R.id.ll_personal_logout);
 		tv_nickname = (TextView) personalView.findViewById(R.id.tv_fm_nickname);
 		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);
-		tvVersionName = (TextView) personalView.findViewById(R.id.tv_version_name);
-		tvVersionName.setText(getString(R.string.setttings_now_version) + VersionUtil.getVersionName(getActivity()));
+	
+		
 		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, ll_logout, rl__comment, rl__wallet,
 				rl__recommend, rl__feedback, rl_about);
 
