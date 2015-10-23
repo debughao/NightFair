@@ -284,7 +284,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		LogUtils.e("用户id" + BaseApplication.userid + "-->" + buyerInfo);
 		RequestQueue queue = Volley.newRequestQueue(mContext);
 		String image_url = BaseApplication.buyerInfo.getImage();
-		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
+		ImageRequest imageRequest = new ImageRequest((AppConstants.SERVERIP + image_url), new Listener<Bitmap>() {
 			@Override
 			public void onResponse(Bitmap arg0) {
 				iv_face.setImageBitmap(arg0);
@@ -338,7 +338,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		buyerInfo = new BuyerInfo(nickname, sex, age, star, hometown, address, autograph, image);
 		LogUtils.e("详情页" + buyerInfo + BaseApplication.userid);
 		RequestParams params = new RequestParams();
-		params.addBodyParameter("key", AppConstants.Key);
+		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("action", "info");
 		params.addBodyParameter("nickname", nickname);
 		params.addBodyParameter("sex", sex);
@@ -348,7 +348,7 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 		params.addBodyParameter("address", address);
 		params.addBodyParameter("autograph", autograph);
 		HttpUtils httpUtils = BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, AppConstants.UserUpdate, params, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.USERUPDATE, params, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
@@ -821,11 +821,11 @@ public class Personal_detail_Activity extends CascadeCityActivity implements OnC
 				// 暂时先记着他的用法就可以，具体用法请自行百度。
 				List<NameValuePair> params2 = new ArrayList<NameValuePair>();
 				params.addBodyParameter("action", "headface");
-				params.addBodyParameter("key", AppConstants.Key);
+				params.addBodyParameter("key", AppConstants.KEY);
 				params2.add(new BasicNameValuePair("picStr", picStr));
 				params.addBodyParameter(params2);
 				HttpUtils http = BaseApplication.httpUtils;
-				http.send(HttpMethod.POST, AppConstants.UserUpdate, params, new RequestCallBack<String>() {
+				http.send(HttpMethod.POST, AppConstants.USERUPDATE, params, new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
 						NetUtils.coonFairException(arg1, mContext);

@@ -14,6 +14,7 @@ import com.umeng.fb.push.FeedbackPush;
 
 import android.app.Activity;
 import android.app.Application;
+import cn.bmob.sms.BmobSMS;
 
 /**
  * 
@@ -50,6 +51,7 @@ public class BaseApplication extends Application {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		FeedbackPush.getInstance(this).init(true);
+		BmobSMS.initialize(getApplicationContext(), "000ca7d3d028874f8e8401f27877171e");
 		init();
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);

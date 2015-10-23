@@ -11,7 +11,7 @@
         android:color="#00000000" >
     </stroke>
     <!-- 矩形的圆角半径 -->
-    <corners android:radius="10dp" />
+    <corners android:radius="6dp" />
 
     <padding android:left="5dp" />
     <padding android:right="5dp" />

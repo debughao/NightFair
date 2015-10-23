@@ -29,10 +29,10 @@ public class Personal_Collection_Activity extends BaseActivity {
 				String name = sharedPreferences.getString("sessionid", "");
 			System.out.println(name);
 		RequestParams requestParams = new RequestParams();
-		requestParams.addBodyParameter("key", AppConstants.Key);
+		requestParams.addBodyParameter("key", AppConstants.KEY);
 		requestParams.addBodyParameter("action", "collection");
 		HttpUtils httpUtils = BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, AppConstants.UserUpdate, requestParams, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.USERUPDATE, requestParams, new RequestCallBack<String>() {
 
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/bg_login_actionbar"
+     >
+
+    <ImageButton
+        android:id="@+id/iv_actionbar_back"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/actionbar_selector"
+        android:clickable="true"
+        android:contentDescription="@null"
+        android:src="@drawable/ic_bar_back" />
+
+    <TextView
+        android:id="@+id/tv_actionbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="16dp"      
+        android:clickable="true"
+        android:text="@string/actionbar_title"
+        android:textColor="@color/white"
+        android:textSize="@dimen/c_text_size" />
+
+</RelativeLayout>

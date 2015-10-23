@@ -65,9 +65,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		et_login_user = (ClearEditText) findViewById(R.id.et_login_user);
 		et_login_password = (ClearEditText) findViewById(R.id.et_login_password);
 		bt_login_check = (Button) findViewById(R.id.bt_login_check);
-		
+
 		bt_login_check.setOnClickListener(this);
-		tv_register=(TextView) findViewById(R.id.tv_login_register);
+		tv_register = (TextView) findViewById(R.id.tv_login_register);
 		tv_register.setOnClickListener(this);
 		iv_login_eye = (ImageView) findViewById(R.id.iv_login_eye);
 		iv_login_eye.setOnClickListener(this);
@@ -98,7 +98,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			changePwdDisplay();
 			break;
 		case R.id.tv_login_register:
-			ActivityUtils.startActivity(mContent, RegisterActivity.class);
+			Intent intent = new Intent("com.nightfair.register.action.callback");
+			startActivityForResult(intent, 1);
+			
 			break;
 		default:
 			break;
@@ -119,12 +121,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			return;
 		} else {
 			RequestParams params = new RequestParams();
-			params.addBodyParameter("key", AppConstants.Key);
+			params.addBodyParameter("key", AppConstants.KEY);
 			params.addBodyParameter("userName", username);
 			params.addBodyParameter("userpassword", MD5Util.MD5(password));
 			final HttpUtils http = BaseApplication.httpUtils;
 			http.configTimeout(3000);
-			http.send(HttpMethod.POST, AppConstants.LoginApiUrl, params, new RequestCallBack<String>() {
+			http.send(HttpMethod.POST, AppConstants.LOGINAPIURL, params, new RequestCallBack<String>() {
 
 				@Override
 				public void onFailure(HttpException arg0, String arg1) {
@@ -162,6 +164,25 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					}
 				}
 			});
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case 1:
+			if (resultCode==Activity.RESULT_OK) {
+				username=data.getStringExtra("phone");
+				password=data.getStringExtra("password");
+				et_login_user.setText(username);
+				et_login_password.setText(password);
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
 

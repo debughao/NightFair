@@ -84,6 +84,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
+        <activity
+            android:name="com.nightfair.mobille.activity.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="com.nightfair.register.action.callback" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -105,14 +120,6 @@
             android:name="com.nightfair.mobile.lib.umeng.CustomActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
-        </activity>
-        <activity
-            android:name=".activity.SettingActivity"
-            android:label="@string/title_activity_setting" >
-        </activity>
-        <activity
-            android:name="com.nightfair.mobille.activity.RegisterActivity"
-            android:label="@string/title_activity_register" >
         </activity>
     </application>
 

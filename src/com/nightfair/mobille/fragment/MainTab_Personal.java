@@ -65,7 +65,6 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	private RelativeLayout rl__wallet;
 	private RelativeLayout rl__recommend;
 	private RelativeLayout rl__feedback;
-	private RelativeLayout rl__update;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,7 +94,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		rl__wallet = (RelativeLayout) personalView.findViewById(R.id.personal_item_wallet);
 		rl__recommend = (RelativeLayout) personalView.findViewById(R.id.personal_item_recommend);
 		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);
-		rl__update = (RelativeLayout) personalView.findViewById(R.id.personal_item_update);
+		
 		rl_about = (RelativeLayout) personalView.findViewById(R.id.personal_item_about);
 		ll_login_normal = (LinearLayout) personalView.findViewById(R.id.ll_login_normal);
 		ll_login_already = (LinearLayout) personalView.findViewById(R.id.ll_login_already);
@@ -105,14 +104,14 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		tvVersionName = (TextView) personalView.findViewById(R.id.tv_version_name);
 		tvVersionName.setText(getString(R.string.setttings_now_version) + VersionUtil.getVersionName(getActivity()));
 		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, ll_logout, rl__comment, rl__wallet,
-				rl__recommend, rl__feedback, rl__update, rl_about);
+				rl__recommend, rl__feedback, rl_about);
 
 	}
 
 	private void inintHeadFace() {
 		tv_nickname.setText(BaseApplication.buyerInfo.getNickname());
 		String image_url = BaseApplication.buyerInfo.getImage();
-		ImageRequest imageRequest = new ImageRequest((AppConstants.ServerIp + image_url), new Listener<Bitmap>() {
+		ImageRequest imageRequest = new ImageRequest((AppConstants.SERVERIP + image_url), new Listener<Bitmap>() {
 			@Override
 			public void onResponse(Bitmap arg0) {
 				iv_face.setImageBitmap(arg0);
@@ -171,9 +170,6 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 			intent = new Intent("com.nightfair.buyer.action.update");
 			startActivityForResult(intent, 1);
 			break;
-		case R.id.personal_item_update:
-			checkUpgrade();
-			break;
 		case R.id.ll_personal_logout:
 			BaseApplication.cookieStore.clear();
 			logout();
@@ -223,34 +219,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		FragmentUtils.startActivity(this, CustomActivity.class);
 	}
 
-	private void checkUpgrade() {
-		// TODO Auto-generated method stub
-		if (NetUtils.isNetAvailable(getActivity())) {
-			UmengUpdateAgent.forceUpdate(getActivity());
-			UmengUpdateAgent.setUpdateListener(new UmengUpdateListener() {
-				@Override
-				public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
-					switch (updateStatus) {
-					case UpdateStatus.Yes:
-						ToastUtil.show(getActivity(), "软件有更新");
-						break;
-
-					case UpdateStatus.No:
-						ToastUtil.show(getActivity(), "已是最新版本");
-						break;
-
-					case UpdateStatus.NoneWifi:
-						ToastUtil.show(getActivity(), "没有wifi连接， 只在wifi下更新");
-						break;
-
-					case UpdateStatus.Timeout:
-						ToastUtil.show(getActivity(), "连接超时");
-						break;
-					}
-				}
-			});
-		}
-	}
+	
 
 	/**
 	 * VISIBLE:0 可见的 ;INVISIBILITY:4 不可见的，但还占着原来的空间; GONE:8 不可见的，不占用原来的布局空间

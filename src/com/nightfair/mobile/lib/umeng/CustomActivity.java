@@ -26,7 +26,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nightfair.mobille.R;
-import com.nightfair.mobille.dialog.FacebookDialog;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.umeng.fb.FeedbackAgent;
 import com.umeng.fb.SyncListener;
@@ -69,7 +68,6 @@ public class CustomActivity extends Activity {
 		mContext = this;
 		ActivityUtils.setActionBarByColor(this, R.layout.title_bar, R.color.title_color);
 		initView();
-		showContact();
 		mComversation = new FeedbackAgent(this).getDefaultConversation();
 		adapter = new ReplyAdapter();
 		mListView.setAdapter(adapter);
@@ -77,11 +75,7 @@ public class CustomActivity extends Activity {
 
 	}
 
-	private void showContact() {
-		FacebookDialog fDialog=new FacebookDialog(mContext);
-		fDialog.show();
-		
-	}
+
 
 	private void initView() {
 		tv_title = (TextView) findViewById(R.id.tv_actionbar_title);
