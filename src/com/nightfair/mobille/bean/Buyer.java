@@ -8,8 +8,6 @@ import com.lidroid.xutils.db.annotation.Id;
 import com.lidroid.xutils.db.annotation.NoAutoIncrement;
 import com.lidroid.xutils.db.annotation.Table;
 /*
- *
- * 
  * @ClassName: Buyer
  * @Description: TODO(用户表)
  * @author debughao
@@ -18,13 +16,13 @@ import com.lidroid.xutils.db.annotation.Table;
 
 @Table(name = "buyer", execAfterTableCreated = "CREATE UNIQUE INDEX index_name ON buyer(username,password)") // 建议加上注解，
 																												// 混淆后表名不受影响
-public class Buyer implements Serializable{
+public class Buyer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@NoAutoIncrement
 	@Column(column = "id")
-	private int  id;
+	private int id;
 	/*
 	 * 用户登录名
 	 */
@@ -42,6 +40,7 @@ public class Buyer implements Serializable{
 	private boolean isLogin;
 	@Finder(valueColumn = "id", targetColumn = "user_id")
 	public BuyerInfo buyerInfo;
+
 	public int getId() {
 		return id;
 	}
@@ -49,6 +48,7 @@ public class Buyer implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -65,8 +65,6 @@ public class Buyer implements Serializable{
 		this.password = password;
 	}
 
-
-
 	public boolean isLogin() {
 		return isLogin;
 	}
@@ -75,7 +73,7 @@ public class Buyer implements Serializable{
 		this.isLogin = isLogin;
 	}
 
-	public Buyer(int id,String username, String password, boolean isLogin) {
+	public Buyer(int id, String username, String password, boolean isLogin) {
 		super();
 		this.id = id;
 		this.username = username;

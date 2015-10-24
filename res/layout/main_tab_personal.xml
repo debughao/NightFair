@@ -114,6 +114,7 @@
                     <TextView
                         style="@style/personal_item_text"
                         android:layout_toRightOf="@id/personal_item_image_collection"
+                        android:layout_toEndOf="@id/personal_item_image_collection"
                         android:text="@string/personal_item_collectiion" />
 
                     <ImageView

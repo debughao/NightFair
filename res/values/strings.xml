@@ -114,5 +114,14 @@
     <string name="cancle">取消</string>
     <string name="confirm">确定</string>
     <string name="loading">正在加载...</string>
+    <!-- 消息页 列表 -->
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="text_message_system">系统消息</string>
+    <string name="text_message_recommended">夜夜通推荐</string>
+    <string name="title_activity_message_listview">MessageListviewActivity</string>
+    <string name="text_message_date">2015年10月24日11:03:49</string>
+    <string name="text_meaasge_title">消息标题</string>
+    <string name="text_meaasge_detail">详情</string>
+    <string name="actionbar_title_message">消息通知</string>
 
 </resources>

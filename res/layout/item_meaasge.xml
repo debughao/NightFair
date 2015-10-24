@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_message_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/message_date_bg"
+        android:text="@string/text_message_date"
+        android:textColor="@color/white"
+        android:textSize="@dimen/b_text_size" />
+
+    <LinearLayout
+        android:id="@+id/ll_message_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/message_content_bg"
+        android:orientation="vertical"
+        android:padding="8dp" >
+
+        <TextView
+               android:id="@+id/tv_message_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/text_meaasge_title"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/a_text_size" />
+
+        <TextView
+               android:id="@+id/tv_message_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/text_meaasge_title"
+            android:textColor="@color/black_text"
+            android:textSize="@dimen/a_text_size" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="@color/divider" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/text_meaasge_detail"
+                android:textColor="@color/tab_title_normal_color"
+                android:textSize="@dimen/item_phone_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_message_right" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

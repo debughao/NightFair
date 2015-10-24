@@ -22,15 +22,12 @@ import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -55,9 +52,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 	private ImageView iv_back;
 	protected Context mContext;
 	private RelativeLayout rl_update, rl_cache, rl_photo, rl_push;
-
 	private SlideSwitchView mSs_Location,mSs_Push;
-
 	private PushAgent mPushAgent;
 
     

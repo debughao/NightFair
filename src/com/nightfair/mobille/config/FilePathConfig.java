@@ -50,5 +50,8 @@ public class FilePathConfig {
 		return getExternalCachePath(context) + File.separator + "hd";
 
 	}
+	public static String getPushMessageDbPath(Context context) {
+		return getExternalCachePath(context) + File.separator + "PushMessage";
+	}
 }
 

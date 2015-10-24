@@ -2,6 +2,7 @@
 package com.nightfair.mobille.db;
 
 import com.nightfair.mobille.db.impl.BuyerDaoImpl;
+import com.nightfair.mobille.db.impl.PushMessageDaoImpl;
 
 import android.content.Context;
 
@@ -39,6 +40,15 @@ public class DaoFactory {
 	 */
 	public BuyerDao getBuyerDao(Context context) {
 		return new BuyerDaoImpl(context);
+	}
+	/**
+	 * 获取推送消息数据库
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public PushMessageDao getPushMessageDao(Context context) {
+		return new PushMessageDaoImpl(context);
 	}
 
 }

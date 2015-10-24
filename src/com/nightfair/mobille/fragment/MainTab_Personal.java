@@ -9,8 +9,8 @@ import com.android.volley.toolbox.Volley;
 import com.nightfair.mobile.lib.umeng.CustomActivity;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.AboutActivity;
-import com.nightfair.mobille.activity.Personal_Collection_Activity;
-import com.nightfair.mobille.activity.Personal_Coupon_Activity;
+import com.nightfair.mobille.activity.PersonalCollectionActivity;
+import com.nightfair.mobille.activity.PersonalCouponActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
@@ -146,11 +146,11 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 			break;
 		case R.id.personal_item_coupon:
 
-			FragmentUtils.startActivity(this, Personal_Coupon_Activity.class);
+			FragmentUtils.startActivity(this, PersonalCouponActivity.class);
 			break;
 		case R.id.personal_item_collection:
 
-			FragmentUtils.startActivity(this, Personal_Collection_Activity.class);
+			FragmentUtils.startActivity(this, PersonalCollectionActivity.class);
 			break;
 		case R.id.personal_item_about:
 			FragmentUtils.startActivity(this, AboutActivity.class);

@@ -22,7 +22,9 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.GET_TASKS" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".base.BaseApplication"
@@ -55,17 +57,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.Personal_Coupon_Activity"
+            android:name=".activity.PersonalCouponActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".activity.Personal_Collection_Activity"
+            android:name=".activity.PersonalCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name=".activity.Personal_detail_Activity"
+            android:name=".activity.PersonaDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <intent-filter>
@@ -94,7 +96,7 @@
             android:theme="@style/AppTheme" >
         </activity>
         <activity
-            android:name="com.nightfair.mobille.activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
             <intent-filter>
@@ -110,6 +112,15 @@
         </activity>
         <activity
             android:name="com.nightfair.mobile.lib.umeng.CustomActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" >
+        </activity>
+        <activity
+            android:name=".activity.MessageActivity"
+            android:label="@string/title_activity_message" >
+        </activity>
+        <activity
+            android:name="com.nightfair.mobille.activity.RecommandMessageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
