@@ -3,6 +3,7 @@
 
     <color name="bg">#f2f2f2</color>
     <color name="title_color">#e75858</color>
+   <color name="write_gray">#f0eeec</color>
     <color name="title_color_deep">#aae75858</color>
     <color name="tab_title_normal_color">#9e9e9f</color>
     <color name="sub_color">#ff6633</color>

@@ -1,16 +1,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+    android:layout_height="match_parent"
+    android:background="@color/write_gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/ll_message_empty"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/no_message_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/text_nomessage"
+            android:textColor="@color/black_text" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_message"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:scrollbars="none">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
     </ListView>
 
 </LinearLayout>

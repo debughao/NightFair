@@ -120,7 +120,7 @@
                 android:layout_toEndOf="@id/iv_register_password"
                 android:layout_toRightOf="@id/iv_register_password"
                 android:hint="@string/text_regiser_password"
-                android:inputType="number"
+                android:inputType="textPassword"
                 android:maxLength="16" >
             </com.nightfair.mobille.view.ClearEditText>
         </RelativeLayout>

@@ -14,7 +14,15 @@
         android:clickable="true"
         android:contentDescription="@null"
         android:src="@drawable/ic_bar_back" />
-
+ <ImageView
+        android:id="@+id/imv_actionbar_divider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/iv_actionbar_back"
+        android:layout_toEndOf="@id/iv_actionbar_back"
+        android:contentDescription="@null"
+        android:src="@drawable/base_action_bar_back_divider" />
     <TextView
         android:id="@+id/tv_actionbar_title"
         android:gravity="center"

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="tv_hint_search">搜索商家、店铺</string>
+    <string name="tv_title_bar_delete">清空</string>
+    <string name="tv_title_bar_inform">通知</string>
+    <string name="tv_title_bar_appname">夜夜通</string>
+    <string name="ic_category_food">美食</string>
+    <string name="ic_category_movie">电影</string>
+    <string name="ic_category_car">公交</string>
+    <string name="ic_category_new">今日推荐</string>
+    <string name="tv_guess_you_like">猜你喜欢</string>
     <string name="app_name">NightFairMobille</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -122,6 +131,11 @@
     <string name="text_message_date">2015年10月24日11:03:49</string>
     <string name="text_meaasge_title">消息标题</string>
     <string name="text_meaasge_detail">详情</string>
-    <string name="actionbar_title_message">消息通知</string>
+    <string name="actionbar_title_push">消息通知</string>
+    <string name="actionbar_title_detail">消息详情</string>
+    <string name="actionbar_title_recommend">夜夜通推荐</string>
+    <string name="title_activity_shop_detail">ShopDetailActivity</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="text_nomessage">你还没有最新的消息</string>
 
 </resources>

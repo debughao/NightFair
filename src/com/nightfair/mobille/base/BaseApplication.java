@@ -71,14 +71,6 @@ public class BaseApplication extends Application {
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);
 		httpUtils.configCookieStore(cookieStore);
-		/**
-		 * 推送消息
-		 */
-		/*
-		 * PushMessage pushMessage =new PushMessage("测试", "测试", "测试", "测试是滴是滴",
-		 * "http://www.baidu.com", "201503", true, false);
-		 * pushMessageDao.insertPushMessage(pushMessage);
-		 */
 		umengPush();
 
 	}
@@ -122,7 +114,7 @@ public class BaseApplication extends Application {
 				 */
 				PushMessage pushMessage = new PushMessage(msg.title, TimesGet.getCurrentTime(), msg.text,
 						msg.extra.get("content"), msg.extra.get("url"), msg.extra.get("seller_id"),
-						Integer.parseInt(msg.extra.get("seller_id")), Integer.parseInt(msg.extra.get("seller_id")));
+						Integer.parseInt(msg.extra.get("isRecommand")), Integer.parseInt(msg.extra.get("isSystem")));
 				pushMessageDao.insertPushMessage(pushMessage);
 				switch (msg.builder_id) {
 				case 1:

@@ -39,7 +39,11 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/title</item>
     </style>
-
+   <style name="title_bar_location">
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:textSize">@dimen/a_text_size</item>
+    </style>
+    
     <style name="user_nickname_text">
         <item name="android:textColor">#ffffffff</item>
         <item name="android:textStyle">bold</item>

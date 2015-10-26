@@ -1,7 +1,6 @@
 package com.nightfair.mobille.fragment;
 
 import com.nightfair.mobille.R;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +10,7 @@ import android.view.ViewGroup;
 public class MainTab_Index extends Fragment {
 
 	private View indexView;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,7 +25,8 @@ public class MainTab_Index extends Fragment {
 		if (parent != null) {
 			parent.removeView(indexView);
 		}
+		
 		return indexView;
 	}
-
+	
 }

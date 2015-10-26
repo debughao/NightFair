@@ -1,7 +1,6 @@
 package com.nightfair.mobille.activity;
 
 import java.io.File;
-
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
@@ -22,6 +21,7 @@ import com.umeng.update.UmengUpdateAgent;
 import com.umeng.update.UmengUpdateListener;
 import com.umeng.update.UpdateResponse;
 import com.umeng.update.UpdateStatus;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -78,6 +78,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		rl_photo = (RelativeLayout) findViewById(R.id.rl_setting_wifi_photo);
 		rl_push = (RelativeLayout) findViewById(R.id.rl_setting_push);
 		mTvVersionName = (TextView) findViewById(R.id.tv_setting_version);
+		mTvCacheSize=(TextView) findViewById(R.id.tv_cache_size);
 		mSs_Location=(SlideSwitchView) findViewById(R.id.ss_location);
 		mSs_Location.setOnChangeListener(this);
 		mSs_Push=(SlideSwitchView) findViewById(R.id.ss_push);
@@ -189,6 +190,8 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 				
 				try {
 					mExternCacheSize = Long.valueOf(resultString);
+//					LogUtils.e("格式化之前"+mExternCacheSize);
+//					LogUtils.e("格式化之h后"	+FileUtils.formatSize(mExternCacheSize));
 					mTvCacheSize.setText(FileUtils.formatSize(mExternCacheSize));
 				} catch (Exception e) {
 					

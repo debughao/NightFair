@@ -208,6 +208,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	}
 
 	protected void sendCode() {
+		
 		BmobSMS.requestSMSCode(mContext, phone, "注册模板", new RequestSMSCodeListener() {
 
 			@Override

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:baselineAligned="false"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/rl_index_item_img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1" >
+
+        <ImageView
+            android:id="@+id/iv_index_item"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:background="#111111"
+            android:contentDescription="@null"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_index_item_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3" >
+
+        <RelativeLayout
+            android:id="@+id/rl_index_item_text_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                />
+            <!-- 图片大小问题 -->
+            <TextView
+                android:id="@+id/tv_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="15dp"
+                android:drawableLeft="@drawable/ic_distance1"
+                android:gravity="center_vertical"
+                android:textColor="#707070"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_index_item_text_top"
+            android:paddingRight="20dp"
+            android:textColor="#707070"
+            android:textSize="12sp" />
+        
+        <RelativeLayout
+            android:id="@+id/rl_index_item_text_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_detail">
+            <!-- 图片大小问题 -->
+            <TextView 
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_money"
+                android:textColor="@color/title_color"
+                android:gravity="center_vertical"
+                android:textSize="25sp"/>
+            
+            <TextView 
+                android:id="@+id/tv_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#707070"
+                android:textSize="12sp"/>
+            
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

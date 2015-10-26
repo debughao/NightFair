@@ -64,8 +64,6 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		if (personalView == null) {
 			personalView = inflater.inflate(R.layout.main_tab_personal, container, false);
 		}
-		// 缓存的rootView需要判断是否已经被加过parent，
-		// 如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
 		ViewGroup parent = (ViewGroup) personalView.getParent();
 		if (parent != null) {
 			parent.removeView(personalView);
@@ -85,8 +83,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		rl__comment = (RelativeLayout) personalView.findViewById(R.id.personal_item_comment);
 		rl__wallet = (RelativeLayout) personalView.findViewById(R.id.personal_item_wallet);
 		rl__recommend = (RelativeLayout) personalView.findViewById(R.id.personal_item_recommend);
-		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);
-		
+		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);	
 		rl_about = (RelativeLayout) personalView.findViewById(R.id.personal_item_about);
 		ll_login_normal = (LinearLayout) personalView.findViewById(R.id.ll_login_normal);
 		ll_login_already = (LinearLayout) personalView.findViewById(R.id.ll_login_already);

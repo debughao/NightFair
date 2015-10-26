@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.common.message.Log;
@@ -34,6 +36,16 @@ public class CustomNotificationHandler extends UmengNotificationClickHandler {
 	public void openActivity(Context context, UMessage msg) {
 		Log.d(TAG, "openActivity");
 		super.openActivity(context, msg);
+		if ((msg.activity == null) || (TextUtils.isEmpty(msg.activity.trim()))) {
+			return;
+		}
+		Intent localIntent = new Intent();
+		
+		localIntent.setClassName(context, msg.activity);
+		localIntent.addFlags(268435456);
+		localIntent.putExtra("seller_id", msg.extra.get("seller_id").toString());
+		localIntent.putExtra("url", msg.extra.get("url").toString());
+		context.startActivity(localIntent);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("action", "open_activity");
 		MobclickAgent.onEvent(context, "click_notification", map);

@@ -48,7 +48,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 */
 	private FragmentManager fragmentManager;
 	private long mExitTime;
-	private ImageView iv_setting;
+	private ImageView iv_setting,iv_message;
+
 	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
@@ -117,7 +118,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		switch (index) {
 		case 0:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
-
+			ActivityUtils.setActionBarLayout(getActionBar(), MainActivity.this, R.layout.title_bar_index);
+			ActivityUtils.setTranslucentStatus(getWindow(), true);
+			ActivityUtils.setStatusBarColor(R.color.title_color, this);
 			mBtnindex.setImageResource(R.drawable.tab_index_pressed);
 			mTvIndex.setTextColor(getResources().getColor(R.color.title_color));
 			if (mTab01 == null) {
@@ -176,11 +179,20 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void inintPersonalBar() {
+		iv_message= (ImageView) findViewById(R.id.iv_title_bar_message);
 		iv_setting=(ImageView) findViewById(R.id.iv_title_bar_setting);
 		 iv_setting.setOnClickListener(new OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				ActivityUtils.startActivity(mContext, SettingActivity.class);				
+			}
+		});
+		 iv_message.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ActivityUtils.startActivity(mContext, MessageActivity.class);	
+				
 			}
 		});
 	}

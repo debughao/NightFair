@@ -25,7 +25,7 @@ public class PushMessageDaoImpl implements PushMessageDao {
 
 	}
 	private void init() {
-		this.db = DbUtils.create(context, FilePathConfig.getPushMessageDbPath(context),"pushMessage_recommand.db");
+		this.db = DbUtils.create(context, "pushMessage_recommand.db");
 		db.configAllowTransaction(true);
 		db.configDebug(true);
 		try {
@@ -37,7 +37,7 @@ public class PushMessageDaoImpl implements PushMessageDao {
 	}
 	@Override
 	public void insertPushMessage(PushMessage message) {
-		try {
+		try {			
 			PushMessage findItem = db.findFirst(Selector.from(PushMessage.class).where("title", "=", message.getTitle()));
 			if (findItem != null) {
 				db.update(message, WhereBuilder.b("title", "=", message.getTitle()));
@@ -51,6 +51,7 @@ public class PushMessageDaoImpl implements PushMessageDao {
 
 	@Override
 	public List<PushMessage> queryAllRecommendMessage() {
+
 		List<PushMessage> pushMessages = new  ArrayList<PushMessage>();
 		try {
 			pushMessages=db.findAll(Selector.from(PushMessage.class).where("isRecommand", "=", 1));
@@ -62,6 +63,7 @@ public class PushMessageDaoImpl implements PushMessageDao {
 	}
 	@Override
 	public List<PushMessage> queryAllSystemMessage() {
+		
 		List<PushMessage> pushMessages = new  ArrayList<PushMessage>();
 		try {
 			pushMessages=db.findAll(Selector.from(PushMessage.class).where("isSystem", "=", 1));
