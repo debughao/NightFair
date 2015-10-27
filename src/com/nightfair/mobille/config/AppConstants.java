@@ -13,5 +13,5 @@ public class AppConstants {
 	public final static String LOGINAPIURL = SERVERIP+"/NightFair/buyer/login";
 	public final static String USERUPDATE=SERVERIP+"/NightFair/buyer/update";
 	public final static String REGISTER=SERVERIP+"/NightFair/buyer/register";
-	
+	public final static String INDEXSHOP=SERVERIP+"/NightFair/GetGoodsServlet";
 }

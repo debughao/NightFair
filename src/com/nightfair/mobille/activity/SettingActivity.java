@@ -51,7 +51,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 	private TextView mTv_title, mTvVersionName,mTvCacheSize;
 	private ImageView iv_back;
 	protected Context mContext;
-	private RelativeLayout rl_update, rl_cache, rl_photo, rl_push;
+	private RelativeLayout rl_update, rl_cache, rl_photo, rl_chat;
 	private SlideSwitchView mSs_Location,mSs_Push;
 	private PushAgent mPushAgent;
 
@@ -76,7 +76,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		rl_update = (RelativeLayout) findViewById(R.id.rl_setting_update);
 		rl_cache = (RelativeLayout) findViewById(R.id.rl_setting_remove_photo);
 		rl_photo = (RelativeLayout) findViewById(R.id.rl_setting_wifi_photo);
-		rl_push = (RelativeLayout) findViewById(R.id.rl_setting_push);
+		rl_chat = (RelativeLayout) findViewById(R.id.rl_setting_chat);
 		mTvVersionName = (TextView) findViewById(R.id.tv_setting_version);
 		mTvCacheSize=(TextView) findViewById(R.id.tv_cache_size);
 		mSs_Location=(SlideSwitchView) findViewById(R.id.ss_location);
@@ -84,7 +84,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		mSs_Push=(SlideSwitchView) findViewById(R.id.ss_push);
 		mSs_Push.setOnChangeListener(this);
 		mTvVersionName.setText(getString(R.string.text_setttings_now_version) + VersionUtil.getVersionName(this));
-		mySetOnClickListener(iv_back, rl_update, rl_cache, rl_photo, rl_push);
+		mySetOnClickListener(iv_back, rl_update, rl_cache, rl_photo, rl_chat);
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -112,8 +112,8 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		case R.id.rl_setting_location:
 			ToastUtil.show(mContext, "点击了3");
 			break;
-		case R.id.rl_setting_push:
-			ToastUtil.show(mContext, "点击了4");
+		case R.id.rl_setting_chat:
+			ActivityUtils.startActivity(mContext, ChatSetActivity.class);
 			break;
 		default:
 			break;

@@ -6,6 +6,8 @@
     android:background="@color/bg"
     android:orientation="vertical" >
 
+    <include layout="@layout/title_bar_personal" />
+
     <LinearLayout
         android:id="@+id/ll_login_normal"
         android:layout_width="fill_parent"
@@ -113,8 +115,8 @@
 
                     <TextView
                         style="@style/personal_item_text"
-                        android:layout_toRightOf="@id/personal_item_image_collection"
                         android:layout_toEndOf="@id/personal_item_image_collection"
+                        android:layout_toRightOf="@id/personal_item_image_collection"
                         android:text="@string/personal_item_collectiion" />
 
                     <ImageView
@@ -235,7 +237,8 @@
                         android:contentDescription="@null"
                         android:src="@drawable/personal_itme_right" />
                 </RelativeLayout>
-             <View
+
+                <View
                     android:layout_width="fill_parent"
                     android:layout_height="1px"
                     android:background="@color/divider" />

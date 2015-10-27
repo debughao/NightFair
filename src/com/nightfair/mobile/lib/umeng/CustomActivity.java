@@ -71,7 +71,7 @@ public class CustomActivity extends Activity {
 		mComversation = new FeedbackAgent(this).getDefaultConversation();
 		adapter = new ReplyAdapter();
 		mListView.setAdapter(adapter);
-		sync();
+	
 
 	}
 

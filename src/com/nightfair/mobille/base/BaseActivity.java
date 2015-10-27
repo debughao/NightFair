@@ -13,7 +13,6 @@ import android.os.Bundle;
  */
 
 public class BaseActivity extends Activity {
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,5 +38,5 @@ public class BaseActivity extends Activity {
 	public void finish() {
 	
 		super.finish();
-	}
+	}	
 }

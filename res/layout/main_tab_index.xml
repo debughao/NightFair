@@ -5,7 +5,119 @@
     android:layout_height="fill_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
+    <include layout="@layout/title_bar_index" />
+    <!-- 设置垂直滚动条 -->
 
-    
+    <ScrollView
+        android:id="@+id/sv_index_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- 自动轮播的广告栏 -->
+
+            <krelve.view.Kanner
+                android:id="@+id/kanner"
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
+
+            <!-- 导航栏 -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp" >
+
+                <TextView
+                    android:id="@+id/tv_food"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_category_food_for_map"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ic_category_food"
+                    android:textSize="14sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_movies"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_category_movie_for_map"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ic_category_movie"
+                    android:textSize="14sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_transit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_category_travel_for_map"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ic_category_car"
+                    android:textSize="14sp" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tv_recommendation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableTop="@drawable/ic_category_new_for_map"
+                    android:gravity="center_horizontal"
+                    android:text="@string/ic_category_new"
+                    android:textSize="14sp" >
+                </TextView>
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/divider" />
+
+            <TextView
+                android:id="@+id/tv_guess_you_like"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/tv_guess_you_like"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/divider" />
+
+            <com.nightfair.mobille.view.FullyListView
+                android:id="@+id/lv_index_item_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </com.nightfair.mobille.view.FullyListView>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/divider" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="查看更多" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

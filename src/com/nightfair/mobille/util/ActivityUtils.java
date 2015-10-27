@@ -39,10 +39,10 @@ public class ActivityUtils {
 			actionBar.setCustomView(v, layout);
 		}
 	}
-
 	public static void setStatusBarColor(int res, Activity activity) {
 		SystemBarTintManager tintManager = new SystemBarTintManager(activity);
 		tintManager.setStatusBarTintEnabled(true);
+		tintManager.setNavigationBarTintEnabled(false);
 		tintManager.setStatusBarTintResource(res);
 		
 	}

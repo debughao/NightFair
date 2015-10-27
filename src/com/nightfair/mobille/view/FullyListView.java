@@ -12,11 +12,9 @@ import android.widget.ListView;
 public class FullyListView extends ListView {
 
 	/*ScrollView parentScrollView;
-
     public ScrollView getParentScrollView() {
         return parentScrollView;
     }
-
     public void setParentScrollView(ScrollView parentScrollView) {
         this.parentScrollView = parentScrollView;
     }*/
@@ -44,16 +42,12 @@ public class FullyListView extends ListView {
 
 	/*@Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-
                 setParentScrollAble(false);
             case MotionEvent.ACTION_MOVE:
-
                 break;
             case MotionEvent.ACTION_UP:
-
             case MotionEvent.ACTION_CANCEL:
                 setParentScrollAble(true);
                 break;
@@ -67,7 +61,6 @@ public class FullyListView extends ListView {
      * @param flag
      */
     /*private void setParentScrollAble(boolean flag) {
-
         parentScrollView.requestDisallowInterceptTouchEvent(!flag);
     }*/
 

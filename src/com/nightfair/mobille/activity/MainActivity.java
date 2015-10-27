@@ -7,7 +7,6 @@ import com.nightfair.mobille.fragment.MainTab_Index;
 import com.nightfair.mobille.fragment.MainTab_Nearby;
 import com.nightfair.mobille.fragment.MainTab_Personal;
 import com.nightfair.mobille.util.ActivityUtils;
-
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -16,13 +15,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @SuppressLint("ResourceAsColor")
 public class MainActivity extends BaseActivity implements OnClickListener {
-  private  MainActivity mContext;
+	private MainActivity mContext;
 	private MainTab_Index mTab01;
 	private MainTab_Nearby mTab02;
 	private MainTab_Chat mTab03;
@@ -48,23 +46,21 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	 */
 	private FragmentManager fragmentManager;
 	private long mExitTime;
-	private ImageView iv_setting,iv_message;
-
 	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		mContext=this;
-		ActivityUtils.setActionBarLayout(getActionBar(), MainActivity.this, R.layout.title_bar);
-		ActivityUtils.setTranslucentStatus(getWindow(), true);
+		mContext = this;
+		ActivityUtils.setTranslucentStatus(this.getWindow(), true);
 		ActivityUtils.setStatusBarColor(R.color.title_color, this);
 		initViews();
 		fragmentManager = getFragmentManager();
 		setTabSelection(0);
 		// 初始化BmobSDK
 	}
+
 
 	private void initViews() {
 
@@ -118,9 +114,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		switch (index) {
 		case 0:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
-			ActivityUtils.setActionBarLayout(getActionBar(), MainActivity.this, R.layout.title_bar_index);
-			ActivityUtils.setTranslucentStatus(getWindow(), true);
-			ActivityUtils.setStatusBarColor(R.color.title_color, this);
 			mBtnindex.setImageResource(R.drawable.tab_index_pressed);
 			mTvIndex.setTextColor(getResources().getColor(R.color.title_color));
 			if (mTab01 == null) {
@@ -135,8 +128,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		case 1:
 			// 当点击了消息tab时，改变控件的图片和文字颜色
 			mBtnNearby.setImageResource(R.drawable.tab_nearby_pressed);
-
 			mTvNearby.setTextColor(getResources().getColor(R.color.title_color));
+
 			if (mTab02 == null) {
 				// 如果MessageFragment为空，则创建一个并添加到界面上
 				mTab02 = new MainTab_Nearby();
@@ -162,9 +155,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		case 3:
 			// 当点击了设置tab时，改变控件的图片和文字颜色
 			mBtnPersonal.setImageResource(R.drawable.tab_personal_pressed);
-			mTvPersonal.setTextColor(getResources().getColor(R.color.title_color));		
-			ActivityUtils.setActionBarByColor(this, R.layout.title_bar_personal, R.color.title_color);
-			inintPersonalBar();
+			mTvPersonal.setTextColor(getResources().getColor(R.color.title_color));
+
 			if (mTab04 == null) {
 				// 如果SettingFragment为空，则创建一个并添加到界面上
 				mTab04 = new MainTab_Personal();
@@ -176,25 +168,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 		transaction.commit();
-	}
-
-	private void inintPersonalBar() {
-		iv_message= (ImageView) findViewById(R.id.iv_title_bar_message);
-		iv_setting=(ImageView) findViewById(R.id.iv_title_bar_setting);
-		 iv_setting.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				ActivityUtils.startActivity(mContext, SettingActivity.class);				
-			}
-		});
-		 iv_message.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				ActivityUtils.startActivity(mContext, MessageActivity.class);	
-				
-			}
-		});
 	}
 
 	/**
@@ -221,19 +194,19 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private void hideFragments(FragmentTransaction transaction) {
 		if (mTab01 != null) {
 			transaction.hide(mTab01);
-		
+
 		}
 		if (mTab02 != null) {
 			transaction.hide(mTab02);
-			
+
 		}
 		if (mTab03 != null) {
 			transaction.hide(mTab03);
-			
+
 		}
 		if (mTab04 != null) {
 			transaction.hide(mTab04);
-		
+
 		}
 
 	}

@@ -2,7 +2,6 @@ package com.nightfair.mobille.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.HttpUtils;
@@ -12,10 +11,11 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.nightfair.mobille.R;
-import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.base.Activitybase;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.bean.Buyer;
 import com.nightfair.mobille.bean.BuyerInfo;
+import com.nightfair.mobille.bean.User;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
@@ -25,6 +25,7 @@ import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.ClearEditText;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -34,9 +35,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.im.util.BmobLog;
+import cn.bmob.v3.listener.SaveListener;
 
 @SuppressLint("ResourceAsColor")
-public class LoginActivity extends BaseActivity implements OnClickListener {
+public class LoginActivity extends Activitybase implements OnClickListener {
 
 	private TextView tv_login_cancel;
 	private ClearEditText et_login_user;
@@ -109,6 +112,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void normalLogin() {
+		final ProgressDialog progress = new ProgressDialog(
+				LoginActivity.this);
+		progress.setMessage("正在登陆...");
+		progress.setCanceledOnTouchOutside(false);
+		progress.show();
 		username = et_login_user.getText().toString().trim();
 		password = et_login_password.getText().toString().trim();
 		if (TextUtils.isEmpty(username)) {
@@ -119,7 +127,30 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			et_login_password.setShakeAnimation();
 			ActivityUtils.showShortToast(mContent, "密码不能为空");
 			return;
-		} else {
+		} else {					
+			User user = new User();
+			user.setUsername(username);
+			user.setPassword(password);
+			userManager.login(user, new SaveListener() {
+				
+				@Override
+				public void onSuccess() {
+//					runOnUiThread(new Runnable() {
+//						public void run() {
+//							progress.setMessage("正在获取好友列表...");
+//						}
+//					});
+					//更新用户的地理位置以及好友的资料
+					updateUserInfos();
+				}			
+				@Override
+				public void onFailure( int arg0, String arg1) {
+					progress.dismiss();
+					BmobLog.i(arg1);
+					ShowToast("登录失败");
+				}
+			});
+			
 			RequestParams params = new RequestParams();
 			params.addBodyParameter("key", AppConstants.KEY);
 			params.addBodyParameter("userName", username);
@@ -141,6 +172,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 						JSONObject jsonObject = new JSONObject(arg0.result.toString());
 						resultStatus = jsonObject.get("status").toString();
 						if ("200".equals(resultStatus)) {
+							progress.dismiss();
 							int userid = jsonObject.getInt("user_id");
 							Buyer buyer = new Buyer(userid, username, password, true);
 							String result = jsonObject.optString("info");

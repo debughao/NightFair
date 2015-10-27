@@ -54,8 +54,10 @@
                         android:layout_height="80dp"
                         android:layout_marginBottom="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_toLeftOf="@id/iv_ps_detail_right"
+                        android:layout_toStartOf="@id/iv_ps_detail_right"
                         android:src="@drawable/my_dd_icon_default"
                         app:border_color="@color/user_image_circle2"
                         app:border_width="2dp" />
@@ -80,6 +82,7 @@
                         android:id="@+id/et_ps_detail_nickname"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_nickname"
+                         android:layout_toEndOf="@id/tv_ps_detail_nickname"
                         android:hint="@string/et_ps_detail_nickname_text"
                         android:maxLength="13" >
                     </com.nightfair.mobille.view.MyEditText>
@@ -104,6 +107,7 @@
                         android:id="@+id/tvv_ps_detail_sex"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_sex"
+                        android:layout_toEndOf="@id/tv_ps_detail_sex"
                         android:hint="@string/text_personal_sex" />
 
                     <ImageView
@@ -131,6 +135,7 @@
                         android:id="@+id/tvv_ps_detail_age"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_age"
+                         android:layout_toEndOf="@id/tv_ps_detail_age" 
                         android:hint="@string/text_personal_age" />
 
                     <ImageView
@@ -158,6 +163,7 @@
                         android:id="@+id/tvv_ps_detail_star"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_star"
+                        android:layout_toEndOf="@id/tv_ps_detail_star"
                         android:hint="@string/text_personal_star" />
 
                     <ImageView
@@ -198,6 +204,7 @@
                         android:id="@+id/tvv_ps_detail_hometown"
                         style="@style/personal_detail_edit"
                         android:layout_toRightOf="@id/tv_ps_detail_hometown"
+                        android:layout_toEndOf="@id/tv_ps_detail_hometown"
                         android:hint="@string/text_ps_detail_hometown" />
 
                     <ImageView
@@ -225,7 +232,9 @@
                         android:id="@+id/tvv_ps_detail_address"
                         style="@style/personal_detail_edit"
                         android:layout_marginLeft="34dp"
+                        android:layout_marginStart="34dp"
                         android:layout_toRightOf="@id/tv_ps_detail_address"
+                        android:layout_toEndOf="@id/tv_ps_detail_address"
                         android:hint="@string/text_ps_detail_address" />
 
                     <ImageView
@@ -243,7 +252,6 @@
                     android:id="@+id/personal_detail_autograph"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="15dp"
                     android:background="@drawable/menu_option_bg" >
@@ -267,7 +275,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="90dp"
+                        android:layout_marginStart="90dp"
                         android:layout_toLeftOf="@id/iv_autograph"
+                        android:layout_toStartOf="@id/iv_autograph"
                         android:textSize="@dimen/c_text_size"
                         android:hint="@string/text_ps_detail_autograph" />
                 </RelativeLayout>

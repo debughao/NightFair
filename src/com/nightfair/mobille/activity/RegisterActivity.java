@@ -2,6 +2,7 @@ package com.nightfair.mobille.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -10,6 +11,8 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.Activitybase;
+import com.nightfair.mobille.bean.User;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
@@ -17,7 +20,9 @@ import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.StringUtils;
 import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.ClearEditText;
+
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -26,12 +31,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.bmob.im.util.BmobLog;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.sms.exception.BmobException;
 import cn.bmob.sms.listener.RequestSMSCodeListener;
 import cn.bmob.sms.listener.VerifySMSCodeListener;
+import cn.bmob.v3.BmobInstallation;
+import cn.bmob.v3.listener.SaveListener;
 
-public class RegisterActivity extends Activity implements OnClickListener {
+public class RegisterActivity extends Activitybase implements OnClickListener {
 
 	private RegisterActivity mContext;
 	private TextView tv_title;
@@ -103,15 +111,67 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			public void done(BmobException ex) {
 				if (ex == null) {// 短信验证码已验证成功
 					LogUtils.e("验证通过");
-					subRegister();
-
+					 registerChat();
+					subRegister();					
 				} else {
+					 registerChat();
+						subRegister();
 					ToastUtil.show(mContext, ErrCodeUtils.ERROR_VERCODE_ERROR);
 					LogUtils.e("验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
 				}
 			}
 		});
 
+	}
+
+	protected void registerChat() {
+		// TODO Auto-generated method stub
+		//检查是否有网络
+				boolean isNetConnected = NetUtils.isNetworkAvailable(this);
+				if(!isNetConnected){
+					ToastUtil.show(mContext,getString(R.string.network_tips));
+					return;
+				}
+				
+				final ProgressDialog progress = new ProgressDialog(RegisterActivity.this);
+				progress.setMessage("正在注册...");
+				progress.setCanceledOnTouchOutside(false);
+				progress.show();
+				
+				//由于每个应用的注册所需的资料都不一样，故IM sdk未提供注册方法，用户可按照bmod SDK的注册方式进行注册。
+				//注册的时候需要注意两点：1、User表中绑定设备id和type，2、设备表中绑定username字段
+				final User bu = new User();
+				bu.setUsername(phone);
+				bu.setPassword(password);
+				//将user和设备id进行绑定aa
+				bu.setSex(true);
+				bu.setDeviceType("android");
+				bu.setInstallId(BmobInstallation.getInstallationId(this));
+				bu.signUp(RegisterActivity.this, new SaveListener() {
+
+					@Override
+					public void onSuccess() {
+						progress.dismiss();
+						
+						// 将设备与username进行绑定
+						userManager.bindInstallationForRegister(bu.getUsername());
+						//更新地理位置信息
+						updateUserLocation();
+						//发广播通知登陆页面退出
+						//sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
+						// 启动主页
+//						Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
+//						startActivity(intent);
+//						finish();			
+					}
+
+					@Override
+					public void onFailure(int arg0, String arg1) {
+						BmobLog.i(arg1);
+						ToastUtil.show(mContext,"注册失败:用户名已存在!");
+						progress.dismiss();
+					}
+				});
 	}
 
 	protected void subRegister() {

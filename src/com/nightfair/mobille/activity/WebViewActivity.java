@@ -2,9 +2,9 @@ package com.nightfair.mobille.activity;
 
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.util.ActivityUtils;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,13 +18,14 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.GeolocationPermissions.Callback;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 @SuppressLint("SetJavaScriptEnabled")
-public class WebViewActivity extends Activity implements OnClickListener {
+public class WebViewActivity extends BaseActivity implements OnClickListener {
 	protected Context mContext;
 	private TextView mTv_title;
 	private ImageView iv_back;
@@ -32,6 +33,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 	private WebView mWebView;
 	private String url;
 	private ProgressBar mProgressBar; // 进度条
+
 	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 		iv_back.setOnClickListener(this);
 		mReLoadImageView.setOnClickListener(this);
 		mReLoadImageView.setOnClickListener(this);
-		
+
 	}
 
 	private void initWebView() {
@@ -63,7 +65,11 @@ public class WebViewActivity extends Activity implements OnClickListener {
 		mWebView.getSettings().setJavaScriptEnabled(true);
 		mWebView.getSettings().setDefaultTextEncodingName("utf-8");
 		mWebView.getSettings().setAppCacheEnabled(true);
+		// 启用数据库
 		mWebView.getSettings().setDatabaseEnabled(true);
+		String dir = this.getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath();
+		mWebView.getSettings().setGeolocationDatabasePath(dir);
+		mWebView.getSettings().setGeolocationEnabled(true);		
 		// LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
 		// LOAD_DEFAULT: 根据cache-control决定是否从网络上取数据。
 		// 总结：根据以上两种模式，建议缓存策略为，判断是否有网络，有的话，使用LOAD_DEFAULT，无网络时，使用LOAD_CACHE_ELSE_NETWORK。
@@ -71,7 +77,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 		mWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				loadurl(view, url);// 载入网页				
+				loadurl(view, url);// 载入网页
 				return true;
 			}
 
@@ -94,16 +100,22 @@ public class WebViewActivity extends Activity implements OnClickListener {
 				// TODO Auto-generated method stub
 				mWebView.setVisibility(View.GONE);
 				mReLoadImageView.setVisibility(View.VISIBLE);
-				
+
 				Toast.makeText(mContext, description + " 错误代码：" + errorCode, Toast.LENGTH_SHORT).show();
 				super.onReceivedError(view, errorCode, description, failingUrl);
 			}
+			
 		});
-		
+
 		mWebView.setWebChromeClient(new WebChromeClient() {
 			public void onProgressChanged(WebView view, int progress) {// 载入进度改变而触发
-				LogUtils.e("百分比"+progress);
+				LogUtils.e("百分比" + progress);
 				super.onProgressChanged(view, progress);
+			}
+			@Override
+			public void onGeolocationPermissionsShowPrompt(String origin, Callback callback) {
+				callback.invoke(origin, true, false);
+				super.onGeolocationPermissionsShowPrompt(origin, callback);
 			}
 		});
 		/**
@@ -115,7 +127,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 					long contentLength) {
 				// download(url);
 			}
-			
+
 		});
 
 	}
@@ -134,6 +146,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 			}
 		});
 	}
+
 	/**
 	 * 重新加载
 	 */
@@ -142,6 +155,7 @@ public class WebViewActivity extends Activity implements OnClickListener {
 		mProgressBar.setVisibility(View.VISIBLE);
 		mWebView.reload();
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

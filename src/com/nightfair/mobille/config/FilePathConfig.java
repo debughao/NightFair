@@ -27,7 +27,6 @@ public class FilePathConfig {
 	 * @return
 	 */
 	public static String getTemp(Context c) {
-
 		return FileUtils.getPicturesStorageDir(c, "temp").getAbsolutePath();
 	}
 

@@ -9,8 +9,10 @@ import com.android.volley.toolbox.Volley;
 import com.nightfair.mobile.lib.umeng.CustomActivity;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.AboutActivity;
+import com.nightfair.mobille.activity.MessageActivity;
 import com.nightfair.mobille.activity.PersonalCollectionActivity;
 import com.nightfair.mobille.activity.PersonalCouponActivity;
+import com.nightfair.mobille.activity.SettingActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
@@ -18,6 +20,7 @@ import com.nightfair.mobille.util.FragmentUtils;
 import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.widget.CircleImageView;
 import com.umeng.fb.FeedbackAgent;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
@@ -29,6 +32,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,7 +61,8 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	private RelativeLayout rl__wallet;
 	private RelativeLayout rl__recommend;
 	private RelativeLayout rl__feedback;
-
+	private ImageView iv_setting,iv_message;
+	@SuppressLint("ResourceAsColor")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -67,7 +72,8 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ViewGroup parent = (ViewGroup) personalView.getParent();
 		if (parent != null) {
 			parent.removeView(personalView);
-		}
+		}		
+		inintPersonalBar();
 		inintView();
 		queue = Volley.newRequestQueue(getActivity());
 		if (BaseApplication.userid != 0) {
@@ -89,14 +95,30 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_login_already = (LinearLayout) personalView.findViewById(R.id.ll_login_already);
 		ll_logout = (LinearLayout) personalView.findViewById(R.id.ll_personal_logout);
 		tv_nickname = (TextView) personalView.findViewById(R.id.tv_fm_nickname);
-		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);
-	
-		
+		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);		
 		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, ll_logout, rl__comment, rl__wallet,
 				rl__recommend, rl__feedback, rl_about);
 
 	}
 
+	private void inintPersonalBar() {
+		iv_message= (ImageView) personalView.findViewById(R.id.iv_title_bar_message);
+		iv_setting=(ImageView)  personalView.findViewById(R.id.iv_title_bar_setting);
+		 iv_setting.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				ActivityUtils.startActivity(getActivity(), SettingActivity.class);				
+			}
+		});
+		 iv_message.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ActivityUtils.startActivity(getActivity(), MessageActivity.class);	
+				
+			}
+		});
+	}
 	private void inintHeadFace() {
 		tv_nickname.setText(BaseApplication.buyerInfo.getNickname());
 		String image_url = BaseApplication.buyerInfo.getImage();
@@ -112,19 +134,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 				iv_face.setImageResource(R.drawable.my_dd_icon_default);
 			}
 		});
-		queue.add(imageRequest);
-		/**
-		 * 下面使用xutils
-		 * 的BitmapUtils加载图片出问题，对于imageview没问题，可能是使用自定义控件CircleImageView的原因，
-		 * 兼容性需要处理
-		 */
-		// BitmapUtils bitmapUtils =new BitmapUtils(getActivity(),
-		// FilePathConfig.getHeadFaceParh(getActivity()));
-		// bitmapUtils.configDefaultBitmapConfig(Config.RGB_565);
-		// BitmapSize bitmapMaxSize=new BitmapSize(80, 80);
-		// bitmapUtils.configDefaultAutoRotation(true);
-		// bitmapUtils.configDefaultBitmapMaxSize(bitmapMaxSize);
-		// bitmapUtils.display(iv_face, (AppConstants.ServerIp+image_url));
+		queue.add(imageRequest);	
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -218,6 +228,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_login_normal.setVisibility(View.VISIBLE);// 显示未登录界面
 		ll_login_already.setVisibility(View.GONE);// 隐藏登录后界面
 		ll_logout.setVisibility(View.GONE);// 隐藏注销界面
+		BaseApplication.getInstance().logout();
 		BaseApplication.userid=0;
 		BaseApplication.cookieStore.clear();
 		BaseApplication.mBuyerDao.logout(BaseApplication.userid);

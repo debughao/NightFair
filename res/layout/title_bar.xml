@@ -14,23 +14,39 @@
         android:clickable="true"
         android:contentDescription="@null"
         android:src="@drawable/ic_bar_back" />
- <ImageView
+
+    <ImageView
         android:id="@+id/imv_actionbar_divider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/iv_actionbar_back"
         android:layout_toEndOf="@id/iv_actionbar_back"
+        android:layout_toRightOf="@id/iv_actionbar_back"
         android:contentDescription="@null"
         android:src="@drawable/base_action_bar_back_divider" />
+
     <TextView
         android:id="@+id/tv_actionbar_title"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_centerInParent="true"
+        android:gravity="center"
+        android:maxEms="12"
+        android:singleLine="true"
         android:text="@string/actionbar_title"
         android:textColor="@color/white"
         android:textSize="@dimen/c_text_size" />
+
+    <Button
+        android:id="@+id/btn_right_send"
+        android:layout_width="45dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="16dp"
+        android:background="@color/common_btn_send"
+        android:textColor="@color/base_color_text_white"
+        android:textSize="@dimen/text_size_medium"
+        android:visibility="gone" />
 
 </RelativeLayout>

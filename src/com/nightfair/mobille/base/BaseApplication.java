@@ -1,8 +1,15 @@
 package com.nightfair.mobille.base;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.mapapi.SDKInitializer;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.util.LogUtils;
@@ -14,7 +21,16 @@ import com.nightfair.mobille.db.BuyerDao;
 import com.nightfair.mobille.db.DaoFactory;
 import com.nightfair.mobille.db.PushMessageDao;
 import com.nightfair.mobille.service.CustomNotificationHandler;
+import com.nightfair.mobille.util.CollectionUtils;
+import com.nightfair.mobille.util.SharePreferenceUtil;
 import com.nightfair.mobille.util.TimesGet;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 import com.umeng.message.UmengMessageHandler;
@@ -23,12 +39,21 @@ import com.umeng.message.entity.UMessage;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import cn.bmob.im.BmobChat;
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.im.bean.BmobChatUser;
+import cn.bmob.im.db.BmobDB;
 import cn.bmob.sms.BmobSMS;
+import cn.bmob.v3.datatype.BmobGeoPoint;
 
 /**
  * 
@@ -51,12 +76,14 @@ public class BaseApplication extends Application {
 	private PushAgent mPushAgent;
 	public static HttpUtils httpUtils;
 	public static BitmapUtils bitmapUtils;
+	public LocationClient mLocationClient;
+	public MyLocationListener mMyLocationListener;
+
+	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
 
 	// 单例模式中获取唯一的ExitApplication 实例
 	public static BaseApplication getInstance() {
-		if (null == mInstance) {
-			mInstance = new BaseApplication();
-		}
+
 		return mInstance;
 
 	}
@@ -66,8 +93,9 @@ public class BaseApplication extends Application {
 		// TODO Auto-generated method stub
 		super.onCreate();
 		BmobSMS.initialize(getApplicationContext(), "000ca7d3d028874f8e8401f27877171e");
-
+		BmobChat.DEBUG_MODE = true;
 		init();
+		mInstance=this;
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);
 		httpUtils.configCookieStore(cookieStore);
@@ -141,20 +169,7 @@ public class BaseApplication extends Application {
 			}
 		};
 		mPushAgent.setMessageHandler(messageHandler);
-
-		/**
-		 * 该Handler是在BroadcastReceiver中被调用，故
-		 * 如果需启动Activity，需添加Intent.FLAG_ACTIVITY_NEW_TASK 参考集成文档的1.6.2
-		 * http://dev.umeng.com/push/android/integration#1_6_2
-		 */
-		/*
-		 * UmengNotificationClickHandler notificationClickHandler = new
-		 * UmengNotificationClickHandler(){
-		 * 
-		 * @Override public void dealWithCustomAction(Context context, UMessage
-		 * msg) { Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-		 * } };
-		 */
+	
 		CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
 		mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
@@ -169,27 +184,190 @@ public class BaseApplication extends Application {
 		if (userid != 0) {
 			buyerInfo = mBuyerDao.queryinfo(userid);
 		}
-		initImageLoader();
+		initImageLoader(getApplicationContext());
+		mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
+		mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+		initImageLoader(getApplicationContext());
+		// 若用户登陆过，则先从好友数据库中取出好友list存入内存中
+		if (BmobUserManager.getInstance(getApplicationContext())
+				.getCurrentUser() != null) {
+			// 获取本地好友user list到内存,方便以后获取好友list
+			contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
+		}
+		initBaidu();
+	
+	}
 
-		/*
-		 * // 使用腾讯BUGLY上传崩溃信息 initCrashReport();
-		 */
+
+
+
+	/**
+	 * 初始化百度相关sdk initBaidumap
+	 */
+	private void initBaidu() {
+		// 初始化地图Sdk
+		SDKInitializer.initialize(this);
+		// 初始化定位sdk
+		initBaiduLocClient();
 	}
 
 	/**
-	 * 初始化ImageLoader
+	 * 初始化百度定位sdk
 	 */
-	private void initImageLoader() {
-
+	private void initBaiduLocClient() {
+		mLocationClient = new LocationClient(getApplicationContext());
+		mMyLocationListener = new MyLocationListener();
+		mLocationClient.registerLocationListener(mMyLocationListener);
 	}
 
 	/**
-	 * 初始化崩溃上传(腾讯BUGLY)
+	 * 实现实位回调监听
 	 */
-	// private void initCrashReport() {
-	// CrashReport.initCrashReport(this, "900007710", false);
-	// }
+	public class MyLocationListener implements BDLocationListener {
 
+		@Override
+		public void onReceiveLocation(BDLocation location) {
+			// Receive Location
+			double latitude = location.getLatitude();
+			double longtitude = location.getLongitude();
+			if (lastPoint != null) {
+				if (lastPoint.getLatitude() == location.getLatitude()
+						&& lastPoint.getLongitude() == location.getLongitude()) {
+					// BmobLog.i("两次获取坐标相同");// 若两次请求获取到的地理位置坐标是相同的，则不再定位
+					mLocationClient.stop();
+					return;
+				}
+			}
+			lastPoint = new BmobGeoPoint(longtitude, latitude);
+		}
+	}
+
+	/** 初始化ImageLoader */
+	@SuppressWarnings("deprecation")
+	public static void initImageLoader(Context context) {
+		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
+				"bmobim/Cache");// 获取到缓存的目录地址
+		// 创建配置ImageLoader(所有的选项都是可选的,只使用那些你真的想定制)，这个可以设定在APPLACATION里面，设置为全局的配置参数
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
+				context)
+				// 线程池内加载的数量
+				.threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
+				.memoryCache(new WeakMemoryCache())
+				.denyCacheImageMultipleSizesInMemory()
+				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+				// 将保存的时候的URI名称用MD5 加密
+				.tasksProcessingOrder(QueueProcessingType.LIFO)
+				.discCache(new UnlimitedDiskCache(cacheDir))// 自定义缓存路径
+				// .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
+				.writeDebugLogs() // Remove for release app
+				.build();
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);// 全局初始化此配置
+	}
+
+	// 单例模式，才能及时返回数据
+	SharePreferenceUtil mSpUtil;
+	public static final String PREFERENCE_NAME = "_sharedinfo";
+
+	public synchronized SharePreferenceUtil getSpUtil() {
+		if (mSpUtil == null) {
+			String currentId = BmobUserManager.getInstance(getApplicationContext()).getCurrentUserObjectId();
+			String sharedName = currentId + PREFERENCE_NAME;
+			mSpUtil = new SharePreferenceUtil(this, sharedName);
+		}
+		return mSpUtil;
+	}
+
+	NotificationManager mNotificationManager;
+
+	public NotificationManager getNotificationManager() {
+		if (mNotificationManager == null)
+			mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
+		return mNotificationManager;
+	}
+
+	MediaPlayer mMediaPlayer;
+
+	public synchronized MediaPlayer getMediaPlayer() {
+		if (mMediaPlayer == null)
+			mMediaPlayer = MediaPlayer.create(this, R.raw.notify);
+		return mMediaPlayer;
+	}
+
+	public final String PREF_LONGTITUDE = "longtitude";// 经度
+	private String longtitude = "";
+
+	/**
+	 * 获取经度
+	 */
+	public String getLongtitude() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		longtitude = preferences.getString(PREF_LONGTITUDE, "");
+		return longtitude;
+	}
+
+	/**
+	 * 设置经度
+	 */
+	public void setLongtitude(String lon) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		if (editor.putString(PREF_LONGTITUDE, lon).commit()) {
+			longtitude = lon;
+		}
+	}
+
+	public final String PREF_LATITUDE = "latitude";// 经度
+	private String latitude = "";
+
+	/**
+	 * 获取纬度
+	 */
+	public String getLatitude() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		latitude = preferences.getString(PREF_LATITUDE, "");
+		return latitude;
+	}
+
+	/**
+	 * 设置维度
+	 */
+	public void setLatitude(String lat) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		SharedPreferences.Editor editor = preferences.edit();
+		if (editor.putString(PREF_LATITUDE, lat).commit()) {
+			latitude = lat;
+		}
+	}
+
+	private Map<String, BmobChatUser> contactList = new HashMap<String, BmobChatUser>();
+
+	/**
+	 * 获取内存中好友user list
+	 */
+	public Map<String, BmobChatUser> getContactList() {
+		return contactList;
+	}
+
+	/**
+	 * 设置好友user list到内存中
+	 */
+	public void setContactList(Map<String, BmobChatUser> contactList) {
+		if (this.contactList != null) {
+			this.contactList.clear();
+		}
+		this.contactList = contactList;
+	}
+
+	/**
+	 * 退出登录,清空缓存数据
+	 */
+	public void logout() {
+		BmobUserManager.getInstance(getApplicationContext()).logout();
+		setContactList(null);
+		setLatitude(null);
+		setLongtitude(null);
+	}
 	/**
 	 * 把Activity加入历史堆栈
 	 * 
@@ -212,5 +390,4 @@ public class BaseApplication extends Application {
 
 		System.exit(0);
 	}
-
 }
