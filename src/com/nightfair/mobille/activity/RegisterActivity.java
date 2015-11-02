@@ -2,7 +2,6 @@ package com.nightfair.mobille.activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -17,6 +16,7 @@ import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ErrCodeUtils;
 import com.nightfair.mobille.util.NetUtils;
+import com.nightfair.mobille.util.RandomNickname;
 import com.nightfair.mobille.util.StringUtils;
 import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.ClearEditText;
@@ -31,7 +31,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.bmob.im.util.BmobLog;
 import cn.bmob.sms.BmobSMS;
 import cn.bmob.sms.exception.BmobException;
 import cn.bmob.sms.listener.RequestSMSCodeListener;
@@ -49,6 +48,7 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 	private String phone;
 	private String code;
 	private String password;
+	private String nickname;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +111,10 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 			public void done(BmobException ex) {
 				if (ex == null) {// 短信验证码已验证成功
 					LogUtils.e("验证通过");
-					 registerChat();
-					subRegister();					
+					nickname=RandomNickname.getRandomNick();
+					subRegister();
+					registerChat();					
 				} else {
-					 registerChat();
-						subRegister();
 					ToastUtil.show(mContext, ErrCodeUtils.ERROR_VERCODE_ERROR);
 					LogUtils.e("验证失败：code =" + ex.getErrorCode() + ",msg = " + ex.getLocalizedMessage());
 				}
@@ -126,59 +125,51 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 
 	protected void registerChat() {
 		// TODO Auto-generated method stub
-		//检查是否有网络
-				boolean isNetConnected = NetUtils.isNetworkAvailable(this);
-				if(!isNetConnected){
-					ToastUtil.show(mContext,getString(R.string.network_tips));
-					return;
-				}
-				
-				final ProgressDialog progress = new ProgressDialog(RegisterActivity.this);
-				progress.setMessage("正在注册...");
-				progress.setCanceledOnTouchOutside(false);
-				progress.show();
-				
-				//由于每个应用的注册所需的资料都不一样，故IM sdk未提供注册方法，用户可按照bmod SDK的注册方式进行注册。
-				//注册的时候需要注意两点：1、User表中绑定设备id和type，2、设备表中绑定username字段
-				final User bu = new User();
-				bu.setUsername(phone);
-				bu.setPassword(password);
-				//将user和设备id进行绑定aa
-				bu.setSex(true);
-				bu.setDeviceType("android");
-				bu.setInstallId(BmobInstallation.getInstallationId(this));
-				bu.signUp(RegisterActivity.this, new SaveListener() {
+		// 检查是否有网络
+		boolean isNetConnected = NetUtils.isNetworkAvailable(this);
+		if (!isNetConnected) {
+			ToastUtil.show(mContext, getString(R.string.network_tips));
+			return;
+		}
 
-					@Override
-					public void onSuccess() {
-						progress.dismiss();
-						
-						// 将设备与username进行绑定
-						userManager.bindInstallationForRegister(bu.getUsername());
-						//更新地理位置信息
-						updateUserLocation();
-						//发广播通知登陆页面退出
-						//sendBroadcast(new Intent(BmobConstants.ACTION_REGISTER_SUCCESS_FINISH));
-						// 启动主页
-//						Intent intent = new Intent(RegisterActivity.this,MainActivity.class);
-//						startActivity(intent);
-//						finish();			
-					}
+		// 由于每个应用的注册所需的资料都不一样，故IM sdk未提供注册方法，用户可按照bmod SDK的注册方式进行注册。
+		// 注册的时候需要注意两点：1、User表中绑定设备id和type，2、设备表中绑定username字段
+		final User bu = new User();
+		bu.setUsername(phone);
+		bu.setPassword(password);
+		bu.setNick(nickname);
+		bu.setSex(true);
+		bu.setDeviceType("android");
+		bu.setInstallId(BmobInstallation.getInstallationId(this));
+		bu.signUp(RegisterActivity.this, new SaveListener() {
 
-					@Override
-					public void onFailure(int arg0, String arg1) {
-						BmobLog.i(arg1);
-						ToastUtil.show(mContext,"注册失败:用户名已存在!");
-						progress.dismiss();
-					}
-				});
+			@Override
+			public void onSuccess() {
+				// 将设备与username进行绑定
+				userManager.bindInstallationForRegister(bu.getUsername());
+				// 更新地理位置信息
+				updateUserLocation();
+			}
+
+			@Override
+			public void onFailure(int arg0, String arg1) {
+				LogUtils.e(arg1);
+
+			}
+		});
 	}
 
 	protected void subRegister() {
+		
+		final ProgressDialog progress = new ProgressDialog(RegisterActivity.this);
+		progress.setMessage("正在注册...");
+		progress.setCanceledOnTouchOutside(false);
+		progress.show();
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("phone", phone);
 		params.addBodyParameter("password", password);
+		params.addBodyParameter("nickname",nickname);
 		params.addBodyParameter("action", "register");
 		HttpUtils httpUtils = new HttpUtils(5000);
 		httpUtils.send(HttpMethod.POST, AppConstants.REGISTER, params, new RequestCallBack<String>() {
@@ -187,6 +178,7 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 			public void onFailure(HttpException arg0, String arg1) {
 
 				NetUtils.coonFairException(arg1, mContext);
+				progress.dismiss();
 			}
 
 			@Override
@@ -203,6 +195,7 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 						intent.putExtra("phone", phone);
 						intent.putExtra("password", password);
 						setResult(Activity.RESULT_OK, intent);
+						progress.dismiss();
 						finish();
 					} else {
 						ToastUtil.show(mContext, result);
@@ -268,7 +261,7 @@ public class RegisterActivity extends Activitybase implements OnClickListener {
 	}
 
 	protected void sendCode() {
-		
+
 		BmobSMS.requestSMSCode(mContext, phone, "注册模板", new RequestSMSCodeListener() {
 
 			@Override

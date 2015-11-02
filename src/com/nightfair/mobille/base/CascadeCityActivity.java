@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import com.nightfair.mobille.bean.City;
+import com.nightfair.mobille.bean.Citys;
 import com.nightfair.mobille.bean.District;
 import com.nightfair.mobille.bean.Province;
 import com.nightfair.mobille.service.XmlParserHandler;
@@ -83,7 +83,7 @@ public class CascadeCityActivity extends BaseActivity {
 			provinceList = handler.getDataList();
 			if (provinceList != null && !provinceList.isEmpty()) {
 				mCurrentProviceName = provinceList.get(0).getName();
-				List<City> cityList = provinceList.get(0).getCityList();
+				List<Citys> cityList = provinceList.get(0).getCityList();
 				if (cityList != null && !cityList.isEmpty()) {
 					mCurrentCityName = cityList.get(0).getName();
 					List<District> districtList = cityList.get(0).getDistrictList();
@@ -96,7 +96,7 @@ public class CascadeCityActivity extends BaseActivity {
 			for (int i = 0; i < provinceList.size(); i++) {
 				// 遍历所有省的数据
 				mProvinceDatas[i] = provinceList.get(i).getName();
-				List<City> cityList = provinceList.get(i).getCityList();
+				List<Citys> cityList = provinceList.get(i).getCityList();
 				String[] cityNames = new String[cityList.size()];
 				for (int j = 0; j < cityList.size(); j++) {
 					// 遍历省下面的所有市的数据

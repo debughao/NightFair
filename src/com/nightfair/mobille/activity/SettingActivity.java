@@ -2,6 +2,7 @@ package com.nightfair.mobille.activity;
 
 import java.io.File;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.dialog.BaseDialog.OnConfirmListener;
 import com.nightfair.mobille.dialog.LoadingDialog;
@@ -12,6 +13,7 @@ import com.nightfair.mobille.task.OnResponseListener;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FileUtils;
 import com.nightfair.mobille.util.NetUtils;
+import com.nightfair.mobille.util.SharePreferenceUtil;
 import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.util.VersionUtil;
 import com.nightfair.mobille.view.SlideSwitchView;
@@ -33,7 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 @SuppressLint("ResourceAsColor")
-public class SettingActivity extends Activity implements OnClickListener,OnSwitchChangedListener {
+public class SettingActivity extends Activity implements OnClickListener, OnSwitchChangedListener {
 	/**
 	 * SD卡缓存大小
 	 */
@@ -47,20 +49,26 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 	/**
 	 * 缓存数据View
 	 */
-	
-	private TextView mTv_title, mTvVersionName,mTvCacheSize;
+
+	private TextView mTv_title, mTvVersionName, mTvCacheSize, tv_location_open;
 	private ImageView iv_back;
 	protected Context mContext;
 	private RelativeLayout rl_update, rl_cache, rl_photo, rl_chat;
-	private SlideSwitchView mSs_Location,mSs_Push;
+	private SlideSwitchView mSs_Location, mSs_Push;
 	private PushAgent mPushAgent;
+	public SharePreferenceUtil mSharedUtil;
+	public BaseApplication mApplication;
+	private boolean allowLocation,allowPush;
 
-    
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		ActivityUtils.setActionBarByColor(this, R.layout.title_bar, R.color.title_color);
+		mApplication = BaseApplication.getInstance();
+		mSharedUtil = mApplication.getSpUtil();
 		initView();
 		mContext = this;
 		mPushAgent = PushAgent.getInstance(this);
@@ -78,12 +86,17 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		rl_photo = (RelativeLayout) findViewById(R.id.rl_setting_wifi_photo);
 		rl_chat = (RelativeLayout) findViewById(R.id.rl_setting_chat);
 		mTvVersionName = (TextView) findViewById(R.id.tv_setting_version);
-		mTvCacheSize=(TextView) findViewById(R.id.tv_cache_size);
-		mSs_Location=(SlideSwitchView) findViewById(R.id.ss_location);
+		mTvCacheSize = (TextView) findViewById(R.id.tv_cache_size);
+		mSs_Location = (SlideSwitchView) findViewById(R.id.ss_location);
+		tv_location_open = (TextView) findViewById(R.id.tv_setting_location_open);
 		mSs_Location.setOnChangeListener(this);
-		mSs_Push=(SlideSwitchView) findViewById(R.id.ss_push);
+		mSs_Push = (SlideSwitchView) findViewById(R.id.ss_push);
 		mSs_Push.setOnChangeListener(this);
 		mTvVersionName.setText(getString(R.string.text_setttings_now_version) + VersionUtil.getVersionName(this));
+		allowLocation = mSharedUtil.isAllowLocation();
+		allowPush=mSharedUtil.isAllowPush();
+		mSs_Push.setChecked(!allowPush);
+		mSs_Location.setChecked(allowLocation);		
 		mySetOnClickListener(iv_back, rl_update, rl_cache, rl_photo, rl_chat);
 	}
 
@@ -104,7 +117,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 			checkUpgrade();
 			break;
 		case R.id.rl_setting_remove_photo:
-			clearCache(); 
+			clearCache();
 			break;
 		case R.id.rl_setting_wifi_photo:
 			ToastUtil.show(mContext, "点击了2");
@@ -120,31 +133,35 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 		}
 
 	}
+
 	@Override
 	public void onSwitchChange(SlideSwitchView switchView, boolean isChecked) {
 		// TODO Auto-generated method stub
 		switch (switchView.getId()) {
 		case R.id.ss_location:
-			if(isChecked){
-				ToastUtil.show(mContext, "位置开关被打开");
-			}else {
-				ToastUtil.show(mContext, "位置开关被关闭");
+			if (isChecked) {
+				mSharedUtil.setAllowLocationEnable(true);
+				tv_location_open.setText(getString(R.string.text_setting_location_b));
+			} else {
+				mSharedUtil.setAllowLocationEnable(false);
+				tv_location_open.setText(getString(R.string.text_setting_location_c));
 			}
 			break;
 		case R.id.ss_push:
-			if(isChecked){
+			if (isChecked) {
+				mSharedUtil.setAllowPushEnable(false);
 				mPushAgent.enable();
-				ToastUtil.show(mContext, "推送开关被打开");
-			}else {
+			} else {
+				mSharedUtil.setAllowPushEnable(true);
 				mPushAgent.disable();
-				ToastUtil.show(mContext, "推送开关被关闭");
 			}
 			break;
 		default:
 			break;
 		}
-		
+
 	}
+
 	private void checkUpgrade() {
 		// TODO Auto-generated method stub
 		if (NetUtils.isNetAvailable(mContext)) {
@@ -178,7 +195,6 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 	 * 更新数据
 	 */
 	private void updateData() {
-		
 
 		FileCalculateAsyncTask task = new FileCalculateAsyncTask(this);
 		mExternalCacheFile = new File(FilePathConfig.getExternalCachePath(SettingActivity.this));
@@ -187,14 +203,15 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 
 			@Override
 			public void onResponse(String resultString) {
-				
+
 				try {
 					mExternCacheSize = Long.valueOf(resultString);
-//					LogUtils.e("格式化之前"+mExternCacheSize);
-//					LogUtils.e("格式化之h后"	+FileUtils.formatSize(mExternCacheSize));
+					// LogUtils.e("格式化之前"+mExternCacheSize);
+					// LogUtils.e("格式化之h后"
+					// +FileUtils.formatSize(mExternCacheSize));
 					mTvCacheSize.setText(FileUtils.formatSize(mExternCacheSize));
 				} catch (Exception e) {
-					
+
 					e.printStackTrace();
 				}
 			}
@@ -215,7 +232,7 @@ public class SettingActivity extends Activity implements OnClickListener,OnSwitc
 
 				final LoadingDialog dialog = new LoadingDialog(mContext, "正在清理缓存");
 				dialog.show();
-				
+
 				FileDeleteAsyncTask task = new FileDeleteAsyncTask(mContext);
 				task.execute(mExternalCacheFile);
 				task.setOnResponseListener(new OnResponseListener() {

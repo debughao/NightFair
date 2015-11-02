@@ -6,7 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.nightfair.mobille.bean.City;
+import com.nightfair.mobille.bean.Citys;
 import com.nightfair.mobille.bean.District;
 import com.nightfair.mobille.bean.Province;
 
@@ -31,7 +31,7 @@ public class XmlParserHandler extends DefaultHandler {
 	}
 
 	Province provinceModel = new Province();
-	City cityModel = new City();
+	Citys cityModel = new Citys();
 	District districtModel = new District();
 	
 	@Override
@@ -41,9 +41,9 @@ public class XmlParserHandler extends DefaultHandler {
 		if (qName.equals("province")) {
 			provinceModel = new Province();
 			provinceModel.setName(attributes.getValue(0));
-			provinceModel.setCityList(new ArrayList<City>());
+			provinceModel.setCityList(new ArrayList<Citys>());
 		} else if (qName.equals("city")) {
-			cityModel = new City();
+			cityModel = new Citys();
 			cityModel.setName(attributes.getValue(0));
 			cityModel.setDistrictList(new ArrayList<District>());
 		} else if (qName.equals("district")) {

@@ -43,6 +43,7 @@
     <string name="tv_hint_login_user">手机号/邮箱/用户名</string>
     <string name="tv_hint_login_password">请输入密码</string>
     <string name="bt_login">登录</string>
+    <string name="bt_serach">查询</string>
     <string name="text_auth_login">第三方登录</string>
     <string name="nightfair">夜夜通</string>
     <string name="title_activity_personal_detail_">Personal_detail_Activity</string>
@@ -92,6 +93,7 @@
     <string name="text_about_copyrightb">＠2015 NightFair Project Team Co., Ltd</string>
     <string name="actionbar_title">actionbar标题</string>
     <string name="actionbar_title_setting">设置</string>
+    <string name="actionbar_title_location">定位</string>
     <string name="actionbar_title_about">关于夜夜通</string>
     <string name="actionbar_title_facebook">意见反馈</string>
     <string name="message_image_desc">Message Image</string>
@@ -100,7 +102,7 @@
     <string name="text_setting_update">检查更新</string>
     <string name="text_setting_remove_photo">清除缓存</string>
     <string name="text_setting_wifi">非wifi下图片质量</string>
-    <string name="text_setting_location_a">启动时自动定位到当前位置</string>
+    <string name="text_setting_location_a">启动时是否重新定位到当前位置</string>
     <string name="text_setting_location_b">关闭定位以后，打开应用会默认使用上一次位置</string>
     <string name="text_setting_location_c">打开定位以后，打开应用会自动定位到当前位置</string>
     <string name="text_setting_push">推送通知</string>
@@ -124,6 +126,9 @@
     <string name="cancle">取消</string>
     <string name="confirm">确定</string>
     <string name="loading">正在加载&#8230;</string>
+    <!-- actionbar标题 -->
+    <string name="actionbar_title_bus">公交便利</string>
+    <string name="actionbar_title_tranfer_result">换乘方案</string>
     <!-- 消息页 列表 -->
     <string name="title_activity_message">MessageActivity</string>
     <string name="text_message_system">系统消息</string>
@@ -160,9 +165,11 @@
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="add_avator">头像</string>
     <string name="add_nick">昵称</string>
-    <string name="add_name">账号</string>
+    <string name="add_name">个&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;人：</string>
     <string name="add_name_hint">请输入昵称&#8230;</string>
-    <string name="add_gender">性别</string>
+    <string name="add_hometown">故&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;乡：</string>
+    <string name="add_address">所&#160;&#160;在&#160;&#160;地：</string>
+    <string name="add_autograph">个人签名：</string>
     <string name="set_notify">接收新消息通知</string>
     <string name="set_myinfo">个人资料</string>
     <string name="set_blacklist">黑名单</string>
@@ -196,5 +203,16 @@
     <string name="voice_short_tips">录音时间太短</string>
     <string name="title_activity_fagment01">Fagment01Activity</string>
     <string name="text_chat_setting">聊天设置</string>
+    <string name="et_search_city">输入城市名或拼音</string>
+    <string name="sapce">&#160;&#160;&#160;&#160;</string>
+    <string name="title_activity_bus">BusActivity</string>
+    <string name="text_location">您当前的位置</string>
+    <string name="hide_startstation">请输入起始地点</string>
+    <string name="hide_station">请输入终点</string>
+    <string name="text_serach_location">查附近</string>
+    <string name="text_serach_station">查站点</string>
+    <string name="text_serach_route">查线路</string>
+    <string name="title_activity_tranfer">TranferActivity</string>
+    <string name="title_activity_coupon_detail">CouponDetailActivity</string>
 
 </resources>

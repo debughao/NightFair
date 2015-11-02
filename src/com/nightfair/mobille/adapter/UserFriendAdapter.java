@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.bean.User;
 import com.nightfair.mobille.util.ImageLoadOptions;
@@ -72,13 +73,12 @@ public class UserFriendAdapter extends BaseAdapter {
 		}
 
 		User friend = data.get(position);
-		final String name = friend.getUsername();
+		final String name = friend.getNick();
 		final String avatar = friend.getAvatar();
-
 		if (!TextUtils.isEmpty(avatar)) {
 			ImageLoader.getInstance().displayImage(avatar, viewHolder.avatar, ImageLoadOptions.getOptions());
 		} else {
-			viewHolder.avatar.setImageDrawable(ct.getResources().getDrawable(R.drawable.head));
+			viewHolder.avatar.setImageDrawable(ct.getResources().getDrawable(R.drawable.my_dd_icon_default));
 		}
 		viewHolder.name.setText(name);
 		return convertView;

@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/theme_bg_color"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
-    
-     <View
+    <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_line_width_2"
         android:background="@drawable/base_horizontal_line" >
     </View>
-    
+
     <RelativeLayout
         android:id="@+id/layout_blacklist"
         android:layout_width="match_parent"
@@ -35,7 +34,7 @@
             android:drawablePadding="10dp"
             android:drawableRight="@drawable/register_bottom_arrow" />
     </RelativeLayout>
-    
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_line_width_2"
@@ -56,25 +55,16 @@
             android:layout_centerVertical="true"
             android:text="@string/set_notify" />
 
-        <ImageView
-            android:id="@+id/iv_open_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.nightfair.mobille.view.SlideSwitchView
+            android:id="@+id/ss_notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/on"
-            android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/iv_close_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/off"
-            android:visibility="invisible" />
+            android:enabled="true" />
     </RelativeLayout>
 
     <View
@@ -97,25 +87,16 @@
             android:layout_centerVertical="true"
             android:text="@string/set_voice" />
 
-        <ImageView
-            android:id="@+id/iv_open_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.nightfair.mobille.view.SlideSwitchView
+            android:id="@+id/ss_voice"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/on"
-            android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/iv_close_voice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/off"
-            android:visibility="invisible" />
+            android:enabled="true" />
     </RelativeLayout>
 
     <View
@@ -139,25 +120,16 @@
             android:layout_centerVertical="true"
             android:text="@string/set_vibrate" />
 
-        <ImageView
-            android:id="@+id/iv_open_vibrate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.nightfair.mobille.view.SlideSwitchView
+            android:id="@+id/ss_vibrate"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/on"
-            android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/iv_close_vibrate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/off"
-            android:visibility="invisible" />
+            android:enabled="true" />
     </RelativeLayout>
 
     <View

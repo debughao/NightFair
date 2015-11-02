@@ -147,7 +147,7 @@ public class LoginActivity extends Activitybase implements OnClickListener {
 				public void onFailure( int arg0, String arg1) {
 					progress.dismiss();
 					BmobLog.i(arg1);
-					ShowToast("登录失败");
+					
 				}
 			});
 			

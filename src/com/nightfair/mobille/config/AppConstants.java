@@ -14,4 +14,13 @@ public class AppConstants {
 	public final static String USERUPDATE=SERVERIP+"/NightFair/buyer/update";
 	public final static String REGISTER=SERVERIP+"/NightFair/buyer/register";
 	public final static String INDEXSHOP=SERVERIP+"/NightFair/GetGoodsServlet";
+	public final static String GETFRAENDINFO=SERVERIP+"/NightFair/buyer/getbuyerinfo";
+	public final static String GETGUESSCOUPON=SERVERIP+"/NightFair/buyer/getcoupons";
+	/**
+	 * 全国公交查询
+	 * 
+	 */
+	public final static  String API_KEY = "f41c8afccc586de03a99c86097e98ccb";
+	public final static String BUS_TRANSFER="http://openapi.aibang.com/bus/transfer";//公交换乘接口
+
 }

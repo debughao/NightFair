@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Province {
 	private String name;
-	private List<City> cityList;
+	private List<Citys> cityList;
 
 	public Province() {
 		super();
 	}
 
-	public Province(String name, List<City> cityList) {
+	public Province(String name, List<Citys> cityList) {
 		super();
 		this.name = name;
 		this.cityList = cityList;
@@ -24,11 +24,11 @@ public class Province {
 		this.name = name;
 	}
 
-	public List<City> getCityList() {
+	public List<Citys> getCityList() {
 		return cityList;
 	}
 
-	public void setCityList(List<City> cityList) {
+	public void setCityList(List<Citys> cityList) {
 		this.cityList = cityList;
 	}
 

@@ -98,6 +98,7 @@
             android:orientation="vertical"
             android:text="@string/bt_login"
             android:textColor="@color/white"
+            android:focusable="true"
             android:textSize="@dimen/button_text_size" />
 
         <RelativeLayout

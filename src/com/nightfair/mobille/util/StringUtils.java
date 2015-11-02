@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.EditText;
 
 public class StringUtils {
-	
+
 	public static String[] convertStrToArry(String str) {
 		String[] strArray = null;
 		strArray = str.split("-");
@@ -20,6 +20,11 @@ public class StringUtils {
 			}
 		}
 		return n;
+	}
+
+	public static String subString(String str, String parm) {
+		int n = str.indexOf(parm);
+		return str.substring(0, n);
 	}
 
 	public static boolean isPhone(Context context, EditText et_phone) {
@@ -44,7 +49,7 @@ public class StringUtils {
 		} else if (password.length() < 8 || password.length() > 16) {
 			ToastUtil.show(context, ErrCodeUtils.ERROR_PASSWORD_LENGTH);
 			isPass = false;
-		} 
+		}
 		return isPass;
 	}
 

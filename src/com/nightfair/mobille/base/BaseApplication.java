@@ -78,7 +78,6 @@ public class BaseApplication extends Application {
 	public static BitmapUtils bitmapUtils;
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
-
 	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
 
 	// 单例模式中获取唯一的ExitApplication 实例
@@ -91,16 +90,17 @@ public class BaseApplication extends Application {
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
+		SDKInitializer.initialize(getApplicationContext());
 		super.onCreate();
 		BmobSMS.initialize(getApplicationContext(), "000ca7d3d028874f8e8401f27877171e");
 		BmobChat.DEBUG_MODE = true;
-		init();
-		mInstance=this;
+		mInstance = this;
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);
 		httpUtils.configCookieStore(cookieStore);
+		bitmapUtils=new BitmapUtils(getApplicationContext());
+		init();
 		umengPush();
-
 	}
 
 	private void umengPush() {
@@ -169,7 +169,7 @@ public class BaseApplication extends Application {
 			}
 		};
 		mPushAgent.setMessageHandler(messageHandler);
-	
+
 		CustomNotificationHandler notificationClickHandler = new CustomNotificationHandler();
 		mPushAgent.setNotificationClickHandler(notificationClickHandler);
 
@@ -189,25 +189,20 @@ public class BaseApplication extends Application {
 		mNotificationManager = (NotificationManager) getSystemService(android.content.Context.NOTIFICATION_SERVICE);
 		initImageLoader(getApplicationContext());
 		// 若用户登陆过，则先从好友数据库中取出好友list存入内存中
-		if (BmobUserManager.getInstance(getApplicationContext())
-				.getCurrentUser() != null) {
+		if (BmobUserManager.getInstance(getApplicationContext()).getCurrentUser() != null) {
 			// 获取本地好友user list到内存,方便以后获取好友list
 			contactList = CollectionUtils.list2map(BmobDB.create(getApplicationContext()).getContactList());
 		}
 		initBaidu();
-	
+
 	}
-
-
-
 
 	/**
 	 * 初始化百度相关sdk initBaidumap
 	 */
 	private void initBaidu() {
-		// 初始化地图Sdk
-		SDKInitializer.initialize(this);
 		// 初始化定位sdk
+		
 		initBaiduLocClient();
 	}
 
@@ -245,19 +240,14 @@ public class BaseApplication extends Application {
 	/** 初始化ImageLoader */
 	@SuppressWarnings("deprecation")
 	public static void initImageLoader(Context context) {
-		File cacheDir = StorageUtils.getOwnCacheDirectory(context,
-				"bmobim/Cache");// 获取到缓存的目录地址
+		File cacheDir = StorageUtils.getOwnCacheDirectory(context, "bmobim/Cache");// 获取到缓存的目录地址
 		// 创建配置ImageLoader(所有的选项都是可选的,只使用那些你真的想定制)，这个可以设定在APPLACATION里面，设置为全局的配置参数
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-				context)
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
 				// 线程池内加载的数量
-				.threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2)
-				.memoryCache(new WeakMemoryCache())
-				.denyCacheImageMultipleSizesInMemory()
-				.discCacheFileNameGenerator(new Md5FileNameGenerator())
+				.threadPoolSize(3).threadPriority(Thread.NORM_PRIORITY - 2).memoryCache(new WeakMemoryCache())
+				.denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator())
 				// 将保存的时候的URI名称用MD5 加密
-				.tasksProcessingOrder(QueueProcessingType.LIFO)
-				.discCache(new UnlimitedDiskCache(cacheDir))// 自定义缓存路径
+				.tasksProcessingOrder(QueueProcessingType.LIFO).discCache(new UnlimitedDiskCache(cacheDir))// 自定义缓存路径
 				// .defaultDisplayImageOptions(DisplayImageOptions.createSimple())
 				.writeDebugLogs() // Remove for release app
 				.build();
@@ -368,6 +358,7 @@ public class BaseApplication extends Application {
 		setLatitude(null);
 		setLongtitude(null);
 	}
+
 	/**
 	 * 把Activity加入历史堆栈
 	 * 

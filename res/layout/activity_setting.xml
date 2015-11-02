@@ -132,6 +132,7 @@
                     android:textSize="@dimen/c_text_size" />
 
                 <TextView
+                    android:id="@+id/tv_setting_location_open"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"

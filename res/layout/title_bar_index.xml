@@ -7,40 +7,46 @@
     <!-- 定位 -->
     <RelativeLayout 
         android:id="@+id/rl_title_bar_loaction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:padding="8dp"
         android:layout_centerVertical="true"
+        android:background="@drawable/actionbar_selector"
+        android:clickable="true"
         >
         <TextView 
+ 
             android:id="@+id/tv_title_bar_loaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="吴中区"
             style="@style/title_bar_location"
             android:layout_centerVertical="true"
+            android:text="@string/sapce"
             />
         <ImageView
             android:id="@+id/iv_title_bar_loaction"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"
             android:contentDescription="@null"
             android:layout_alignTop="@id/tv_title_bar_loaction"
             android:layout_alignBottom="@id/tv_title_bar_loaction"
             android:layout_toRightOf="@id/tv_title_bar_loaction"
+            android:layout_toEndOf="@id/tv_title_bar_loaction"
             android:src="@drawable/title_location_normal"/>
     </RelativeLayout>
     
      <!-- 消息 -->
-    <ImageView
+    <ImageButton
         android:id="@+id/iv_index_title_bar_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
         android:contentDescription="@null"
+        android:background="@drawable/actionbar_selector"
         android:src="@drawable/titlebar_message" />
     
     <!-- 搜索 -->
@@ -49,9 +55,13 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_toRightOf="@id/rl_title_bar_loaction"
+        android:layout_toEndOf="@id/rl_title_bar_loaction" 
         android:layout_toLeftOf="@id/iv_index_title_bar_message"
+        android:layout_toStartOf="@id/iv_index_title_bar_message"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
         android:layout_centerVertical="true"
         android:background="@drawable/search_bg">
         
@@ -61,6 +71,7 @@
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:contentDescription="@null"
             android:src="@drawable/titlebar_search"/>
         
@@ -70,11 +81,15 @@
             android:layout_height="wrap_content"
             android:text="@string/tv_hint_search"
             android:layout_marginLeft="5dp"
-            android:textSize="14sp"
+            android:layout_marginStart="5dp"
+            android:textSize="@dimen/a_text_size"
             android:textColor="@color/white"
             android:layout_centerVertical="true"
             android:background="@null"
-            android:layout_toRightOf="@id/iv_title_bar_search"/>
+            android:layout_toRightOf="@id/iv_title_bar_search"
+             android:layout_toEndOf="@id/iv_title_bar_search"
+            
+            />
     </RelativeLayout>
     
 </RelativeLayout>

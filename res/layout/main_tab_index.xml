@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/bg"
     android:orientation="vertical" >
+
     <include layout="@layout/title_bar_index" />
     <!-- 设置垂直滚动条 -->
 
@@ -31,10 +32,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="10dp" >
+                android:orientation="horizontal" >
 
                 <TextView
+                    android:layout_marginLeft="16dp"
                     android:id="@+id/tv_food"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -103,7 +104,12 @@
             <com.nightfair.mobille.view.FullyListView
                 android:id="@+id/lv_index_item_detail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:divider="@color/divider"
+                android:dividerHeight="0.5dp"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none" >
             </com.nightfair.mobille.view.FullyListView>
 
             <View

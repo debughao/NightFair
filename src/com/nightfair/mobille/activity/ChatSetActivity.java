@@ -1,28 +1,27 @@
 package com.nightfair.mobille.activity;
 
-import cn.bmob.im.BmobUserManager;
-
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.Activitybase;
 import com.nightfair.mobille.util.SharePreferenceUtil;
+import com.nightfair.mobille.util.ToastUtil;
+import com.nightfair.mobille.view.SlideSwitchView;
+import com.nightfair.mobille.view.SlideSwitchView.OnSwitchChangedListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-public class ChatSetActivity extends Activitybase implements OnClickListener {
+public class ChatSetActivity extends Activitybase implements OnClickListener,
+		OnSwitchChangedListener {
 
+	RelativeLayout rl_switch_notification, rl_switch_voice, rl_switch_vibrate,
+			layout_blacklist;
 
-	RelativeLayout rl_switch_notification, rl_switch_voice, rl_switch_vibrate, layout_blacklist;
-
-	ImageView iv_open_notification, iv_close_notification, iv_open_voice, iv_close_voice, iv_open_vibrate,
-			iv_close_vibrate;
-
+	SlideSwitchView ss_notification, ss_voice, ss_vibrate;
 	View view1, view2;
 
+	
 	SharePreferenceUtil mSharedUtil;
 
 	@Override
@@ -43,46 +42,44 @@ public class ChatSetActivity extends Activitybase implements OnClickListener {
 		rl_switch_notification.setOnClickListener(this);
 		rl_switch_voice.setOnClickListener(this);
 		rl_switch_vibrate.setOnClickListener(this);
-		iv_open_notification = (ImageView) findViewById(R.id.iv_open_notification);
-		iv_close_notification = (ImageView) findViewById(R.id.iv_close_notification);
-		iv_open_voice = (ImageView) findViewById(R.id.iv_open_voice);
-		iv_close_voice = (ImageView) findViewById(R.id.iv_close_voice);
-		iv_open_vibrate = (ImageView) findViewById(R.id.iv_open_vibrate);
-		iv_close_vibrate = (ImageView) findViewById(R.id.iv_close_vibrate);
-		view1 = (View) findViewById(R.id.view1);
-		view2 = (View) findViewById(R.id.view2);
-		
-
-		// 初始化
-		boolean isAllowNotify = mSharedUtil.isAllowPushNotify();
-
-		if (isAllowNotify) {
-			iv_open_notification.setVisibility(View.VISIBLE);
-			iv_close_notification.setVisibility(View.INVISIBLE);
-		} else {
-			iv_open_notification.setVisibility(View.INVISIBLE);
-			iv_close_notification.setVisibility(View.VISIBLE);
-		}
-		boolean isAllowVoice = mSharedUtil.isAllowVoice();
-		if (isAllowVoice) {
-			iv_open_voice.setVisibility(View.VISIBLE);
-			iv_close_voice.setVisibility(View.INVISIBLE);
-		} else {
-			iv_open_voice.setVisibility(View.INVISIBLE);
-			iv_close_voice.setVisibility(View.VISIBLE);
-		}
-		boolean isAllowVibrate = mSharedUtil.isAllowVibrate();
-		if (isAllowVibrate) {
-			iv_open_vibrate.setVisibility(View.VISIBLE);
-			iv_close_vibrate.setVisibility(View.INVISIBLE);
-		} else {
-			iv_open_vibrate.setVisibility(View.INVISIBLE);
-			iv_close_vibrate.setVisibility(View.VISIBLE);
-		}
 		layout_blacklist.setOnClickListener(this);
 
+		ss_notification = (SlideSwitchView) findViewById(R.id.ss_notification);
+		ss_voice = (SlideSwitchView) findViewById(R.id.ss_voice);
+		ss_vibrate = (SlideSwitchView) findViewById(R.id.ss_vibrate);
+
+		ss_voice.setOnChangeListener(this);
+		ss_notification.setOnChangeListener(this);
+		ss_vibrate.setOnChangeListener(this);
+
+		view1 = (View) findViewById(R.id.view1);
+		view2 = (View) findViewById(R.id.view2);
+
+		// 初始化
+		/*boolean isAllowNotify = mSharedUtil.isAllowPushNotify();
+
+		if (isAllowNotify) {
+			ToastUtil.show(ChatSetActivity.this, "允许接收新消息");
+		} else {
+			ToastUtil.show(ChatSetActivity.this, "拒绝接收新消息");
+		}
+		
+		boolean isAllowVoice = mSharedUtil.isAllowVoice();
+
+		if (isAllowVoice) {
+			//ToastUtil.show(ChatSetActivity.this, "开启声音");
+		} else {
+			ToastUtil.show(ChatSetActivity.this, "关闭声音");
+		}
+		
+		boolean isAllowVibrate = mSharedUtil.isAllowVibrate();
+		if (isAllowVibrate) {
+			//ToastUtil.show(ChatSetActivity.this, "开启震动");
+		} else {
+			//ToastUtil.show(ChatSetActivity.this, "关闭震动");
+		}*/
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -94,50 +91,52 @@ public class ChatSetActivity extends Activitybase implements OnClickListener {
 		case R.id.layout_blacklist:// 启动到黑名单页面
 			startAnimActivity(new Intent(this, BlackListActivity.class));
 			break;
-		case R.id.rl_switch_notification:
-			if (iv_open_notification.getVisibility() == View.VISIBLE) {
-				iv_open_notification.setVisibility(View.INVISIBLE);
-				iv_close_notification.setVisibility(View.VISIBLE);
-				mSharedUtil.setPushNotifyEnable(false);
-				rl_switch_vibrate.setVisibility(View.GONE);
-				rl_switch_voice.setVisibility(View.GONE);
-				view1.setVisibility(View.GONE);
-				view2.setVisibility(View.GONE);
-			} else {
-				iv_open_notification.setVisibility(View.VISIBLE);
-				iv_close_notification.setVisibility(View.INVISIBLE);
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void onSwitchChange(SlideSwitchView switchView, boolean isChecked) {
+		switch (switchView.getId()) {
+		case R.id.ss_notification:
+			if (isChecked) {
+				
 				mSharedUtil.setPushNotifyEnable(true);
 				rl_switch_vibrate.setVisibility(View.VISIBLE);
 				rl_switch_voice.setVisibility(View.VISIBLE);
 				view1.setVisibility(View.VISIBLE);
 				view2.setVisibility(View.VISIBLE);
-			}
-
-			break;
-		case R.id.rl_switch_voice:
-			if (iv_open_voice.getVisibility() == View.VISIBLE) {
-				iv_open_voice.setVisibility(View.INVISIBLE);
-				iv_close_voice.setVisibility(View.VISIBLE);
-				mSharedUtil.setAllowVoiceEnable(false);
+				ToastUtil.show(ChatSetActivity.this, "允许接收新消息");
 			} else {
-				iv_open_voice.setVisibility(View.VISIBLE);
-				iv_close_voice.setVisibility(View.INVISIBLE);
+				mSharedUtil.setPushNotifyEnable(false);
+				rl_switch_vibrate.setVisibility(View.GONE);
+				rl_switch_voice.setVisibility(View.GONE);
+				view1.setVisibility(View.GONE);
+				view2.setVisibility(View.GONE);
+				ToastUtil.show(ChatSetActivity.this, "拒绝接收新消息");
+			}
+			break;
+		case R.id.ss_voice:
+			if (isChecked) {
 				mSharedUtil.setAllowVoiceEnable(true);
-			}
-			break;
-		case R.id.rl_switch_vibrate:
-			if (iv_open_vibrate.getVisibility() == View.VISIBLE) {
-				iv_open_vibrate.setVisibility(View.INVISIBLE);
-				iv_close_vibrate.setVisibility(View.VISIBLE);
-				mSharedUtil.setAllowVibrateEnable(false);
+				ToastUtil.show(ChatSetActivity.this, "开启声音");
 			} else {
-				iv_open_vibrate.setVisibility(View.VISIBLE);
-				iv_close_vibrate.setVisibility(View.INVISIBLE);
-				mSharedUtil.setAllowVibrateEnable(true);
+				mSharedUtil.setAllowVoiceEnable(false);
+				ToastUtil.show(ChatSetActivity.this, "关闭声音");
 			}
 			break;
-
+		case R.id.ss_vibrate:
+			if (isChecked) {
+				mSharedUtil.setAllowVibrateEnable(true);
+				ToastUtil.show(ChatSetActivity.this, "开启震动");
+			} else {
+				mSharedUtil.setAllowVibrateEnable(false);
+				ToastUtil.show(ChatSetActivity.this, "关闭震动");
+			}
+			break;
+		default:
+			break;
 		}
-
 	}
 }

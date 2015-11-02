@@ -4,16 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <com.nightfair.mobille.view.HintEditText
-        android:id="@+id/hint_edt"
+   <ListView
+        android:id="@+id/lv_bus_tranfer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:maxLength="127" >
-    </com.nightfair.mobille.view.HintEditText>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="sahjdsahjd " />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
+    </ListView>
 
 </LinearLayout>

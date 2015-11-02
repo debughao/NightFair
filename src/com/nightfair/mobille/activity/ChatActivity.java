@@ -123,7 +123,7 @@ public class ChatActivity extends Activitybase implements OnClickListener,
 		targetId = targetUser.getObjectId();
 //		BmobLog.i("聊天对象：" + targetUser.getUsername() + ",targetId = "
 //				+ targetId);
-		initActionbar("与" + targetUser.getUsername() +"会话",0);
+		initActionbar("与" + targetUser.getNick() +"会话",0);
 		//注册广播接收器
 		initNewMessageBroadCast();
 		initView();
@@ -681,7 +681,8 @@ public class ChatActivity extends Activitybase implements OnClickListener,
 			selectImageFromCamera();
 			break;
 		case R.id.tv_picture:// 图片
-			selectImageFromLocal();
+			openPhones();
+			//selectImageFromLocal();
 			break;
 		case R.id.tv_location:// 位置
 			selectLocationFromMap();
@@ -722,7 +723,14 @@ public class ChatActivity extends Activitybase implements OnClickListener,
 		startActivityForResult(openCameraIntent,
 				BmobConstants.REQUESTCODE_TAKE_CAMERA);
 	}
-
+	
+	private void openPhones() {
+		//dialog.dismiss();
+		Intent intent = new Intent(Intent.ACTION_PICK, null);
+		intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+		startActivityForResult(intent, 1);
+	}
+	
 	/**
 	 * 选择图片
 	 */
@@ -981,7 +989,7 @@ public class ChatActivity extends Activitybase implements OnClickListener,
 
 	@Override
 	public void onOffline() {
-		showOfflineDialog(this);
+		
 	}
 
 	@Override

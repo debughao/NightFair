@@ -3,18 +3,12 @@ package com.nightfair.mobille.base;
 import java.util.List;
 
 import com.nightfair.mobille.R;
-import com.nightfair.mobille.activity.LoginActivity;
 import com.nightfair.mobille.bean.User;
-import com.nightfair.mobille.dialog.DiaLogTips;
-import com.nightfair.mobille.dialog.DiaLogTips.DialogTips;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.CollectionUtils;
 import com.umeng.analytics.MobclickAgent;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -96,25 +90,6 @@ public class Activitybase extends BaseActivity {
 		}
 	}
 
-	/**
-	 * 显示下线的对话框
-	 */
-	public void showOfflineDialog(final Context context) {
-		DiaLogTips base = new DiaLogTips();
-		DialogTips dialog = base.new DialogTips(this, "您的账号已在其他设备上登录!", "重新登录");
-		// 设置成功事件
-		dialog.SetOnSuccessListener(new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialogInterface, int userId) {
-				BaseApplication.getInstance().logout();
-				startActivity(new Intent(context, LoginActivity.class));
-				finish();
-				dialogInterface.dismiss();
-			}
-		});
-		// 显示确认对话框
-		dialog.show();
-		dialog = null;
-	}
 	Toast mToast;
 
 	public void ShowToast(final String text) {

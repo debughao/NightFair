@@ -3,7 +3,7 @@
 
     <color name="bg">#f2f2f2</color>
     <color name="title_color">#e75858</color>
-   <color name="write_gray">#f0eeec</color>
+    <color name="write_gray">#f0eeec</color>
     <color name="title_color_deep">#aae75858</color>
     <color name="tab_title_normal_color">#9e9e9f</color>
     <color name="sub_color">#ff6633</color>
@@ -14,6 +14,7 @@
     <color name="user_image_circle2">#f1ffff</color>
     <color name="divider">#D8D8D8</color>
     <color name="white">#ffffffff</color>
+     <color name="color_half_write">#b0ffffff</color>
     <color name="about_white">#ccffffff</color>
     <color name="fafafa">#f0f0f0</color>
     <color name="not_click_white">#90ffffff</color>
@@ -24,15 +25,19 @@
     <color name="text_title_right">#ca9d00</color>
     <color name="translucent">#cc808080</color>
     <color name="main_color">#21292C</color>
-    <color name="gray">#5D5D5D</color>   
-    <color name="black_text">#353535</color> <!-- 微信黑色字 -->
-    <color name="gray_bg">#EBEBEB</color><!-- 微信灰色背景 -->
+    <color name="gray">#5D5D5D</color>
+    <color name="frame_bg">#f8f8f8</color>
+    <color name="frame_gray">#cccccc</color>
+    <color name="black_text">#353535</color>
+    <!-- 微信黑色字 -->
+    <color name="gray_bg">#EBEBEB</color>
+    <!-- 微信灰色背景 -->
     <!-- eleme 蓝 -->
     <color name="blue">#4da6f0</color>
     <color name="airblue">#0075c4</color>
     <!-- 省市区三级联动 分割线 -->
     <color name="province_line_border">#C7C7C7</color>
- <color name="base_actionbar_bg">#f5f5f5</color>
+    <color name="base_actionbar_bg">#f5f5f5</color>
     <color name="base_action_bar_title_color">#2f2725</color>
     <color name="base_tab_indicator_text_color">#f82c22</color>
     <color name="base_menu_left_bg">#393c44</color>
@@ -54,15 +59,12 @@
     <color name="text_gray">#969696</color>
     <color name="transparent3">#00000000</color>
     <color name="msg_chat_bg">#eceff4</color>
-    
     <color name="theme_bg_color">#f0f2f5</color>
     <color name="color_theme">#489cfa</color>
     <color name="c_f98800">#ed4e23</color>
-    
     <color name="dialog_color_title">#f82c22</color>
     <color name="guide_color">#898989</color>
-
     <color name="common_bg">#fcfcfc</color>
-    
     <color name="common_btn_send">#299fdf</color>
+
 </resources>

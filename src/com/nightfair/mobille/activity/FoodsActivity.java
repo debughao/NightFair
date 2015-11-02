@@ -36,6 +36,39 @@ public class FoodsActivity extends BaseActivity {
 				finish();
 			}
 		});
+		//inint();
 	}
 	
+//	private void inint() {
+//		
+//		mSearch = GeoCoder.newInstance();
+//		OnGetGeoCoderResultListener listener = new OnGetGeoCoderResultListener() {  
+//		    public void onGetGeoCodeResult(GeoCodeResult result) {  
+//		        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {  
+//		            //没有检索到结果  
+//		        }  
+//		        //获取地理编码结果 
+//		        LogUtils.e("坐标"+result.getLocation().longitude+"------"+result.getLocation().latitude);
+//		    }  
+//		 
+//		    @Override  
+//		    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {  
+//		        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {  
+//		            //没有找到检索结果  
+//		        }  
+//		        //获取反向地理编码结果  
+//		    }  
+//		};
+//		mSearch.setOnGetGeoCodeResultListener(listener);
+//		mSearch.geocode(new GeoCodeOption()  
+//			    .city("苏州")  
+//			    .address("西交利物浦大学"));
+//	}
+//	@Override
+//	protected void onDestroy() {
+//		// TODO Auto-generated method stub
+//		super.onDestroy();
+//		mSearch.destroy();
+//	}
+	 
 }

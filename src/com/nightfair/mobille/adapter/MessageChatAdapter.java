@@ -25,6 +25,7 @@ import cn.bmob.im.inteface.DownloadListener;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.ImageBrowserActivity;
 import com.nightfair.mobille.activity.LocationActivity;
+import com.nightfair.mobille.activity.PersonaDetailActivity;
 import com.nightfair.mobille.activity.SetMyInfoActivity;
 import com.nightfair.mobille.adapter.base.BaseListAdapter;
 import com.nightfair.mobille.adapter.base.ViewHolder;
@@ -154,22 +155,23 @@ public class MessageChatAdapter extends BaseListAdapter<BmobMsg> {
 		if(avatar!=null && !avatar.equals("")){//加载头像-为了不每次都加载头像
 			ImageLoader.getInstance().displayImage(avatar, iv_avatar, ImageLoadOptions.getOptions(),animateFirstListener);
 		}else{
-			iv_avatar.setImageResource(R.drawable.head);
+			iv_avatar.setImageResource(R.drawable.my_dd_icon_default);
 		}
 		
 		iv_avatar.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
-				Intent intent =new Intent(mContext,SetMyInfoActivity.class);
+				Intent intent=null;
 				if(getItemViewType(position) == TYPE_RECEIVER_TXT 
 						||getItemViewType(position) == TYPE_RECEIVER_IMAGE
 				        ||getItemViewType(position)==TYPE_RECEIVER_LOCATION
 				        ||getItemViewType(position)==TYPE_RECEIVER_VOICE){
+					intent =new Intent(mContext,SetMyInfoActivity.class);
 					intent.putExtra("from", "other");
 					intent.putExtra("username", item.getBelongUsername());
 				}else{
-					intent.putExtra("from", "me");
+					intent =new Intent(mContext,PersonaDetailActivity.class);
 				}
 				mContext.startActivity(intent);
 			}

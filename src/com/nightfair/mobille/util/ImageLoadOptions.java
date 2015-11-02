@@ -1,10 +1,11 @@
 package com.nightfair.mobille.util;
 
-import android.graphics.Bitmap;
-
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
+import android.graphics.Bitmap;
+
 
 public class ImageLoadOptions {
 	public static DisplayImageOptions getOptions() {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
@@ -13,9 +12,15 @@
 	<classpathentry kind="lib" path="libs/umeng-feedback-v5.4.0.jar"/>
 	<classpathentry kind="lib" path="libs/BmobSMS_V1.0.1_20150710.jar"/>
 	<classpathentry kind="lib" path="libs/com.umeng.message.lib_v2.5.0.jar"/>
-	<classpathentry kind="lib" path="libs/baidumapapi_v3_0_0.jar"/>
 	<classpathentry kind="lib" path="libs/BmobSDK_V3.4.3_0820.jar"/>
-	<classpathentry kind="lib" path="libs/locSDK_4.2.jar"/>
+	<classpathentry kind="lib" path="libs/httpmime-4.1.2.jar"/>
+	<classpathentry kind="lib" path="libs/pinyin4android1.0.jar"/>
+	<classpathentry kind="lib" path="libs/pinyin4j-2.5.0.jar"/>
+	<classpathentry kind="lib" path="libs/BaiduLBS_Android.jar"/>
+	<classpathentry kind="lib" path="libs/locSDK_6.13.jar"/>
+	<classpathentry kind="lib" path="libs/baidumapapi_search_v3_6_0.jar"/>
+	<classpathentry kind="lib" path="libs/AMap_Location_v1.4.1_20150917.jar"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

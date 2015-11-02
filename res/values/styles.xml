@@ -257,18 +257,15 @@
     <style name="Smile.ImageView.Photo_Large">
         <item name="android:layout_width">75dp</item>
         <item name="android:layout_height">75dp</item>
-        <item name="android:scaleType">fitXY</item>
     </style>
     <style name="Smile.ImageView.Photo_Middle">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:scaleType">fitXY</item>
     </style>
 
     <style name="Smile.ImageView.Photo_Small">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:scaleType">fitXY</item>
     </style>
 
     <style name="Smile.Button.theme" parent="Smile.TextView._White">
@@ -292,7 +289,7 @@
     </style>
 
     <style name="Smile.TextView._Black">
-        <item name="android:textColor">@color/base_color_text_black</item>
+        <item name="android:textColor">@color/black_text</item>
     </style>
     
     

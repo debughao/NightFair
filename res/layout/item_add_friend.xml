@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:descendantFocusability="blocksDescendants"
-    >
+    android:descendantFocusability="blocksDescendants" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:duplicateParentState="true" 
-        android:padding="5dp"
-        >
+        android:duplicateParentState="true"
+        android:padding="5dp" >
 
-        <ImageView
+        <com.nightfair.mobille.widget.CircleImageView
             android:id="@+id/avatar"
             style="@style/Smile.ImageView.Photo_Middle"
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/default_head" />
+            android:src="@drawable/default_head"
+            app:border_color="@color/transparent3"
+            app:border_width="1dp" >
+        </com.nightfair.mobille.widget.CircleImageView>
 
         <TextView
             android:id="@+id/name"

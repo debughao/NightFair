@@ -1,15 +1,19 @@
 package com.nightfair.mobille.activity;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseActivity;
+import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.fragment.MainTab_Chat;
 import com.nightfair.mobille.fragment.MainTab_Index;
 import com.nightfair.mobille.fragment.MainTab_Nearby;
 import com.nightfair.mobille.fragment.MainTab_Personal;
 import com.nightfair.mobille.util.ActivityUtils;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -61,7 +65,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		// 初始化BmobSDK
 	}
 
-
 	private void initViews() {
 
 		mTabBtnIndex = (LinearLayout) findViewById(R.id.id_tab_bottom_index);
@@ -92,7 +95,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			setTabSelection(1);
 			break;
 		case R.id.id_tab_bottom_chat:
-			setTabSelection(2);
+			if (BaseApplication.userid == 0) {
+				Intent intent  =new Intent("com.nightfair.buyer.action.login");
+				startActivityForResult(intent, 2);						
+			}else {
+				setTabSelection(2);			
+			}		
 			break;
 		case R.id.id_tab_bottom_personal:
 			setTabSelection(3);
@@ -105,6 +113,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void setTabSelection(int index) {
+	
 		// 重置按钮
 		resetBtn();
 		// 开启一个Fragment事务
@@ -170,6 +179,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		transaction.commit();
 	}
 
+
 	/**
 	 * 清除掉所有的选中状态。
 	 */
@@ -224,5 +234,29 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		LogUtils.e("requestCode---"+requestCode+"resultCode--------"+resultCode);
+		switch (requestCode) {
+		case 2:
+			if (resultCode == Activity.RESULT_OK){
+				setTabSelection(2);	
+				ActivityUtils.showShortToast(mContext, "登录成功");
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 }

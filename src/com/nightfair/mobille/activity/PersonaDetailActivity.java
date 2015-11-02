@@ -31,6 +31,7 @@ import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.base.CascadeCityActivity;
 import com.nightfair.mobille.bean.BuyerInfo;
+import com.nightfair.mobille.bean.User;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.dialog.AutoGraphDialog;
@@ -74,6 +75,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
+import cn.bmob.im.BmobUserManager;
+import cn.bmob.v3.listener.UpdateListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -849,6 +852,7 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 											MD5Util.MD5("headface") + ".png", bitmap);
 
 									BaseApplication.buyerInfo.setImage(imageurl);
+									updateUserAvatar(AppConstants.SERVERIP+imageurl);
 									BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo,
 											BaseApplication.userid);
 								}
@@ -871,6 +875,28 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	private void updateUserAvatar(final String url) {
+		User u = new User();
+		u.setAvatar(url);
+		updateUserData(u, new UpdateListener() {
+			@Override
+			public void onSuccess() {
+				
+				
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+				
+			}
+		});
+	}
+	private void updateUserData(User user, UpdateListener listener) {
+		BmobUserManager userManager = BmobUserManager.getInstance(this);
+		User current = (User) userManager.getCurrentUser(User.class);
+		user.setObjectId(current.getObjectId());
+		user.update(this, listener);
 	}
 
 	@Override

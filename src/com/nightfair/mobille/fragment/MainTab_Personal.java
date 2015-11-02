@@ -6,7 +6,6 @@ import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.nightfair.mobile.lib.umeng.CustomActivity;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.AboutActivity;
 import com.nightfair.mobille.activity.MessageActivity;
@@ -15,6 +14,7 @@ import com.nightfair.mobille.activity.PersonalCouponActivity;
 import com.nightfair.mobille.activity.SettingActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
+import com.nightfair.mobille.lib.umeng.CustomActivity;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.FragmentUtils;
 import com.nightfair.mobille.util.ToastUtil;
@@ -61,7 +61,8 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	private RelativeLayout rl__wallet;
 	private RelativeLayout rl__recommend;
 	private RelativeLayout rl__feedback;
-	private ImageView iv_setting,iv_message;
+	private ImageView iv_setting, iv_message;
+
 	@SuppressLint("ResourceAsColor")
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,7 +73,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ViewGroup parent = (ViewGroup) personalView.getParent();
 		if (parent != null) {
 			parent.removeView(personalView);
-		}		
+		}
 		inintPersonalBar();
 		inintView();
 		queue = Volley.newRequestQueue(getActivity());
@@ -89,36 +90,37 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		rl__comment = (RelativeLayout) personalView.findViewById(R.id.personal_item_comment);
 		rl__wallet = (RelativeLayout) personalView.findViewById(R.id.personal_item_wallet);
 		rl__recommend = (RelativeLayout) personalView.findViewById(R.id.personal_item_recommend);
-		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);	
+		rl__feedback = (RelativeLayout) personalView.findViewById(R.id.personal_item_feedback);
 		rl_about = (RelativeLayout) personalView.findViewById(R.id.personal_item_about);
 		ll_login_normal = (LinearLayout) personalView.findViewById(R.id.ll_login_normal);
 		ll_login_already = (LinearLayout) personalView.findViewById(R.id.ll_login_already);
 		ll_logout = (LinearLayout) personalView.findViewById(R.id.ll_personal_logout);
 		tv_nickname = (TextView) personalView.findViewById(R.id.tv_fm_nickname);
-		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);		
+		iv_face = (CircleImageView) personalView.findViewById(R.id.iv_face);
 		mySetOnClickListener(bt_login, rl__coupon, ll_login_already, rl__collection, ll_logout, rl__comment, rl__wallet,
 				rl__recommend, rl__feedback, rl_about);
 
 	}
 
 	private void inintPersonalBar() {
-		iv_message= (ImageView) personalView.findViewById(R.id.iv_title_bar_message);
-		iv_setting=(ImageView)  personalView.findViewById(R.id.iv_title_bar_setting);
-		 iv_setting.setOnClickListener(new OnClickListener() {			
+		iv_message = (ImageView) personalView.findViewById(R.id.iv_title_bar_message);
+		iv_setting = (ImageView) personalView.findViewById(R.id.iv_title_bar_setting);
+		iv_setting.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ActivityUtils.startActivity(getActivity(), SettingActivity.class);				
+				ActivityUtils.startActivity(getActivity(), SettingActivity.class);
 			}
 		});
-		 iv_message.setOnClickListener(new OnClickListener() {
-			
+		iv_message.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				ActivityUtils.startActivity(getActivity(), MessageActivity.class);	
-				
+				ActivityUtils.startActivity(getActivity(), MessageActivity.class);
+
 			}
 		});
 	}
+
 	private void inintHeadFace() {
 		tv_nickname.setText(BaseApplication.buyerInfo.getNickname());
 		String image_url = BaseApplication.buyerInfo.getImage();
@@ -134,7 +136,7 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 				iv_face.setImageResource(R.drawable.my_dd_icon_default);
 			}
 		});
-		queue.add(imageRequest);	
+		queue.add(imageRequest);
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -188,37 +190,35 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		fb.sync();
 		fb.openAudioFeedback();
 		fb.openFeedbackPush();
-//		UserInfo info = fb.getUserInfo();
-//		if (info == null)
-//			info = new UserInfo();
-//		Map<String, String> contact = info.getContact();
-//		if (contact == null)
-//			contact = new HashMap<String, String>();
-//		// contact.put(KEY_UMENG_CONTACT_INFO_PLAIN_TEXT, contact_info);
-//
-//		contact.put("email", "*******");
-//		// contact.put("qq", "*******");
-//		// contact.put("phone", "*******");
-//		// contact.put("plain", "*******");
-//		info.setContact(contact);
-//
-//		// optional, setting user gender information.
-//		info.setAgeGroup(1);
-//		info.setGender("male");
-//		// info.setGender("female");
-//
-//		fb.setUserInfo(info);
-//
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				boolean result = fb.updateUserInfo();
-//			}
-//		}).start();
+		// UserInfo info = fb.getUserInfo();
+		// if (info == null)
+		// info = new UserInfo();
+		// Map<String, String> contact = info.getContact();
+		// if (contact == null)
+		// contact = new HashMap<String, String>();
+		// // contact.put(KEY_UMENG_CONTACT_INFO_PLAIN_TEXT, contact_info);
+		//
+		// contact.put("email", "*******");
+		// // contact.put("qq", "*******");
+		// // contact.put("phone", "*******");
+		// // contact.put("plain", "*******");
+		// info.setContact(contact);
+		//
+		// // optional, setting user gender information.
+		// info.setAgeGroup(1);
+		// info.setGender("male");
+		// // info.setGender("female");
+		//
+		// fb.setUserInfo(info);
+		//
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// boolean result = fb.updateUserInfo();
+		// }
+		// }).start();
 		FragmentUtils.startActivity(this, CustomActivity.class);
 	}
-
-	
 
 	/**
 	 * VISIBLE:0 可见的 ;INVISIBILITY:4 不可见的，但还占着原来的空间; GONE:8 不可见的，不占用原来的布局空间
@@ -229,9 +229,10 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 		ll_login_already.setVisibility(View.GONE);// 隐藏登录后界面
 		ll_logout.setVisibility(View.GONE);// 隐藏注销界面
 		BaseApplication.getInstance().logout();
-		BaseApplication.userid=0;
+		BaseApplication.userid = 0;
 		BaseApplication.cookieStore.clear();
 		BaseApplication.mBuyerDao.logout(BaseApplication.userid);
+		BaseApplication.getInstance().logout();
 		ToastUtil.showCenter(getActivity(), "客观你慢走，欢迎下次光临^-^");
 
 	}
@@ -268,10 +269,8 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 	@Override
 	public void onResume() {
 
-		// if (SplashActivity.isLogin && SplashActivity.requestCode == 1) {
-		// refreshView();
-		// ActivityUtils.showShortToast(getActivity(), "登录成功");
-		// }
+		if (BaseApplication.userid != 0)
+			refreshView();
 		super.onResume();
 	}
 }
