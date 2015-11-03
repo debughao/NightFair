@@ -11,11 +11,11 @@ import android.widget.ListView;
  */
 public class FullyListView extends ListView {
 
-	/*ScrollView parentScrollView;
-    public ScrollView getParentScrollView() {
+	/*PullToRefreshScrollView parentScrollView;
+    public PullToRefreshScrollView getParentScrollView() {
         return parentScrollView;
     }
-    public void setParentScrollView(ScrollView parentScrollView) {
+    public void setParentScrollView(PullToRefreshScrollView parentScrollView) {
         this.parentScrollView = parentScrollView;
     }*/
 	
@@ -45,9 +45,12 @@ public class FullyListView extends ListView {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 setParentScrollAble(false);
+                break;
             case MotionEvent.ACTION_MOVE:
+            	setParentScrollAble(true);
                 break;
             case MotionEvent.ACTION_UP:
+            	setParentScrollAble(false);
             case MotionEvent.ACTION_CANCEL:
                 setParentScrollAble(true);
                 break;
@@ -57,11 +60,17 @@ public class FullyListView extends ListView {
         return super.onInterceptTouchEvent(ev);
     }*/
 
-    /**
+   /* *//**
      * @param flag
-     */
-    /*private void setParentScrollAble(boolean flag) {
+     *//*
+    private void setParentScrollAble(boolean flag) {
         parentScrollView.requestDisallowInterceptTouchEvent(!flag);
+    }*/
+    
+    /*@Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+    	getParent().requestDisallowInterceptTouchEvent(true);
+    	return super.dispatchTouchEvent(ev);
     }*/
 
 	

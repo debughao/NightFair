@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/menu_option_bg"
     android:clickable="true"
+     android:baselineAligned="false" 
     android:orientation="horizontal">
       <RelativeLayout
             android:id="@+id/rl_index_item_img"
@@ -13,6 +14,7 @@
             android:layout_weight="2" >
 
             <ImageView
+                android:focusable="false"
                 android:id="@+id/iv_index_item"
                 android:layout_width="130dp"
                 android:layout_height="80dp"

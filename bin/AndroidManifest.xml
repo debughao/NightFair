@@ -14,7 +14,7 @@
         android:normalScreens="false"
         android:resizeable="true"
         android:smallScreens="true" />
-
+ <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />  
     <!-- normal permission -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 允许应用打开网络套接口 -->

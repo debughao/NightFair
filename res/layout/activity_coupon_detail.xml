@@ -1,16 +1,250 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nightfair.mobille.activity.CouponDetailActivity" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/parent_layout"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/bg"
+	android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:background="@color/action_write" >
 
-</RelativeLayout>
+		<TextView
+			style="@style/title_bar_text"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
+			android:layout_centerVertical="true"
+			android:background="@drawable/actionbar_selector_gray"
+			android:clickable="true"
+			android:drawableLeft="@drawable/ic_detail_back"
+			android:drawablePadding="4dp"
+			android:drawableStart="@drawable/ic_detail_back"
+			android:gravity="center_vertical"
+			android:text="@string/text_title_bar_coupon"
+			android:textColor="@color/text_gray"
+			android:textSize="@dimen/c_text_size" />
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true" >
+
+			<ImageButton
+				android:id="@+id/iv_title_bar_message"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:layout_gravity="center_vertical"
+				android:background="@drawable/actionbar_selector_gray"
+				android:clickable="true"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_action_share" />
+
+			<ImageButton
+				android:id="@+id/iv_title_bar_setting"
+				android:layout_width="50dp"
+				android:layout_height="50dp"
+				android:layout_gravity="center_vertical"
+				android:background="@drawable/actionbar_selector_gray"
+				android:clickable="true"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_action_favorite_off" />
+		</LinearLayout>
+	</RelativeLayout>
+
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:background="@color/divider" />
+
+	<com.handmark.pulltorefresh.library.PullToRefreshScrollView
+		xmlns:ptr="http://schemas.android.com/apk/res-auto"
+		android:id="@+id/sv_index_detail"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:focusable="true"
+		ptr:ptrAnimationStyle="rotate"
+		ptr:ptrMode="pullFromStart" >
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical" >
+
+			<RelativeLayout
+				android:id="@+id/rl_coupon_detail_head"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" >
+
+				<ImageView
+					android:id="@+id/iv_coupon_img"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/action_write"
+					android:contentDescription="@null"
+					android:scaleType="fitXY"
+					android:src="@drawable/meituan_150c6537a07" />
+
+				<LinearLayout
+					android:id="@+id/tv_introduce"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_alignParentBottom="true"
+					android:background="#4C000000"
+					android:orientation="vertical"
+					android:paddingBottom="5dp"
+					android:paddingLeft="16dp"
+					android:paddingRight="16dp"
+					android:paddingTop="5dp" >
+
+					<TextView
+						android:id="@+id/tv_coupon_name"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginBottom="5dp"
+						android:text="肯德基"
+						android:textColor="@color/white"
+						android:textSize="@dimen/a_text_size" />
+
+					<TextView
+						android:id="@+id/tv_coupon_description"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="20元代金券一张，可叠加，免预约。"
+						android:textColor="@color/white"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+			</RelativeLayout>
+
+			<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:orientation="vertical" >
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginStart="16dp"
+					android:gravity="center_vertical"
+					android:text="@string/text_title_seller"
+					android:textColor="@color/tab_title_normal_color"
+					android:textSize="@dimen/a_text_size" />
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5px"
+					android:background="@color/divider" />
+
+				<RelativeLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="15dp"
+					android:layout_marginRight="15dp" >
+
+					<ImageView
+						android:id="@+id/iv_sellerinfo_tell"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:contentDescription="@null"
+						android:src="@drawable/ic_seller_phone" />
+
+					<View
+						android:layout_width="0.5dp"
+						android:layout_height="6dp"
+						android:layout_centerHorizontal="true"
+						android:layout_toLeftOf="@id/iv_sellerinfo_tell"
+						android:layout_toStartOf="@id/iv_sellerinfo_tell"
+						android:background="@color/divider" />
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_alignParentRight="true"
+						android:layout_marginBottom="5dp"
+						android:layout_marginTop="5dp"
+						android:orientation="vertical" >
+
+						<TextView
+							android:id="@+id/tv_sellerinfo_name"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="3dp"
+							android:text="肯德基"
+							android:textColor="@color/black_text"
+							android:textSize="@dimen/a_text_size" />
+
+						<TextView
+							android:id="@+id/tv_sellerinfo_adress"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginBottom="3dp"
+							android:layout_marginTop="3dp"
+							android:text="工业园区工业园林林泉街611号文星广场"
+							android:textColor="@color/tab_title_normal_color"
+							android:textSize="@dimen/a_text_size" />
+
+						<LinearLayout
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:orientation="horizontal" >
+
+							<ImageView
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:contentDescription="@null"
+								android:src="@drawable/ic_sellerinfo_ocation" />
+
+							<TextView
+								android:id="@+id/tv_seller_location"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginLeft="2dp"
+								android:layout_marginRight="2dp"
+								android:text="&lt;0.5km"
+								android:textColor="@color/tab_title_normal_color" />
+						</LinearLayout>
+					</LinearLayout>
+				</RelativeLayout>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5px"
+					android:background="@color/divider" />
+
+				<RelativeLayout
+					android:id="@+id/rl_sellerinfo_detail"
+					android:layout_width="wrap_content"
+					android:layout_height="45dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginRight="16dp" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:text="查看详细"
+						android:textColor="@color/title_color"
+						android:textSize="@dimen/a_text_size" />
+
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentEnd="true"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:contentDescription="@null"
+						android:src="@drawable/ic_detail_right" />
+				</RelativeLayout>
+			</LinearLayout>
+		</LinearLayout>
+	</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+</LinearLayout>

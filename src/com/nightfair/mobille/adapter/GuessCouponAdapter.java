@@ -1,13 +1,17 @@
 package com.nightfair.mobille.adapter;
 
 import java.util.ArrayList;
+
+import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.activity.CouponDetailActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.bean.SellerAndCoupon;
 import com.nightfair.mobille.config.AppConstants;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
@@ -15,6 +19,7 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -25,9 +30,10 @@ public class GuessCouponAdapter extends BaseAdapter {
 	ArrayList<SellerAndCoupon> list = new ArrayList<SellerAndCoupon>();
 	LayoutInflater mInflater;
 	ViewHolder viewHolder;
-
+	private Context context;
 	public GuessCouponAdapter(ArrayList<SellerAndCoupon> list, Context context) {
 		super();
+		this.context=context;
 		this.list = list;
 		this.mInflater=LayoutInflater.from(context);
 	}
@@ -49,7 +55,7 @@ public class GuessCouponAdapter extends BaseAdapter {
 
 	@SuppressLint("InflateParams")
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		if (convertView==null) {
 			viewHolder=new ViewHolder();
 			convertView=mInflater.inflate(R.layout.item_index_detail, null);
@@ -60,10 +66,21 @@ public class GuessCouponAdapter extends BaseAdapter {
 			viewHolder.price=(TextView) convertView.findViewById(R.id.tv_money);
 			viewHolder.count=(TextView) convertView.findViewById(R.id.tv_count);
 			convertView.setTag(viewHolder);
+			convertView.setOnClickListener(new OnClickListener() {			
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					LogUtils.e("5555"+position);
+					Intent intent = new Intent();
+					intent.setClass(context, CouponDetailActivity.class);
+					intent.putExtra("coupon_id", list.get(position).getCoupons().get(0).getId());
+					context.startActivity(intent);
+				}
+			});
 		}else {
 			viewHolder=(ViewHolder) convertView.getTag();
 		}
-		BaseApplication.bitmapUtils.display(viewHolder.imageView, AppConstants.SERVERIP+list.get(position).getImg());
+		BaseApplication.bitmapUtils.display(viewHolder.imageView, AppConstants.SERVERIP+list.get(position).getImg());	
 		String currentPrice=list.get(position).getCoupons().get(0).getCurrent_price();
 		String originalPrice=list.get(position).getCoupons().get(0).getOriginal_price();
 		String price="￥ "+currentPrice+"  ￥"+originalPrice;
@@ -89,5 +106,5 @@ public class GuessCouponAdapter extends BaseAdapter {
 		public TextView price;//商品价格
 		public TextView count;//已售商品数量
 	}
-
+ 
 }

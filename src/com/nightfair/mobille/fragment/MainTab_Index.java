@@ -8,6 +8,9 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -17,6 +20,7 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.BusActivity;
+import com.nightfair.mobille.activity.CouponDetailActivity;
 import com.nightfair.mobille.activity.FoodsActivity;
 import com.nightfair.mobille.activity.LocationIndexActivity;
 import com.nightfair.mobille.activity.MessageActivity;
@@ -44,17 +48,16 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 import krelve.view.Kanner;
 
 @SuppressLint("ResourceAsColor")
-public class MainTab_Index extends Fragment implements OnClickListener, OnItemClickListener {
+public class MainTab_Index extends Fragment
+		implements OnClickListener, OnItemClickListener, OnRefreshListener<ScrollView> {
 
 	private View indexView;
 
 	private Kanner kanner;// 自定义的轮播广告栏
 	private FullyListView listView;
-	private ScrollView scrollView;
 	private TextView recommendationTextView, tv_loaction, transitTextView, moviesTextView, foodTextView;
 	private Intent intent;
 	private RelativeLayout rl_loaction;
@@ -62,6 +65,7 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 	private ImageButton iv_message;
 	private ArrayList<SellerAndCoupon> list = new ArrayList<SellerAndCoupon>();
 	private GuessCouponAdapter adapter;
+	private PullToRefreshScrollView mPullRefreshScrollView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,8 +79,8 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 		if (parent != null) {
 			parent.removeView(indexView);
 		}
-		initView();	
-		initData();	
+		initView();
+		initData();
 		adapter = new GuessCouponAdapter(list, getActivity());
 		listView.setAdapter(adapter);
 		return indexView;
@@ -85,7 +89,6 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 	private void initView() {
 		kanner = (Kanner) indexView.findViewById(R.id.kanner);
 		listView = (FullyListView) indexView.findViewById(R.id.lv_index_item_detail);
-		scrollView = (ScrollView) indexView.findViewById(R.id.sv_index_detail);
 		foodTextView = (TextView) indexView.findViewById(R.id.tv_food);
 		moviesTextView = (TextView) indexView.findViewById(R.id.tv_movies);
 		transitTextView = (TextView) indexView.findViewById(R.id.tv_transit);
@@ -93,12 +96,16 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 		recommendationTextView = (TextView) indexView.findViewById(R.id.tv_recommendation);
 		rl_loaction = (RelativeLayout) indexView.findViewById(R.id.rl_title_bar_loaction);
 		iv_message = (ImageButton) indexView.findViewById(R.id.iv_index_title_bar_message);
+		mPullRefreshScrollView = (PullToRefreshScrollView) indexView.findViewById(R.id.sv_index_detail);
+		mPullRefreshScrollView.setOnRefreshListener(this);
+		//mPullRefreshScrollView.setFocusable(false);
 		mySetOnClickListener(rl_loaction, foodTextView, moviesTextView, transitTextView, recommendationTextView,
 				iv_message);
 		listView.setOnItemClickListener(this);
 		// 默认显示的首项是ListView，需要手动把ScrollView滚动至最顶端
-		listView.setFocusable(false);
-		scrollView.smoothScrollTo(0, 0);	
+		listView.setFocusable(true);
+		//listView.setParentScrollView(mPullRefreshScrollView);
+		
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -150,18 +157,11 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		switch (position) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-			Toast.makeText(getActivity(), "1", Toast.LENGTH_LONG).show();
-			break;
-		default:
-			break;
-		}
+		LogUtils.e("5555"+position);
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), CouponDetailActivity.class);
+		intent.putExtra("coupon_id", list.get(position).getId());
+		startActivity(intent);
 	}
 
 	/**
@@ -182,6 +182,7 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
+				mPullRefreshScrollView.onRefreshComplete();
 			}
 
 			@Override
@@ -195,15 +196,16 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 					if (state != 200) {
 						ToastUtil.show(getActivity(), results);
 					} else {
-						String data=jsonObject.optString("data");
+						String data = jsonObject.optString("data");
 						Gson gson = new Gson();
 						Type typeOfT = new TypeToken<ArrayList<SellerAndCoupon>>() {
 						}.getType();
-						LogUtils.e("sdsds---------"+data);
+						LogUtils.e("sdsds---------" + data);
 						ArrayList<SellerAndCoupon> sellerAndCoupons = gson.fromJson(data, typeOfT);
-					
+						list.clear();
 						list.addAll(sellerAndCoupons);
 						adapter.notifyDataSetChanged();
+						mPullRefreshScrollView.onRefreshComplete();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -222,4 +224,11 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnItemCl
 		cityName = mSharedUtil.getLOCATION_CITYNAME();
 		tv_loaction.setText(cityName);
 	}
+
+	@Override
+	public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+		// TODO Auto-generated method stub
+		initData();
+	}
+
 }

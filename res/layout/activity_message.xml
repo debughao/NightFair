@@ -1,57 +1,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical" >
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="8dp"
-        android:background="@color/divider" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:layout_marginTop="8dp"
+		android:background="@color/divider" />
 
-    <RelativeLayout
-        android:id="@+id/rl_message_system"
-        style="@style/personal_item_layout" >
+	<RelativeLayout
+		android:id="@+id/rl_message_system"
+		style="@style/personal_item_layout" >
 
-        <ImageView
-            android:id="@+id/message_image_system"
-            style="@style/personal_item_image_left"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_message_system" />
+		<ImageView
+			android:id="@+id/message_image_system"
+			style="@style/personal_item_image_left"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_message_system" />
 
-        <TextView
-            style="@style/personal_item_text"
-            android:layout_toEndOf="@id/message_image_system"
-            android:layout_toRightOf="@id/message_image_system"
-            android:text="@string/text_message_system" />
-    </RelativeLayout>
+		<TextView
+			style="@style/personal_item_text"
+			android:layout_toEndOf="@id/message_image_system"
+			android:layout_toRightOf="@id/message_image_system"
+			android:text="@string/text_message_system" />
+	</RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@color/divider" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:background="@color/divider" />
 
-    <RelativeLayout
-        android:id="@+id/rl_message_recommended"
-        style="@style/personal_item_layout" >
+	<RelativeLayout
+		android:id="@+id/rl_message_recommended"
+		style="@style/personal_item_layout" >
 
-        <ImageView
-            android:id="@+id/message_image_recommended"
-            style="@style/personal_item_image_left"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_message_recommended" />
+		<ImageView
+			android:id="@+id/message_image_recommended"
+			style="@style/personal_item_image_left"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_message_recommended" />
 
-        <TextView
-            style="@style/personal_item_text"
-            android:layout_toEndOf="@id/message_image_recommended"
-            android:layout_toRightOf="@id/message_image_recommended"
-            android:text="@string/text_message_recommended" />
-    </RelativeLayout>
+		<TextView
+			style="@style/personal_item_text"
+			android:layout_toEndOf="@id/message_image_recommended"
+			android:layout_toRightOf="@id/message_image_recommended"
+			android:text="@string/text_message_recommended" />
+	</RelativeLayout>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="@color/divider" />
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:background="@color/divider" />
 
 </LinearLayout>

@@ -14,6 +14,7 @@
     <color name="user_image_circle2">#f1ffff</color>
     <color name="divider">#D8D8D8</color>
     <color name="white">#ffffffff</color>
+    <color name="action_write">#fff9f9f9</color>
      <color name="color_half_write">#b0ffffff</color>
     <color name="about_white">#ccffffff</color>
     <color name="fafafa">#f0f0f0</color>
@@ -29,6 +30,7 @@
     <color name="frame_bg">#f8f8f8</color>
     <color name="frame_gray">#cccccc</color>
     <color name="black_text">#353535</color>
+    <color name="gray_text">#565656</color>
     <!-- 微信黑色字 -->
     <color name="gray_bg">#EBEBEB</color>
     <!-- 微信灰色背景 -->
