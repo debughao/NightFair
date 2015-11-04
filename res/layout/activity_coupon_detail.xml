@@ -1,76 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/parent_layout"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:background="@color/bg"
-	android:orientation="vertical" >
-
-	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="50dp"
-		android:background="@color/action_write" >
-
-		<TextView
-			style="@style/title_bar_text"
-			android:layout_width="wrap_content"
-			android:layout_height="50dp"
-			android:layout_centerVertical="true"
-			android:background="@drawable/actionbar_selector_gray"
-			android:clickable="true"
-			android:drawableLeft="@drawable/ic_detail_back"
-			android:drawablePadding="4dp"
-			android:drawableStart="@drawable/ic_detail_back"
-			android:gravity="center_vertical"
-			android:text="@string/text_title_bar_coupon"
-			android:textColor="@color/text_gray"
-			android:textSize="@dimen/c_text_size" />
-
-		<LinearLayout
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true" >
-
-			<ImageButton
-				android:id="@+id/iv_title_bar_message"
-				android:layout_width="50dp"
-				android:layout_height="50dp"
-				android:layout_gravity="center_vertical"
-				android:background="@drawable/actionbar_selector_gray"
-				android:clickable="true"
-				android:contentDescription="@null"
-				android:src="@drawable/ic_action_share" />
-
-			<ImageButton
-				android:id="@+id/iv_title_bar_setting"
-				android:layout_width="50dp"
-				android:layout_height="50dp"
-				android:layout_gravity="center_vertical"
-				android:background="@drawable/actionbar_selector_gray"
-				android:clickable="true"
-				android:contentDescription="@null"
-				android:src="@drawable/ic_action_favorite_off" />
-		</LinearLayout>
-	</RelativeLayout>
-
-	<View
-		android:layout_width="fill_parent"
-		android:layout_height="1px"
-		android:background="@color/divider" />
+	android:background="@color/bg" >
 
 	<com.handmark.pulltorefresh.library.PullToRefreshScrollView
 		xmlns:ptr="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/sv_index_detail"
+		android:id="@+id/sv_coupon_detail"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:focusable="true"
+		android:scrollbars="none"
 		ptr:ptrAnimationStyle="rotate"
 		ptr:ptrMode="pullFromStart" >
 
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="50dp"
 			android:orientation="vertical" >
 
 			<RelativeLayout
@@ -85,7 +32,7 @@
 					android:background="@color/action_write"
 					android:contentDescription="@null"
 					android:scaleType="fitXY"
-					android:src="@drawable/meituan_150c6537a07" />
+					android:src="@drawable/ic_head_default" />
 
 				<LinearLayout
 					android:id="@+id/tv_introduce"
@@ -121,43 +68,107 @@
 			<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:background="@color/white"
 				android:orientation="vertical" >
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="48dp"
-					android:layout_marginLeft="16dp"
-					android:layout_marginStart="16dp"
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="45dp"
+					android:background="@color/white"
 					android:gravity="center_vertical"
-					android:text="@string/text_title_seller"
-					android:textColor="@color/tab_title_normal_color"
-					android:textSize="@dimen/a_text_size" />
+					android:orientation="horizontal" >
+
+					<ImageView
+						android:layout_width="20dp"
+						android:layout_height="20dp"
+						android:layout_marginLeft="16dp"
+						android:layout_marginStart="16dp"
+						android:background="@null"
+						android:contentDescription="@null"
+						android:scaleType="fitXY"
+						android:src="@drawable/ic_global_deal_exchange" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="5dp"
+						android:layout_marginRight="10dp"
+						android:gravity="center_vertical"
+						android:text="@string/text_coupon_exchange"
+						android:textColor="@color/bamboo_green"
+						android:textSize="@dimen/b_text_size" />
+
+					<ImageView
+						android:layout_width="20dp"
+						android:layout_height="20dp"
+						android:background="@null"
+						android:contentDescription="@null"
+						android:scaleType="fitXY"
+						android:src="@drawable/ic_global_deal_sell" />
+
+					<TextView
+						android:id="@+id/tv_coupon_deal_sell"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginLeft="5dp"
+						android:layout_marginRight="5dp"
+						android:text="@string/tv_coupon_deal_sell"
+						android:textColor="@color/tab_title_normal_color"
+						android:textSize="@dimen/b_text_size" />
+				</LinearLayout>
 
 				<View
 					android:layout_width="fill_parent"
-					android:layout_height="0.5px"
+					android:layout_height="0.5dp"
+					android:layout_marginBottom="5dp"
+					android:background="@color/divider" />
+
+				<LinearLayout
+					android:layout_width="fill_parent"
+					android:layout_height="45dp"
+					android:background="@color/white"
+					android:gravity="center_vertical"
+					android:orientation="vertical" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="48dp"
+						android:layout_marginLeft="16dp"
+						android:layout_marginStart="16dp"
+						android:gravity="center_vertical"
+						android:text="@string/text_title_seller"
+						android:textColor="@color/tab_title_normal_color"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
 					android:background="@color/divider" />
 
 				<RelativeLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp" >
+					android:background="@color/white" >
 
 					<ImageView
 						android:id="@+id/iv_sellerinfo_tell"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
+						android:layout_alignParentEnd="true"
 						android:layout_alignParentRight="true"
 						android:layout_centerVertical="true"
+						android:layout_marginLeft="16dp"
+						android:layout_marginRight="16dp"
+						android:layout_marginStart="16dp"
+						android:background="@drawable/menu_option_bg"
+						android:clickable="true"
 						android:contentDescription="@null"
 						android:src="@drawable/ic_seller_phone" />
 
 					<View
 						android:layout_width="0.5dp"
-						android:layout_height="6dp"
-						android:layout_centerHorizontal="true"
+						android:layout_height="35dp"
+						android:layout_centerVertical="true"
 						android:layout_toLeftOf="@id/iv_sellerinfo_tell"
 						android:layout_toStartOf="@id/iv_sellerinfo_tell"
 						android:background="@color/divider" />
@@ -167,6 +178,7 @@
 						android:layout_height="wrap_content"
 						android:layout_alignParentRight="true"
 						android:layout_marginBottom="5dp"
+						android:layout_marginLeft="15dp"
 						android:layout_marginTop="5dp"
 						android:orientation="vertical" >
 
@@ -175,7 +187,6 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginTop="3dp"
-							android:text="肯德基"
 							android:textColor="@color/black_text"
 							android:textSize="@dimen/a_text_size" />
 
@@ -185,7 +196,6 @@
 							android:layout_height="wrap_content"
 							android:layout_marginBottom="3dp"
 							android:layout_marginTop="3dp"
-							android:text="工业园区工业园林林泉街611号文星广场"
 							android:textColor="@color/tab_title_normal_color"
 							android:textSize="@dimen/a_text_size" />
 
@@ -214,15 +224,15 @@
 
 				<View
 					android:layout_width="fill_parent"
-					android:layout_height="0.5px"
+					android:layout_height="0.5dp"
 					android:background="@color/divider" />
 
 				<RelativeLayout
 					android:id="@+id/rl_sellerinfo_detail"
 					android:layout_width="wrap_content"
 					android:layout_height="45dp"
-					android:layout_marginLeft="16dp"
-					android:layout_marginRight="16dp" >
+					android:background="@drawable/menu_option_bg"
+					android:clickable="true" >
 
 					<TextView
 						android:layout_width="wrap_content"
@@ -230,6 +240,7 @@
 						android:layout_alignParentLeft="true"
 						android:layout_alignParentStart="true"
 						android:layout_centerVertical="true"
+						android:layout_marginLeft="16dp"
 						android:text="查看详细"
 						android:textColor="@color/title_color"
 						android:textSize="@dimen/a_text_size" />
@@ -240,11 +251,297 @@
 						android:layout_alignParentEnd="true"
 						android:layout_alignParentRight="true"
 						android:layout_centerVertical="true"
+						android:layout_marginRight="16dp"
+						android:contentDescription="@null"
+						android:src="@drawable/ic_detail_right" />
+				</RelativeLayout>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:background="@color/white"
+				android:orientation="vertical" >
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginStart="16dp"
+					android:gravity="center_vertical"
+					android:text="@string/text_detail_coupon_set"
+					android:textColor="@color/tab_title_normal_color"
+					android:textSize="@dimen/a_text_size" />
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="45dp"
+					android:layout_gravity="center_vertical"
+					android:orientation="horizontal" >
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_marginLeft="16dp"
+						android:layout_marginStart="16dp"
+						android:layout_weight="4"
+						android:gravity="center_vertical"
+						android:text="@string/text_title_coupon"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+
+					<View
+						android:layout_width="0.5dp"
+						android:layout_height="match_parent"
+						android:background="@color/divider" />
+
+					<TextView
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="2"
+						android:gravity="center"
+						android:text="@string/text_detail_coupon_num"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+
+					<View
+						android:layout_width="0.5dp"
+						android:layout_height="match_parent"
+						android:background="@color/divider" />
+
+					<TextView
+						android:id="@+id/tv_coupon_price"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:gravity="center"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="15dp"
+					android:orientation="vertical" >
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical"
+						android:orientation="horizontal" >
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:gravity="center_vertical"
+							android:text="@string/text_detail_coupon__set_scope"
+							android:textColor="@color/black_text"
+							android:textSize="@dimen/a_text_size" >
+						</TextView>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical"
+						android:orientation="horizontal" >
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:gravity="center_vertical"
+							android:text="@string/text_detail_coupon__set_custom"
+							android:textColor="@color/black_text"
+							android:textSize="@dimen/a_text_size" >
+						</TextView>
+					</LinearLayout>
+
+					<LinearLayout
+						android:layout_width="match_parent"
+						android:layout_height="40dp"
+						android:layout_gravity="center_vertical"
+						android:orientation="horizontal" >
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:gravity="center_vertical"
+							android:text="@string/text_detail_coupon__set_coupon"
+							android:textColor="@color/black_text"
+							android:textSize="@dimen/a_text_size" >
+						</TextView>
+
+						<TextView
+							android:id="@+id/tv_detail_coupon__set_coupon"
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:layout_marginLeft="10dp"
+							android:gravity="center_vertical"
+							android:textColor="@color/black_text"
+							android:textSize="@dimen/a_text_size" >
+						</TextView>
+					</LinearLayout>
+				</LinearLayout>
+
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:background="@color/white"
+				android:orientation="vertical" >
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="48dp"
+					android:layout_marginLeft="16dp"
+					android:layout_marginStart="16dp"
+					android:gravity="center_vertical"
+					android:text="@string/text_detail_coupon_comment"
+					android:textColor="@color/tab_title_normal_color"
+					android:textSize="@dimen/a_text_size" />
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<com.nightfair.mobille.view.FullyListView
+					android:id="@+id/lv_coupon_comment"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@null"
+					android:divider="@color/divider"
+					android:dividerHeight="0.5dp"
+					android:listSelector="@android:color/transparent"
+					android:scrollbars="none" >
+				</com.nightfair.mobille.view.FullyListView>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="0.5dp"
+					android:background="@color/divider" />
+
+				<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="50dp"
+					android:gravity="center"
+					android:text="暂无更多评论"
+					android:textColor="@color/black_text"
+					android:textSize="@dimen/c_text_size" />
+
+				<RelativeLayout
+					android:id="@+id/rl_comment_detail"
+					android:layout_width="wrap_content"
+					android:layout_height="45dp"
+					android:background="@drawable/menu_option_bg"
+					android:clickable="true"
+					android:visibility="gone" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_alignParentStart="true"
+						android:layout_centerVertical="true"
+						android:layout_marginLeft="16dp"
+						android:textColor="@color/title_color"
+						android:textSize="@dimen/c_text_size" />
+
+					<ImageView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentEnd="true"
+						android:layout_alignParentRight="true"
+						android:layout_centerVertical="true"
+						android:layout_marginRight="16dp"
 						android:contentDescription="@null"
 						android:src="@drawable/ic_detail_right" />
 				</RelativeLayout>
 			</LinearLayout>
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="70dp"
+				android:layout_marginTop="8dp" >
+			</View>
 		</LinearLayout>
 	</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
-</LinearLayout>
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="55dp"
+		android:layout_alignParentBottom="true"
+		android:background="@color/white" >
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="0.5px"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_coupon"
+			android:layout_width="fill_parent"
+			android:layout_height="55dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp" >
+
+			<TextView
+				android:id="@+id/tv_coupondetail_price"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentLeft="true"
+				android:layout_centerVertical="true"
+				android:text="25元"
+				android:textColor="@color/tab_title_normal_color"
+				android:textSize="@dimen/a_text_size" />
+
+			<TextView
+				android:id="@+id/tv_coupondetail_buy"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:background="@drawable/button_serach_bg_subred"
+				android:clickable="true"
+				android:gravity="center"
+				android:text="@string/text_couponDetail_buy"
+				android:textColor="@color/about_white"
+				android:textSize="@dimen/a_text_size" />
+		</RelativeLayout>
+	</RelativeLayout>
+
+</RelativeLayout>

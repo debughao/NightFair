@@ -73,7 +73,8 @@ public class GuessCouponAdapter extends BaseAdapter {
 					LogUtils.e("5555"+position);
 					Intent intent = new Intent();
 					intent.setClass(context, CouponDetailActivity.class);
-					intent.putExtra("coupon_id", list.get(position).getCoupons().get(0).getId());
+					intent.putExtra("seller", list.get(position));
+					intent.putExtra("couponposition", 0);
 					context.startActivity(intent);
 				}
 			});

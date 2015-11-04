@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:padding="10dp" >
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal" >
+
+		<com.nightfair.mobille.widget.CircleImageView
+			android:id="@+id/iv_commenter_face"
+			android:layout_width="35dp"
+			android:layout_height="35dp"
+			android:layout_marginBottom="5dp"
+			android:layout_marginEnd="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="5dp"
+			android:src="@drawable/my_dd_icon_default"
+			app:border_color="@color/transparent3"
+			app:border_width="2dp" />
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="5dp"
+			android:orientation="vertical" >
+
+			<TextView
+				android:id="@+id/tv_commenter_nick"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="3dp"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:orientation="horizontal" >
+
+				<RatingBar
+					android:id="@+id/comment_ratingbar"
+					style="@style/roomRatingBar"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:clickable="false"
+					android:isIndicator="true"
+					android:numStars="5" >
+				</RatingBar>
+
+				<TextView
+					android:id="@+id/tv_comment_time"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="1.5dp"
+					android:layout_marginLeft="5dp"
+					android:layout_marginStart="5dp"
+					android:gravity="center_vertical"
+					android:textColor="@color/tab_title_normal_color"
+					android:textSize="@dimen/a_text_size" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/tv_comment_cotent"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="3dp"
+		android:lineSpacingMultiplier="1.2"
+		android:textColor="@color/black_text"
+		android:textSize="@dimen/a_text_size" />
+
+</LinearLayout>

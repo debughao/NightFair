@@ -216,5 +216,15 @@
 	<string name="title_activity_coupon_detail">CouponDetailActivity</string>
 	<string name="text_title_bar_coupon">优惠券详情</string>
 	<string name="text_title_seller">商家详情</string>
+	<string name="text_couponDetail_buy">立即抢购</string>
+	<string name="text_coupon_exchange">随时退</string>
+	<string name="tv_coupon_deal_sell">已售0</string>
+	<string name="text_title_coupon">优惠券</string>
+	<string name="text_detail_coupon_num">1张</string>
+	<string name="text_detail_coupon_set">套餐</string>
+	<string name="text_detail_coupon__set_scope">· 适用范围： 全场通用</string>
+	<string name="text_detail_coupon__set_custom">· 店内部分菜品价格参考：</string>
+	<string name="text_detail_coupon__set_coupon">· 全国门店根据区域价格不同意，请以店内菜单为准</string>
+	<string name="text_detail_coupon_comment">评价</string>
 
 </resources>

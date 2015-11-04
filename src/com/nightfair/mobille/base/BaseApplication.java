@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import android.graphics.Bitmap;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.SDKInitializer;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.bitmap.BitmapCommonUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.util.PreferencesCookieStore;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.bean.BuyerInfo;
 import com.nightfair.mobille.bean.PushMessage;
+import com.nightfair.mobille.config.FilePathConfig;
 import com.nightfair.mobille.db.BuyerDao;
 import com.nightfair.mobille.db.DaoFactory;
 import com.nightfair.mobille.db.PushMessageDao;
@@ -79,7 +82,7 @@ public class BaseApplication extends Application {
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
-
+	private BitmapDisplayConfig bigPicDisplayConfig;
 	// 单例模式中获取唯一的ExitApplication 实例
 	public static BaseApplication getInstance() {
 
@@ -98,7 +101,9 @@ public class BaseApplication extends Application {
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);
 		httpUtils.configCookieStore(cookieStore);
-		bitmapUtils=new BitmapUtils(getApplicationContext());
+		bitmapUtils=new BitmapUtils(getApplicationContext(),FilePathConfig.getTemp(getApplicationContext()));
+        bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
+        bitmapUtils.configDefaultBitmapMaxSize(BitmapCommonUtils.getScreenSize(this));
 		init();
 		umengPush();
 	}

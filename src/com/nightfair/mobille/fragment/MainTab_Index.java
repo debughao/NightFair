@@ -51,8 +51,7 @@ import android.widget.TextView;
 import krelve.view.Kanner;
 
 @SuppressLint("ResourceAsColor")
-public class MainTab_Index extends Fragment
-		implements OnClickListener, OnItemClickListener, OnRefreshListener<ScrollView> {
+public class MainTab_Index extends Fragment implements OnClickListener, OnRefreshListener<ScrollView> {
 
 	private View indexView;
 
@@ -98,14 +97,13 @@ public class MainTab_Index extends Fragment
 		iv_message = (ImageButton) indexView.findViewById(R.id.iv_index_title_bar_message);
 		mPullRefreshScrollView = (PullToRefreshScrollView) indexView.findViewById(R.id.sv_index_detail);
 		mPullRefreshScrollView.setOnRefreshListener(this);
-		//mPullRefreshScrollView.setFocusable(false);
+		// mPullRefreshScrollView.setFocusable(false);
 		mySetOnClickListener(rl_loaction, foodTextView, moviesTextView, transitTextView, recommendationTextView,
 				iv_message);
-		listView.setOnItemClickListener(this);
 		// 默认显示的首项是ListView，需要手动把ScrollView滚动至最顶端
 		listView.setFocusable(true);
-		//listView.setParentScrollView(mPullRefreshScrollView);
-		
+		// listView.setParentScrollView(mPullRefreshScrollView);
+
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -153,18 +151,6 @@ public class MainTab_Index extends Fragment
 	}
 
 	/**
-	 * listview单击事件
-	 */
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		LogUtils.e("5555"+position);
-		Intent intent = new Intent();
-		intent.setClass(getActivity(), CouponDetailActivity.class);
-		intent.putExtra("coupon_id", list.get(position).getId());
-		startActivity(intent);
-	}
-
-	/**
 	 * 广告栏和ListView数据来源
 	 */
 	private void initData() {
@@ -194,6 +180,7 @@ public class MainTab_Index extends Fragment
 					int state = jsonObject.optInt("state");
 					String results = jsonObject.optString("result");
 					if (state != 200) {
+						mPullRefreshScrollView.onRefreshComplete();
 						ToastUtil.show(getActivity(), results);
 					} else {
 						String data = jsonObject.optString("data");
