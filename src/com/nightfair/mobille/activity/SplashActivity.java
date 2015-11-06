@@ -4,6 +4,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.bmob.pay.tool.BmobPay;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.base.Activitybase;
@@ -46,9 +47,9 @@ public class SplashActivity extends Activitybase {
 		super.onCreate(savedInstanceState);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_splash);
+		BmobPay.init(this, "000ca7d3d028874f8e8401f27877171e");
 		mApplication = BaseApplication.getInstance();
-		mSharedUtil = mApplication.getSpUtil();
-		
+		mSharedUtil = mApplication.getSpUtil();	
 		LogUtils.e("是否允许重新定位" + allowLocation);
 		initView();
 		startAnimation();

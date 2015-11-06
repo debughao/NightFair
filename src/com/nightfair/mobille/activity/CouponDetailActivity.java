@@ -57,21 +57,24 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class CouponDetailActivity extends BaseActivity implements OnClickListener,OnRefreshListener<ScrollView> {
+public class CouponDetailActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ScrollView> {
 	private Context mContext;
-	private RelativeLayout rl_head;
-	private PullToRefreshScrollView myScrollView;
+	private RelativeLayout rl_head, rl_comment_detail;
 	private ImageView iv_img, iv_seller_tell;
 	private int height, couponposition;
 	private SellerAndCoupon mAndCoupon;
 	private TextView tv_name, tv_description, tv_deal_sell, tv_seller_name, tv_seller_adress, tv_seller_location,
-			tv_coupon_price, tv_coupondetail_price, tv_coupon_back;
+			tv_coupon_price, tv_coupondetail_price, tv_coupon_back, tv_nomore_comment, tv_look_morecomment;
 	private ImageButton iv_title_bar_message;
 	private ToggleButton iv_title_bar_collect;
 	private ArrayList<Comments> list = new ArrayList<Comments>();
 	private SellerCouponAdapter adapter;
 	private PullToRefreshScrollView mPullRefreshScrollView;
 	private FullyListView listView;
+	private TextView tv_coupondetail_buy;
+	private String seller_name;
+	private String currentPrice,coupon_id;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,21 +84,19 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		mAndCoupon = (SellerAndCoupon) intent.getSerializableExtra("seller");
 		couponposition = intent.getIntExtra("couponposition", 0);
 		ActivityUtils.setActionBarLayout(getActionBar(), mContext, R.layout.title_bar_coupon);
-		ToastUtil.show(mContext, "用户id：" + mAndCoupon.getId());
-
 		// int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
 		// LayoutParams params=rl_head.getLayoutParams();
 		// params.height=screenWidth/3*2;
-
-		myScrollView = (PullToRefreshScrollView) findViewById(R.id.sv_index_detail);
+		seller_name=mAndCoupon.getSeller_name();
+		coupon_id=mAndCoupon.getCoupons().get(couponposition).getId();
 		inintView();
 		inintActionbar();
 		inintData();
 		adapter = new SellerCouponAdapter(list, mContext);
+		listView.setFocusable(false);
 		listView.setAdapter(adapter);
 	}
 
-	
 	private void inintActionbar() {
 		// TODO Auto-generated method stub
 		tv_coupon_back = (TextView) findViewById(R.id.tv_coupon_back);
@@ -110,6 +111,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		// TODO Auto-generated method stub
 		iv_img = (ImageView) findViewById(R.id.iv_coupon_img);
 		rl_head = (RelativeLayout) findViewById(R.id.rl_coupon_detail_head);
+		rl_comment_detail = (RelativeLayout) findViewById(R.id.rl_comment_detail);
 		tv_name = (TextView) findViewById(R.id.tv_coupon_name);
 		tv_description = (TextView) findViewById(R.id.tv_coupon_description);
 		tv_deal_sell = (TextView) findViewById(R.id.tv_coupon_deal_sell);
@@ -119,19 +121,24 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		tv_seller_location = (TextView) findViewById(R.id.tv_seller_location);
 		tv_coupon_price = (TextView) findViewById(R.id.tv_coupon_price);
 		tv_coupondetail_price = (TextView) findViewById(R.id.tv_coupondetail_price);
+		tv_nomore_comment = (TextView) findViewById(R.id.tv_nomore_comment);
+		tv_look_morecomment = (TextView) findViewById(R.id.tv_look_morecomment);
+		tv_coupondetail_buy = (TextView) findViewById(R.id.tv_coupondetail_buy);
 		mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.sv_coupon_detail);
 		mPullRefreshScrollView.setOnRefreshListener(this);
 		listView = (FullyListView) findViewById(R.id.lv_coupon_comment);
 		iv_seller_tell.setOnClickListener(this);
+		rl_comment_detail.setOnClickListener(this);
+		tv_coupondetail_buy.setOnClickListener(this);
 		if (mAndCoupon != null) {
-			tv_name.setText(mAndCoupon.getSeller_name());
+			tv_name.setText(seller_name);
 			tv_description.setText(mAndCoupon.getCoupons().get(couponposition).getDescription());
 			tv_deal_sell.setText("已售出 " + mAndCoupon.getCoupons().get(couponposition).getSeller_counts());
 			tv_seller_name.setText(mAndCoupon.getSeller_name());
 			tv_seller_adress.setText(mAndCoupon.getArer() + mAndCoupon.getStreet());
 			tv_coupon_price.setText(mAndCoupon.getCoupons().get(couponposition).getOriginal_price());
 
-			String currentPrice = mAndCoupon.getCoupons().get(couponposition).getCurrent_price();
+			currentPrice = mAndCoupon.getCoupons().get(couponposition).getCurrent_price();
 			String originalPrice = mAndCoupon.getCoupons().get(couponposition).getOriginal_price();
 			String price = "￥ " + currentPrice + "  ￥" + originalPrice;
 			SpannableString spanString = new SpannableString(price);
@@ -156,6 +163,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 					super.onLoadCompleted(container, uri, bitmap, config, from);
 					int bwidth = bitmap.getWidth();
 					int bHeight = bitmap.getHeight();
+					@SuppressWarnings("deprecation")
 					int width = getWindowManager().getDefaultDisplay().getWidth();
 					height = width * bHeight / bwidth;
 					LayoutParams param = rl_head.getLayoutParams();
@@ -171,14 +179,16 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		}
 
 	}
+
 	private void inintData() {
+
 		// TODO Auto-generated method stub
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("seller_id", mAndCoupon.getId());
 		params.addBodyParameter("pageNum", "5");
 		params.addBodyParameter("pageNow", "1");
-		HttpUtils httpUtils = new HttpUtils();
+		HttpUtils httpUtils = BaseApplication.httpUtils;
 		httpUtils.send(HttpMethod.POST, AppConstants.GETCOMMENTS, params, new RequestCallBack<String>() {
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
@@ -194,9 +204,21 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 					jsonObject = new JSONObject(result);
 					int state = jsonObject.optInt("state");
 					String results = jsonObject.optString("result");
-					if (state != 200) {					
+					int total = jsonObject.optInt("total");
+					if (total >= 6) {
+						tv_nomore_comment.setVisibility(View.GONE);
+						rl_comment_detail.setVisibility(View.VISIBLE);
+						tv_look_morecomment.setText("查看全部" + total + "条评价");
+					}
+					mPullRefreshScrollView.onRefreshComplete();
+					if (state != 200) {
 						mPullRefreshScrollView.onRefreshComplete();
-						ToastUtil.show(mContext, results);
+						if ("该商家暂无收到评论！".equals(results)) {
+							tv_nomore_comment.setText(results);
+						} else {
+
+							ToastUtil.show(mContext, results);
+						}
 					} else {
 						String data = jsonObject.optString("data");
 						Gson gson = new Gson();
@@ -207,7 +229,6 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 						list.clear();
 						list.addAll(sellerAndCoupons.getComments());
 						adapter.notifyDataSetChanged();
-						mPullRefreshScrollView.onRefreshComplete();
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -240,7 +261,15 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		case R.id.tv_coupon_back:
 			finish();
 			break;
-
+		case R.id.tv_coupondetail_buy:
+			Intent intent = new Intent();
+			intent.setClass(mContext, SubmitorderActivity.class);
+			intent.putExtra("coupon_name", seller_name);
+			intent.putExtra("currentPrice", currentPrice);	
+			intent.putExtra("seller_id", mAndCoupon.getId());
+			intent.putExtra("coupon_id", coupon_id);
+			startActivity(intent);
+			break;
 		default:
 			break;
 		}
@@ -256,7 +285,6 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(Intent.createChooser(intent, "夜夜通分享"));
 	}
-
 
 	@Override
 	public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {

@@ -1,0 +1,261 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/pay_parent"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/bg"
+	android:orientation="vertical" >
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:orientation="vertical" >
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:layout_marginTop="15dp"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="35dp"
+				android:gravity="center_vertical"
+				android:text="@string/text_recharge_oder"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<TextView
+				android:id="@+id/tv_pay_order"
+				android:layout_width="wrap_content"
+				android:layout_height="35dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:gravity="center_vertical"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="15dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="35dp"
+				android:gravity="center_vertical"
+				android:text="@string/text_recharge_total"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<TextView
+				android:id="@+id/tv_pay_total"
+				android:layout_width="wrap_content"
+				android:layout_height="35dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:gravity="center_vertical"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+		</LinearLayout>
+	</LinearLayout>
+
+	<RelativeLayout
+		android:id="@+id/rl_wallet_pay"
+		style="@style/wallet_item_layout"
+		android:layout_height="50dp"
+		android:layout_marginTop="5dp" >
+
+		<TextView
+			android:id="@+id/tv_wallet_remain_hint"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:clickable="true"
+			android:text="@string/text_balance_pay"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/a_text_size" />
+
+		<TextView
+			android:id="@+id/tv_wallet_remain"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:layout_toEndOf="@id/tv_wallet_remain_hint"
+			android:layout_toRightOf="@id/tv_wallet_remain_hint"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/a_text_size" />
+
+		<CheckBox
+			android:id="@+id/ck_pay_pay"
+			style="@style/custom_checkbox2"
+			android:layout_width="40dip"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dip"
+			android:layout_marginStart="10dip"
+			android:checked="false"
+			android:enabled="false" />
+	</RelativeLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="0.5dp"
+		android:background="@color/divider" />
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="6dp"
+		android:background="@color/white"
+		android:orientation="vertical" >
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:id="@+id/ll_remain_pay"
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="16dp"
+				android:layout_marginRight="16dp"
+				android:text="@string/text_remain_pay"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<TextView
+				android:id="@+id/tv_remain_pay"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/sub_color"
+				android:textSize="@dimen/a_text_size" />
+		</LinearLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_wallet_alipay"
+			style="@style/wallet_item_layout"
+			android:layout_height="50dp" >
+
+			<ImageView
+				android:id="@+id/personal_image_wallet"
+				style="@style/wallet_item_image_left"
+				android:layout_marginLeft="15dp"
+				android:layout_marginStart="15dp"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_alipay" />
+
+			<TextView
+				android:id="@+id/tv_wallet_hint"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_toEndOf="@id/personal_image_wallet"
+				android:layout_toRightOf="@id/personal_image_wallet"
+				android:clickable="true"
+				android:text="@string/personal_wallet_alipay"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<CheckBox
+				android:id="@+id/ck_pay_alipay"
+				style="@style/custom_checkbox"
+				android:layout_width="40dip"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dip"
+				android:layout_marginStart="10dip"
+				android:checked="true"
+				android:enabled="false" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_wallet_weixin"
+			style="@style/wallet_item_layout"
+			android:layout_height="50dp" >
+
+			<ImageView
+				android:id="@+id/personal_image_wenxin"
+				style="@style/wallet_item_image_left"
+				android:layout_marginLeft="15dp"
+				android:layout_marginStart="15dp"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_weinxinpay" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerVertical="true"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_toEndOf="@id/personal_image_wenxin"
+				android:layout_toRightOf="@id/personal_image_wenxin"
+				android:text="@string/personal_wallet_weixinpay"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/a_text_size" />
+
+			<CheckBox
+				android:id="@+id/ck_pay_wenxin"
+				style="@style/custom_checkbox"
+				android:layout_width="40dip"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dip"
+				android:layout_marginStart="10dip"
+				android:checked="false"
+				android:enabled="false" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/tv_wallet_ok"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp"
+		android:layout_marginTop="25dp"
+		android:background="@drawable/button_serach_bg_subred"
+		android:gravity="center"
+		android:paddingBottom="15dp"
+		android:paddingTop="15dp"
+		android:text="@string/confirm"
+		android:textColor="@color/about_white"
+		android:textSize="@dimen/a_text_size" />
+
+</LinearLayout>

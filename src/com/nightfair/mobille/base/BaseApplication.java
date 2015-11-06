@@ -82,7 +82,6 @@ public class BaseApplication extends Application {
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
-	private BitmapDisplayConfig bigPicDisplayConfig;
 	// 单例模式中获取唯一的ExitApplication 实例
 	public static BaseApplication getInstance() {
 
@@ -95,8 +94,8 @@ public class BaseApplication extends Application {
 		// TODO Auto-generated method stub
 		SDKInitializer.initialize(getApplicationContext());
 		super.onCreate();
-		BmobSMS.initialize(getApplicationContext(), "000ca7d3d028874f8e8401f27877171e");
-		BmobChat.DEBUG_MODE = true;
+		BmobSMS.initialize(getApplicationContext(), "000ca7d3d028874f8e8401f27877171e");	
+		BmobChat.DEBUG_MODE = true;	
 		mInstance = this;
 		httpUtils = new HttpUtils();
 		cookieStore = new PreferencesCookieStore(this);

@@ -2,13 +2,13 @@
 
 	<!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 	-->
 	<style name="AppBaseTheme" parent="android:Theme.Light">
 		<!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
+            backward-compatibility can go here.
 		-->
 	</style>
 
@@ -87,6 +87,18 @@
 	<style name="personal_item_layout">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">50dp</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:background">@drawable/menu_option_bg</item>
+		<item name="android:clickable">true</item>
+	</style>
+
+	<style name="wallet_item_image_left" parent="baseStyle">
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_alignParentLeft">true</item>
+	</style>
+
+	<style name="wallet_item_layout">
+		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_centerVertical">true</item>
 		<item name="android:background">@drawable/menu_option_bg</item>
 		<item name="android:clickable">true</item>
@@ -362,6 +374,22 @@
 		<item name="android:progressDrawable">@drawable/room_rating_bar</item>
 		<item name="android:minHeight">22dp</item>
 		<item name="android:maxHeight">22dp</item>
+	</style>
+	<!-- check圆形框 -->
+	<style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+		<item name="android:button">@drawable/my_checkbox</item>
+		<item name="android:layout_marginLeft">5dp</item>
+		<item name="android:layout_marginRight">16dp</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_alignParentRight">true</item>
+	</style>
+	<!-- check圆形框 -->
+	<style name="custom_checkbox2" parent="@android:style/Widget.CompoundButton.CheckBox">
+		<item name="android:button">@drawable/my_checkbox2</item>
+		<item name="android:layout_marginLeft">5dp</item>
+		<item name="android:layout_marginRight">16dp</item>
+		<item name="android:layout_centerVertical">true</item>
+		<item name="android:layout_alignParentRight">true</item>
 	</style>
 
 </resources>

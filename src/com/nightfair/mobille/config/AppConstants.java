@@ -17,6 +17,8 @@ public class AppConstants {
 	public final static String GETFRAENDINFO=SERVERIP+"/NightFair/buyer/getbuyerinfo";
 	public final static String GETGUESSCOUPON=SERVERIP+"/NightFair/buyer/getcoupons";
 	public final static String GETCOMMENTS=SERVERIP+"/NightFair/buyer/getcomments";
+	public final static String GETWALLET=SERVERIP+"/NightFair/buyer/opeartionaccount";
+	public final static String GETORDER=SERVERIP+"/NightFair/buyer/getorder";
 	/**
 	 * 全国公交查询
 	 * 

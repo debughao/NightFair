@@ -102,8 +102,7 @@ public class LoginActivity extends Activitybase implements OnClickListener {
 			break;
 		case R.id.tv_login_register:
 			Intent intent = new Intent("com.nightfair.register.action.callback");
-			startActivityForResult(intent, 1);
-			
+			startActivityForResult(intent, 1);		
 			break;
 		default:
 			break;

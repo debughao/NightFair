@@ -11,6 +11,7 @@ import com.nightfair.mobille.activity.AboutActivity;
 import com.nightfair.mobille.activity.MessageActivity;
 import com.nightfair.mobille.activity.PersonalCollectionActivity;
 import com.nightfair.mobille.activity.PersonalCouponActivity;
+import com.nightfair.mobille.activity.PersonalWalletActivity;
 import com.nightfair.mobille.activity.SettingActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.config.AppConstants;
@@ -175,7 +176,14 @@ public class MainTab_Personal extends Fragment implements OnClickListener {
 			BaseApplication.cookieStore.clear();
 			logout();
 			break;
-
+		case R.id.personal_item_wallet:
+			if (BaseApplication.userid != 0) {
+				FragmentUtils.startActivity(this, PersonalWalletActivity.class);
+			} else {
+			    intent = new Intent("com.nightfair.buyer.action.login");
+				startActivityForResult(intent, 0);
+			}
+			break;
 		default:
 			break;
 		}

@@ -226,5 +226,28 @@
 	<string name="text_detail_coupon__set_custom">· 店内部分菜品价格参考：</string>
 	<string name="text_detail_coupon__set_coupon">· 全国门店根据区域价格不同意，请以店内菜单为准</string>
 	<string name="text_detail_coupon_comment">评价</string>
+	<string name="title_activity_personal_wallet">PersonalWalletActivity</string>
+	<string name="actionbar_title_wallet">我的钱包</string>
+	<string name="personal_wallet">账户余额</string>
+	<string name="personal_wallet_recharge">充值</string>
+	<string name="personal_wallet_withdraw">提现</string>
+	<string name="personal_wallet_manage">支付管理</string>
+	<string name="title_activity_pay">PayActivity</string>
+	<string name="actionbar_title_pay">支付订单</string>
+	<string name="title_activity_recharge">RechargeActivity</string>
+	<string name="actionbar_title_recharge">充值</string>
+	<string name="text_recharge_money">金额(元)</string>
+	<string name="text_recharge_hint">请输入充值金额</string>
+	<string name="text_recharge_oder">订单名称:</string>
+	<string name="text_recharge_total">订单总价:</string>
+	<string name="personal_wallet_alipay">支付宝支付</string>
+	<string name="personal_wallet_weixinpay">微信支付</string>
+	<string name="text_remain_pay">还需支付:</string>
+	<string name="text_balance_pay">夜夜通余额:</string>
+	<string name="title_activity_submitorder">SubmitorderActivity</string>
+	<string name="confirm_order">提交订单</string>
+	<string name="text_total_amount">总计</string>
+	<string name="text_coupon_price">单价</string>
+	<string name="coupon_order_num">1</string>
 
 </resources>

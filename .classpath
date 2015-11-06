@@ -13,7 +13,6 @@
 	<classpathentry kind="lib" path="libs/BmobSMS_V1.0.1_20150710.jar"/>
 	<classpathentry kind="lib" path="libs/com.umeng.message.lib_v2.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/BmobSDK_V3.4.3_0820.jar"/>
-	<classpathentry kind="lib" path="libs/httpmime-4.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/pinyin4android1.0.jar"/>
 	<classpathentry kind="lib" path="libs/pinyin4j-2.5.0.jar"/>
 	<classpathentry kind="lib" path="libs/BaiduLBS_Android.jar"/>

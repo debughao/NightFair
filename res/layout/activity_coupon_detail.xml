@@ -455,6 +455,7 @@
 					android:background="@color/divider" />
 
 				<TextView
+					android:id="@+id/tv_nomore_comment"
 					android:layout_width="fill_parent"
 					android:layout_height="50dp"
 					android:gravity="center"
@@ -471,6 +472,7 @@
 					android:visibility="gone" >
 
 					<TextView
+						android:id="@+id/tv_look_morecomment"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_alignParentLeft="true"
