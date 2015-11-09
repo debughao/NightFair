@@ -1,17 +1,117 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.nightfair.mobille.activity.RecommendationActivity" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/ll_popuwindow"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/bg"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_recommendation_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:background="@color/white"
+		android:orientation="horizontal" >
 
-</RelativeLayout>
+		<RelativeLayout
+			android:id="@+id/rl_recommendation_details"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_rm"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/recommendation" />
+
+			<ImageView
+				android:id="@+id/iv_rm"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_rm"
+				android:layout_alignParentRight="true"
+				android:layout_toRightOf="@id/tv_rm"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="30dp"
+			android:layout_marginTop="5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_around_details"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_around"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/around" />
+
+			<ImageView
+				android:id="@+id/iv_around"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_around"
+				android:layout_alignParentRight="true"
+				android:layout_toRightOf="@id/tv_around"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="30dp"
+			android:layout_marginTop="5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_sort_details"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_sort"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/sort" />
+
+			<ImageView
+				android:id="@+id/iv_sort"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_sort"
+				android:layout_alignParentRight="true"
+				android:layout_toRightOf="@id/tv_sort"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+	</LinearLayout>
+
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:background="@color/divider" />
+
+	<com.handmark.pulltorefresh.library.PullToRefreshListView
+		android:id="@+id/lv_recommendation"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@null"
+		android:divider="@color/divider"
+		android:dividerHeight="0.5dp"
+		android:listSelector="@android:color/transparent"
+		android:scrollbars="none" >
+	</com.handmark.pulltorefresh.library.PullToRefreshListView>
+
+</LinearLayout>

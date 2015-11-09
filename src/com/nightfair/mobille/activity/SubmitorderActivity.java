@@ -19,8 +19,6 @@ import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.ToastUtil;
-
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;

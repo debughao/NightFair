@@ -20,6 +20,7 @@
 	<classpathentry kind="lib" path="libs/baidumapapi_search_v3_6_0.jar"/>
 	<classpathentry kind="lib" path="libs/AMap_Location_v1.4.1_20150917.jar"/>
 	<classpathentry kind="lib" path="libs/photoview-library-1.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/AMap_2DMap_v2.6.0_20150916.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>

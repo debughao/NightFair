@@ -4,6 +4,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -34,7 +39,9 @@ import com.nightfair.mobille.view.FullyListView;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,7 +53,7 @@ import android.widget.TextView;
 import krelve.view.Kanner;
 
 @SuppressLint("ResourceAsColor")
-public class MainTab_Index extends Fragment implements OnClickListener, OnRefreshListener<ScrollView> {
+public class MainTab_Index extends Fragment implements OnClickListener,AMapLocationListener, OnRefreshListener<ScrollView> {
 
 	private View indexView;
 
@@ -62,6 +69,8 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 	private PullToRefreshScrollView mPullRefreshScrollView;
 	public SharePreferenceUtil mSharedUtil;
 	public BaseApplication mApplication;
+	private LocationManagerProxy mLocationManagerProxy;	
+	public static double geoLat, geoLng;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -78,6 +87,7 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 		mSharedUtil = mApplication.getSpUtil();
 		initView();
 		initData();
+		initLocation();
 		adapter = new GuessCouponAdapter(list, getActivity());
 		listView.setAdapter(adapter);
 		return indexView;
@@ -110,7 +120,11 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 		}
 
 	}
-
+	private void initLocation() {
+		mLocationManagerProxy = LocationManagerProxy.getInstance(getActivity());
+		mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 60 * 1000, 15, this);
+		mLocationManagerProxy.setGpsEnable(false);
+	}
 	/**
 	 * 导航单击事件
 	 */
@@ -162,7 +176,7 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("action", "getGuessCoupon");
 		HttpUtils httpUtils = new HttpUtils();
-		httpUtils.send(HttpMethod.POST, AppConstants.GETGUESSCOUPON, params, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.GETCOUPON, params, new RequestCallBack<String>() {
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
@@ -214,6 +228,55 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 	public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
 		// TODO Auto-generated method stub
 		initData();
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(AMapLocation amapLocation) {
+		// TODO Auto-generated method stub
+		if (amapLocation != null && amapLocation.getAMapException().getErrorCode() == 0) {
+			geoLat = amapLocation.getLatitude();
+			geoLng = amapLocation.getLongitude();
+			Log.e("经度---" + amapLocation.getLatitude(), "纬度---" + amapLocation.getLongitude());
+			if (geoLat != 0 || geoLng != 0) {
+				adapter.notifyDataSetChanged();
+			}
+		} else {
+			Log.e("AmapErr", "Location ERR:" + amapLocation.getAMapException().getErrorCode());
+		}
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		// 移除定位请求
+		mLocationManagerProxy.removeUpdates(this);
+		// 销毁定位
+		mLocationManagerProxy.destroy();
 	}
 
 }

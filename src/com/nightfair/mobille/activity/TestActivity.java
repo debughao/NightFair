@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import com.aibang.open.client.AibangApi;
 import com.aibang.open.client.exception.AibangException;
-import com.baidu.mapapi.common.Logger;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.lidroid.xutils.util.LogUtils;
@@ -16,6 +15,7 @@ import com.nightfair.mobille.R;
 import com.nightfair.mobille.adapter.BusTranferSegAdapter;
 import com.nightfair.mobille.bean.Bus;
 import com.nightfair.mobille.bean.Buses;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -51,7 +51,7 @@ public class TestActivity extends Activity {
 	}
 
 	public class AibangAsyncTask extends AsyncTask<Void, Void, JSONObject> {
-		private String mAction;
+		 String mAction;
 
 		public AibangAsyncTask(String action) {
 			mAction = action;
@@ -93,6 +93,7 @@ public class TestActivity extends Activity {
 
 	}
 
+	@SuppressLint("DefaultLocale")
 	private HttpHost getProxy() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		HttpHost none_host = null;

@@ -1,9 +1,17 @@
 package com.nightfair.mobille.activity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
+import com.amap.api.maps2d.AMapUtils;
+import com.amap.api.maps2d.model.LatLng;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -31,6 +39,7 @@ import com.nightfair.mobille.util.ToastUtil;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -38,6 +47,7 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -45,7 +55,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class OrderDetailActivity extends Activity implements OnClickListener {
+public class OrderDetailActivity extends Activity implements OnClickListener, AMapLocationListener {
 	protected Context mContext;
 	private TextView mTv_title, tv_order_sellername, tv_coupon_description, tv_order_amount, tv_detail_op, coupon_num,
 			tv_datime, tv_detail_msg, tv_total, tv_sellerinfo_name, tv_sellerinfo_adress, tv_seller_location, tv_op,
@@ -59,7 +69,9 @@ public class OrderDetailActivity extends Activity implements OnClickListener {
 	private Coupon coupon;
 	private LinearLayout ll_coupon_num;
 	private RelativeLayout rl_seller_detail;
-
+	private LocationManagerProxy mLocationManagerProxy;	
+	public  double geoLat, geoLng, mlatitude,mlongitude,distance;
+	LatLng p1,p2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,8 +83,11 @@ public class OrderDetailActivity extends Activity implements OnClickListener {
 		sellerInfo = buyerOrder.getSellerInfo();
 		order = buyerOrder.getOrder();
 		coupon = buyerOrder.getCoupon();
+		mlatitude=Double.parseDouble(sellerInfo.getLatitude());
+		mlongitude=Double.parseDouble(sellerInfo.getLongitude());
 		ActivityUtils.setActionBarLayout(getActionBar(), mContext, R.layout.title_bar_recharge);
 		initView();
+		initLocation();
 	}
 
 	private void initView() {
@@ -155,7 +170,11 @@ public class OrderDetailActivity extends Activity implements OnClickListener {
 			tv_detail_op.setVisibility(View.GONE);
 		}
 	}
-
+	private void initLocation() {
+		mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+		mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 60 * 1000, 15, this);
+		mLocationManagerProxy.setGpsEnable(false);
+	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -311,5 +330,73 @@ public class OrderDetailActivity extends Activity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onLocationChanged(AMapLocation amapLocation) {
+		// TODO Auto-generated method stub
+		if (amapLocation != null && amapLocation.getAMapException().getErrorCode() == 0) {
+			geoLat = amapLocation.getLatitude();
+			geoLng = amapLocation.getLongitude();
+			Log.e("经度---" + amapLocation.getLatitude(), "纬度---" + amapLocation.getLongitude());
+			if (geoLat != 0 || geoLng != 0) {
+				setText();
+			}
+		} else {
+			Log.e("AmapErr", "Location ERR:" + amapLocation.getAMapException().getErrorCode());
+		}
+	}
+	private void setText() {
+		// TODO Auto-generated method stub
+		
+		if (geoLat!=0||geoLng!=0) {
+			p1=new LatLng(mlatitude, mlongitude);
+			p2=new LatLng(geoLat, geoLng);
+			distance = AMapUtils.calculateLineDistance(p1, p2);
+			if (distance<500.0) {
+				tv_seller_location.setText("< 500m");
+			}
+			else if (distance>500&&distance<1000.0) {
+				DecimalFormat decimalFormat=new DecimalFormat("#.0");
+				tv_seller_location.setText(decimalFormat.format(distance)+"km");
+			}else if (distance>1000.0) {
+				DecimalFormat decimalFormat=new DecimalFormat("#.0");
+				tv_seller_location.setText(decimalFormat.format("> "+distance/1000.0)+"km");
+			}
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		// 移除定位请求
+		mLocationManagerProxy.removeUpdates(this);
+		// 销毁定位
+		mLocationManagerProxy.destroy();
 	}
 }

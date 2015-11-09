@@ -216,7 +216,6 @@
 								android:layout_height="wrap_content"
 								android:layout_marginLeft="2dp"
 								android:layout_marginRight="2dp"
-								android:text="&lt;0.5km"
 								android:textColor="@color/tab_title_normal_color" />
 						</LinearLayout>
 					</LinearLayout>

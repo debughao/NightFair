@@ -1,11 +1,17 @@
 package com.nightfair.mobille.activity;
 
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
+import com.amap.api.maps2d.AMapUtils;
+import com.amap.api.maps2d.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -39,6 +45,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -46,6 +53,7 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -56,7 +64,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-public class CouponDetailActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ScrollView> {
+public class CouponDetailActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ScrollView>, AMapLocationListener {
 	private Context mContext;
 	private RelativeLayout rl_head, rl_comment_detail;
 	private ImageView iv_img, iv_seller_tell;
@@ -74,7 +82,9 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 	private String seller_name;
 	private String currentPrice, coupon_id;
 	private String way;
-
+	private LocationManagerProxy mLocationManagerProxy;	
+	public  double geoLat, geoLng, mlatitude,mlongitude,distance;
+	LatLng p1,p2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,6 +94,8 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		mAndCoupon = (SellerAndCoupon) intent.getSerializableExtra("seller");
 		couponposition = intent.getIntExtra("couponposition", 0);
 		way = "select";
+		mlatitude=Double.parseDouble(mAndCoupon.getLatitude());
+		mlongitude=Double.parseDouble(mAndCoupon.getLongitude());
 		ActivityUtils.setActionBarLayout(getActionBar(), mContext, R.layout.title_bar_coupon);
 		// int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
 		// LayoutParams params=rl_head.getLayoutParams();
@@ -94,11 +106,16 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		inintActionbar();
 		inintCollection();
 		inintData();
+		initLocation(); 
 		adapter = new SellerCouponAdapter(list, mContext);
 		listView.setFocusable(false);
 		listView.setAdapter(adapter);
 	}
-
+	private void initLocation() {
+		mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+		mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork,  1000, 15, this);
+		mLocationManagerProxy.setGpsEnable(true);
+	}
 	private void inintActionbar() {
 		// TODO Auto-generated method stub
 		tv_coupon_back = (TextView) findViewById(R.id.tv_coupon_back);
@@ -190,7 +207,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		params.addBodyParameter("way", way);
 		params.addBodyParameter("couponid", mAndCoupon.getCoupons().get(couponposition).getId());
 		HttpUtils httpUtils = BaseApplication.httpUtils;
-		httpUtils.send(HttpMethod.POST, AppConstants.GETGUESSCOUPON, params, new RequestCallBack<String>() {
+		httpUtils.send(HttpMethod.POST, AppConstants.GETCOUPON, params, new RequestCallBack<String>() {
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
@@ -369,5 +386,68 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		default:
 			break;
 		}
+	}
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void onLocationChanged(AMapLocation amapLocation) {
+		// TODO Auto-generated method stub
+		if (amapLocation != null && amapLocation.getAMapException().getErrorCode() == 0) {
+			geoLat = amapLocation.getLatitude();
+			geoLng = amapLocation.getLongitude();
+			Log.e("经度---" + amapLocation.getLatitude(), "纬度---" + amapLocation.getLongitude());
+			if (geoLat != 0 || geoLng != 0) {
+				setText();
+			}
+		} else {
+			Log.e("AmapErr", "Location ERR:" + amapLocation.getAMapException().getErrorCode());
+		}
+	}
+	private void setText() {
+		// TODO Auto-generated method stub
+		
+		if (geoLat!=0||geoLng!=0) {
+			p1=new LatLng(mlatitude, mlongitude);
+			p2=new LatLng(geoLat, geoLng);
+			distance = AMapUtils.calculateLineDistance(p1, p2);
+			if (distance<500.0) {
+				tv_seller_location.setText("< 500m");
+			}
+			else if (distance>500&&distance<1000.0) {
+				DecimalFormat decimalFormat=new DecimalFormat("#.0");
+				tv_seller_location.setText(decimalFormat.format(distance)+"km");
+			}else if (distance>1000.0) {
+				DecimalFormat decimalFormat=new DecimalFormat("#.0");
+				tv_seller_location.setText(decimalFormat.format("> "+distance/1000.0)+"km");
+			}
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		// 移除定位请求
+		mLocationManagerProxy.removeUpdates(this);
+		// 销毁定位
+		mLocationManagerProxy.destroy();
 	}
 }

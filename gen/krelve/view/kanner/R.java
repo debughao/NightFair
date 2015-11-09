@@ -10,17 +10,17 @@ public final class R {
 	public static final class drawable {
 		public static final int dot_blur = 0x7f02008f;
 		public static final int dot_focus = 0x7f020092;
-		public static final int ic_launcher = 0x7f0200c3;
-		public static final int loading = 0x7f0200f5;
+		public static final int ic_launcher = 0x7f0200c5;
+		public static final int loading = 0x7f0200fa;
 	}
 	public static final class id {
-		public static final int ll_dot = 0x7f09016b;
-		public static final int v_dot1 = 0x7f09016c;
-		public static final int v_dot2 = 0x7f09016d;
-		public static final int vp = 0x7f09016a;
+		public static final int ll_dot = 0x7f09018c;
+		public static final int v_dot1 = 0x7f09018d;
+		public static final int v_dot2 = 0x7f09018e;
+		public static final int vp = 0x7f09018b;
 	}
 	public static final class layout {
-		public static final int kanner_layout = 0x7f030057;
+		public static final int kanner_layout = 0x7f03005d;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f060000;

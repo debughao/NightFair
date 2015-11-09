@@ -274,5 +274,13 @@
 	<string name="actionbar_title_mycomment">我的评论</string>
 	<string name="title_activity_my_colltction">MyColltctionActivity</string>
 	<string name="actionbar_title_mycollection">我的收藏</string>
+	<string name="recommendation">今日新单</string>
+	<string name="around">附近</string>
+	<string name="sort">智能排序</string>
+	<string name="text_classifying">全部分类</string>
+	<string name="text_nearby_shop">附近商家</string>
+	<string name="text_noncommenrt">你还没有发表过评论</string>
+	<string name="text_try">去下一单试试吧</string>
+	<string name="text_see_see">随便逛一逛</string>
 
 </resources>

@@ -8,14 +8,14 @@
 	android:orientation="horizontal" >
 
 	<RelativeLayout
-		android:id="@+id/rl_index_item_img"
+		android:id="@+id/rl_item_recommendation"
 		android:layout_width="0dp"
 		android:layout_height="wrap_content"
 		android:layout_margin="10dp"
 		android:layout_weight="2" >
 
 		<ImageView
-			android:id="@+id/iv_nearby_img"
+			android:id="@+id/iv_item_recommendation_img"
 			android:layout_width="130dp"
 			android:layout_height="80dp"
 			android:background="@drawable/ic_head_default"
@@ -25,7 +25,7 @@
 	</RelativeLayout>
 
 	<RelativeLayout
-		android:id="@+id/rl_index_item_info"
+		android:id="@+id/rl_item_recommendation_info"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:layout_marginEnd="10dp"
@@ -33,42 +33,64 @@
 		android:layout_weight="5" >
 
 		<RelativeLayout
-			android:id="@+id/rl_index_item_text_top"
+			android:id="@+id/rl_item_recommendation_text_top"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" >
 
 			<TextView
-				android:id="@+id/tv_name"
+				android:id="@+id/tv_seller_name"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="10dp"
 				android:gravity="center_vertical"
 				android:textSize="@dimen/t_text_size" />
+
+			<TextView
+				android:id="@+id/tv_seller_distance"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_marginTop="10dp"
+				android:gravity="center_vertical"
+				android:textColor="@color/tab_title_normal_color"
+				android:textSize="@dimen/a_text_size" />
 		</RelativeLayout>
 
 		<TextView
-			android:id="@+id/tv_detail"
+			android:id="@+id/tv_seller_detail"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/rl_index_item_text_top"
-			android:paddingLeft="20dp"
-			android:paddingRight="20dp"
+			android:layout_below="@id/rl_item_recommendation_text_top"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginTop="8dp"
 			android:textColor="@color/tab_title_normal_color"
 			android:textSize="@dimen/a_text_size" />
 
 		<RelativeLayout
-			android:id="@+id/rl_index_item_text_bottom"
+			android:id="@+id/rl_item_recommendation_text_bottom"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="5dp" >
+			android:layout_marginBottom="10dp" >
 
 			<TextView
-				android:id="@+id/tv_money"
+				android:id="@+id/tv_goods_money"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="center_vertical"
 				android:textColor="@color/tab_title_normal_color"
+				android:textSize="@dimen/b_text_size" />
+
+			<TextView
+				android:id="@+id/tv_goods_count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:textColor="@color/sub_color"
 				android:textSize="@dimen/b_text_size" />
 		</RelativeLayout>
 	</RelativeLayout>

@@ -1,23 +1,158 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ly_main_weixin"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#fcfcfc"
-    android:orientation="vertical" >
-    
-    
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/ll_popuwindow_nearby"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/bg"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical" >
 
-   	<TextView 
-   	    android:layout_width="fill_parent"
-   	    android:layout_height="0dp"
-   	    android:layout_weight="1"
-   	    android:gravity="center"
-   	    android:text="this is second tab !"
-   	    android:textColor="#000000"
-   	    android:textSize="30sp"
-   	    />
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="@color/title_color" >
 
-    
+		<ImageButton
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:layout_centerVertical="true"
+			android:background="@drawable/actionbar_selector"
+			android:clickable="true"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_serach" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent"
+			android:layout_centerInParent="true"
+			android:gravity="center_vertical"
+			android:text="@string/text_nearby_shop"
+			android:textColor="@color/white"
+			android:textSize="@dimen/c_text_size" />
+
+		<ImageButton
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:layout_alignParentEnd="true"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:background="@drawable/actionbar_selector"
+			android:clickable="true"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_map" />
+	</RelativeLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:background="@color/white"
+		android:orientation="horizontal" >
+
+		<RelativeLayout
+			android:id="@+id/rl_nearby_details"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_rm_nearby"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/text_classifying" />
+
+			<ImageView
+				android:id="@+id/iv_rm_nearby"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_rm_nearby"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_toEndOf="@id/tv_rm_nearby"
+				android:layout_toRightOf="@id/tv_rm_nearby"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="30dp"
+			android:layout_marginTop="5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_around_details_nearby"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_around_nearby"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/around" />
+
+			<ImageView
+				android:id="@+id/iv_around"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_around_nearby"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_toEndOf="@id/tv_around_nearby"
+				android:layout_toRightOf="@id/tv_around_nearby"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="30dp"
+			android:layout_marginTop="5dp"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_sort_details_nearby"
+			android:layout_width="0dp"
+			android:layout_height="40dp"
+			android:layout_weight="1" >
+
+			<TextView
+				android:id="@+id/tv_sort_nearby"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:text="@string/sort" />
+
+			<ImageView
+				android:id="@+id/iv_sort_nearby"
+				android:layout_width="8dp"
+				android:layout_height="8dp"
+				android:layout_alignBottom="@id/tv_sort_nearby"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:layout_toEndOf="@id/tv_sort_nearby"
+				android:layout_toRightOf="@id/tv_sort_nearby"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_drop_triangle" />
+		</RelativeLayout>
+	</LinearLayout>
+
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="1px"
+		android:background="@color/divider" />
+
+	<com.handmark.pulltorefresh.library.PullToRefreshListView
+		android:id="@+id/lv_recommendation_nearby"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@null"
+		android:divider="@color/divider"
+		android:dividerHeight="0.5dp"
+		android:listSelector="@android:color/transparent"
+		android:scrollbars="none" >
+	</com.handmark.pulltorefresh.library.PullToRefreshListView>
 
 </LinearLayout>
