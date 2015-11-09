@@ -127,6 +127,7 @@
 		</activity>
 		<activity
 			android:name=".activity.LoginActivity"
+			android:launchMode="singleTask"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme" >
 			<intent-filter>
@@ -508,7 +509,37 @@
 			android:theme="@style/AppTheme" >
 		</activity>
 		<activity
-			android:name="com.nightfair.mobille.activity.SubmitorderActivity"
+			android:name=".activity.SubmitorderActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name=".activity.OrderManageActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name=".activity.OrderDetailActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name=".activity.LookCouponNumActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name=".activity.CommentActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name=".activity.MyCommentActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name="com.nightfair.mobille.activity.MyColltctionActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme" >
 		</activity>

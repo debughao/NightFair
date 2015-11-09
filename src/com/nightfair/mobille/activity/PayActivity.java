@@ -36,7 +36,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -57,7 +56,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 	private ProgressDialog dialog;
 	private String orderid, recharge_way, payThirdMoney, payownMoney;
 	boolean trade_state = false;
-	private double doubleBalance, doubleMoney, doubleReaminMoney, doublePayownMoney;
+	private double doubleBalance, doubleMoney, doubleReaminMoney;
 	DecimalFormat df = new DecimalFormat("#.00");// 保留2位小数
 	private LinearLayout pay_parent;
 	private int order_id;
@@ -381,7 +380,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 	public void payByAli() {
 		showDialog("正在获取订单...");
 		LogUtils.e("第三方支付金额" + getPrice());
-		bmobPay.pay(0.01, ordertitle, new PayListener() {
+		bmobPay.pay(getPrice(), ordertitle, new PayListener() {
 			// 因为网络等原因,支付结果未知(小概率事件),出于保险起见稍后手动查询
 			@Override
 			public void unknow() {
@@ -426,7 +425,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
 	public void payByWeiXin() {
 		showDialog("正在获取订单...");
-		bmobPay.payByWX(0.01, ordertitle, new PayListener() {
+		bmobPay.payByWX(getPrice(), ordertitle, new PayListener() {
 
 			// 因为网络等原因,支付结果未知(小概率事件),出于保险起见稍后手动查询
 			@Override

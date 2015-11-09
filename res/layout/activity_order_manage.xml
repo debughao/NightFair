@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/bg"
+	android:fitsSystemWindows="true" >
+
+	<com.nightfair.mobille.view.XListView
+		android:id="@+id/pull_refresh_list"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginBottom="15dp"
+		android:background="@null"
+		android:divider="@color/divider"
+		android:dividerHeight="0.5dp"
+		android:listSelector="@android:color/transparent"
+		android:scrollbars="none" />
+
+	<LinearLayout
+		android:id="@+id/ll_seemore"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:layout_marginBottom="15dp"
+		android:gravity="center"
+		android:orientation="vertical"
+		android:visibility="gone" >
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="你还没有相关订单"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/c_text_size" />
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="15dp"
+			android:layout_marginTop="8dp"
+			android:text="去下一单试试吧"
+			android:textColor="@color/tab_title_normal_color"
+			android:textSize="@dimen/a_text_size" />
+
+		<TextView
+			android:id="@+id/tv_seemore"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@drawable/button_order_selector_shape_orange"
+			android:clickable="true"
+			android:gravity="center"
+			android:paddingBottom="8dp"
+			android:paddingLeft="15dp"
+			android:paddingRight="15dp"
+			android:paddingTop="8dp"
+			android:text="随便逛一逛"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/button_text_size" />
+	</LinearLayout>
+
+</RelativeLayout>

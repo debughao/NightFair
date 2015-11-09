@@ -1,0 +1,83 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/bg"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical"
+	android:padding="10dp" >
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:gravity="center_horizontal"
+		android:orientation="vertical"
+		android:padding="10dp" >
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="50dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:contentDescription="@null"
+				android:src="@drawable/iconfont_oupon" />
+
+			<TextView
+				android:id="@+id/tv_coupon_name"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+		</LinearLayout>
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="10dp"
+			android:layout_marginTop="10dp"
+			android:gravity="center_horizontal"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="券码:"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+
+			<TextView
+				android:id="@+id/tv_coupon_num"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size"
+				android:textStyle="bold" />
+		</LinearLayout>
+
+		<ImageView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_erweima" />
+	</LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,153 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res/com.nightfair.mobille"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@color/bg"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical" >
+
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="0.5dp"
+		android:background="@color/divider" />
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/white"
+		android:gravity="center_horizontal"
+		android:orientation="vertical" >
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="50dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:contentDescription="@null"
+				android:src="@drawable/ic_comment" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical"
+				android:text="来给商家打个分吧"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+		</LinearLayout>
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="0.5dp"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginTop="5dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:id="@+id/tv_coupon_num"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_marginBottom="6dp"
+				android:gravity="center_vertical"
+				android:text="@string/text_taste"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+
+			<RatingBar
+				android:id="@+id/taste_ratingbar"
+				style="@style/roomRatingBar2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:numStars="5" >
+			</RatingBar>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginStart="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_marginBottom="6dp"
+				android:gravity="center_vertical"
+				android:text="@string/text_services"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+
+			<RatingBar
+				android:id="@+id/comment_services"
+				style="@style/roomRatingBar2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:numStars="5" >
+			</RatingBar>
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="16dp"
+			android:layout_marginStart="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal" >
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_marginBottom="6dp"
+				android:gravity="center_vertical"
+				android:text="@string/text_environment"
+				android:textColor="@color/black_text"
+				android:textSize="@dimen/c_text_size" />
+
+			<RatingBar
+				android:id="@+id/comment_environment "
+				style="@style/roomRatingBar2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:numStars="5" >
+			</RatingBar>
+		</LinearLayout>
+
+		<com.nightfair.mobille.view.HintEditText
+			android:id="@+id/het_comment"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:background="@drawable/bg_comment_label_enable"
+			app:maxLength="500" />
+	</LinearLayout>
+
+	<TextView
+		android:id="@+id/tv_ok"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_marginLeft="10dp"
+		android:layout_marginRight="10dp"
+		android:layout_marginTop="20dp"
+		android:background="@drawable/button_serach_bg_red"
+		android:clickable="true"
+		android:gravity="center"
+		android:padding="10dp"
+		android:text="提交"
+		android:textColor="@color/about_white"
+		android:textSize="@dimen/a_text_size" />
+
+</LinearLayout>

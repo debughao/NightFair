@@ -8,25 +8,25 @@ package krelve.view.kanner;
 
 public final class R {
 	public static final class drawable {
-		public static final int dot_blur = 0x7f02008c;
-		public static final int dot_focus = 0x7f02008f;
-		public static final int ic_launcher = 0x7f0200bc;
-		public static final int loading = 0x7f0200eb;
+		public static final int dot_blur = 0x7f02008f;
+		public static final int dot_focus = 0x7f020092;
+		public static final int ic_launcher = 0x7f0200c3;
+		public static final int loading = 0x7f0200f5;
 	}
 	public static final class id {
-		public static final int ll_dot = 0x7f07014b;
-		public static final int v_dot1 = 0x7f07014c;
-		public static final int v_dot2 = 0x7f07014d;
-		public static final int vp = 0x7f07014a;
+		public static final int ll_dot = 0x7f09016b;
+		public static final int v_dot1 = 0x7f09016c;
+		public static final int v_dot2 = 0x7f09016d;
+		public static final int vp = 0x7f09016a;
 	}
 	public static final class layout {
-		public static final int kanner_layout = 0x7f03004e;
+		public static final int kanner_layout = 0x7f030057;
 	}
 	public static final class string {
-		public static final int app_name = 0x7f080006;
+		public static final int app_name = 0x7f060000;
 	}
 	public static final class style {
-		public static final int AppBaseTheme = 0x7f090000;
-		public static final int AppTheme = 0x7f090001;
+		public static final int AppBaseTheme = 0x7f070000;
+		public static final int AppTheme = 0x7f070001;
 	}
 }

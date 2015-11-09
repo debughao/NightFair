@@ -13,7 +13,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.bitmap.BitmapCommonUtils;
-import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
 import com.lidroid.xutils.util.LogUtils;
 import com.lidroid.xutils.util.PreferencesCookieStore;
 import com.nightfair.mobille.R;

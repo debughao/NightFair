@@ -24,7 +24,6 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
-import com.nightfair.mobille.adapter.GuessCouponAdapter;
 import com.nightfair.mobille.adapter.SellerCouponAdapter;
 import com.nightfair.mobille.base.BaseActivity;
 import com.nightfair.mobille.base.BaseApplication;
@@ -36,10 +35,10 @@ import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.FullyListView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -73,7 +72,8 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 	private FullyListView listView;
 	private TextView tv_coupondetail_buy;
 	private String seller_name;
-	private String currentPrice,coupon_id;
+	private String currentPrice, coupon_id;
+	private String way;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,14 +83,16 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		Intent intent = getIntent();
 		mAndCoupon = (SellerAndCoupon) intent.getSerializableExtra("seller");
 		couponposition = intent.getIntExtra("couponposition", 0);
+		way = "select";
 		ActivityUtils.setActionBarLayout(getActionBar(), mContext, R.layout.title_bar_coupon);
 		// int screenWidth = getWindowManager().getDefaultDisplay().getWidth();
 		// LayoutParams params=rl_head.getLayoutParams();
 		// params.height=screenWidth/3*2;
-		seller_name=mAndCoupon.getSeller_name();
-		coupon_id=mAndCoupon.getCoupons().get(couponposition).getId();
+		seller_name = mAndCoupon.getSeller_name();
+		coupon_id = mAndCoupon.getCoupons().get(couponposition).getId();
 		inintView();
 		inintActionbar();
+		inintCollection();
 		inintData();
 		adapter = new SellerCouponAdapter(list, mContext);
 		listView.setFocusable(false);
@@ -137,7 +139,6 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 			tv_seller_name.setText(mAndCoupon.getSeller_name());
 			tv_seller_adress.setText(mAndCoupon.getArer() + mAndCoupon.getStreet());
 			tv_coupon_price.setText(mAndCoupon.getCoupons().get(couponposition).getOriginal_price());
-
 			currentPrice = mAndCoupon.getCoupons().get(couponposition).getCurrent_price();
 			String originalPrice = mAndCoupon.getCoupons().get(couponposition).getOriginal_price();
 			String price = "￥ " + currentPrice + "  ￥" + originalPrice;
@@ -154,7 +155,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 				@Override
 				public void onLoadStarted(ImageView container, String uri, BitmapDisplayConfig config) {
 					super.onLoadStarted(container, uri, config);
-
+					inintCollection();
 				}
 
 				@Override
@@ -177,15 +178,65 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		} else {
 			ToastUtil.show(mContext, "获取信息失败，稍后重试！");
 		}
+		
+	}
 
+	private void inintCollection() {
+		// TODO Auto-generated method stub
+		RequestParams params = new RequestParams();
+		params.addBodyParameter("key", AppConstants.KEY);
+		params.addBodyParameter("action", "my");
+		params.addBodyParameter("seller_id", mAndCoupon.getId());
+		params.addBodyParameter("way", way);
+		params.addBodyParameter("couponid", mAndCoupon.getCoupons().get(couponposition).getId());
+		HttpUtils httpUtils = BaseApplication.httpUtils;
+		httpUtils.send(HttpMethod.POST, AppConstants.GETGUESSCOUPON, params, new RequestCallBack<String>() {
+			@Override
+			public void onFailure(HttpException arg0, String arg1) {
+				LogUtils.e("网络异常");
+			}
+
+			@Override
+			public void onSuccess(ResponseInfo<String> arg0) {
+				String result = arg0.result;
+				JSONObject jsonObject;
+				try {
+					jsonObject = new JSONObject(result);
+					int state = jsonObject.optInt("state");
+					String results = jsonObject.optString("result");
+					if (state == 200) {
+						if ("select".equals(way)) {
+							iv_title_bar_collect.setChecked(true);
+						} else {
+							iv_title_bar_collect.setChecked(true);
+							ToastUtil.showCenter(mContext, results);
+						}
+					} else if (state == 201) {
+						if ("select".equals(way)) {
+							iv_title_bar_collect.setChecked(false);
+						} else {
+							iv_title_bar_collect.setChecked(false);
+							ToastUtil.showCenter(mContext, results);
+						}
+					}else if (state == 405) {
+						ToastUtil.show(mContext, results);
+						Intent intent = new Intent("com.nightfair.buyer.action.login");
+						startActivityForResult(intent, 2);								
+				}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	private void inintData() {
-
 		// TODO Auto-generated method stub
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("seller_id", mAndCoupon.getId());
+		params.addBodyParameter("action", "other");
 		params.addBodyParameter("pageNum", "5");
 		params.addBodyParameter("pageNow", "1");
 		HttpUtils httpUtils = BaseApplication.httpUtils;
@@ -243,20 +294,19 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.iv_sellerinfo_tell:
-			String phone = mAndCoupon.getPhone();
-			if (phone != null && !phone.equals("")) {
-				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-			} else {
-				ToastUtil.show(mContext, "商家电话暂不可用！");
-			}
+			Phone();
 			break;
 		case R.id.iv_title_bar_message:
 			share();
 			break;
 		case R.id.iv_title_bar_collect:
-
+			if (!iv_title_bar_collect.isChecked()) {
+				way = "sub";				
+				inintCollection();
+			} else {		
+				way = "add";
+				inintCollection();
+			}
 			break;
 		case R.id.tv_coupon_back:
 			finish();
@@ -265,13 +315,25 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 			Intent intent = new Intent();
 			intent.setClass(mContext, SubmitorderActivity.class);
 			intent.putExtra("coupon_name", seller_name);
-			intent.putExtra("currentPrice", currentPrice);	
+			intent.putExtra("currentPrice", currentPrice);
 			intent.putExtra("seller_id", mAndCoupon.getId());
 			intent.putExtra("coupon_id", coupon_id);
 			startActivity(intent);
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void Phone() {
+		// TODO Auto-generated method stub
+		String phone = mAndCoupon.getPhone();
+		if (phone != null && !phone.equals("")) {
+			Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+		} else {
+			ToastUtil.show(mContext, "商家电话暂不可用！");
 		}
 	}
 
@@ -288,7 +350,24 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub		
 		inintData();
+		inintCollection();
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		LogUtils.e("requestCode---" + requestCode + "resultCode--------" + resultCode);
+		switch (requestCode) {
+		case 2:
+			if (resultCode == Activity.RESULT_OK) {
+				inintCollection();
+				ActivityUtils.showShortToast(mContext, "登录成功");
+			}                                                                                                                                         
+			break;
+		default:
+			break;
+		}
 	}
 }

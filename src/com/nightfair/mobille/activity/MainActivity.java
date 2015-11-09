@@ -9,6 +9,8 @@ import com.nightfair.mobille.fragment.MainTab_Index;
 import com.nightfair.mobille.fragment.MainTab_Nearby;
 import com.nightfair.mobille.fragment.MainTab_Personal;
 import com.nightfair.mobille.util.ActivityUtils;
+import com.nightfair.mobille.util.SharePreferenceUtil;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -45,17 +47,24 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	private TextView mTvNearby;
 	private TextView mTvChat;
 	private TextView mTvPersonal;
+	public SharePreferenceUtil mSharedUtil;
+	public BaseApplication mApplication;
+
 	/**
 	 * 用于对Fragment进行管理
 	 */
 	private FragmentManager fragmentManager;
 	private long mExitTime;
+	private boolean allowBackIndex;
+	private boolean allowBackSecond;
 	private final static long TIME_DIFF = 2 * 1000;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mApplication = BaseApplication.getInstance();
+		mSharedUtil = mApplication.getSpUtil();
 		mContext = this;
 		ActivityUtils.setTranslucentStatus(this.getWindow(), true);
 		ActivityUtils.setStatusBarColor(R.color.title_color, this);
@@ -96,11 +105,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.id_tab_bottom_chat:
 			if (BaseApplication.userid == 0) {
-				Intent intent  =new Intent("com.nightfair.buyer.action.login");
-				startActivityForResult(intent, 2);						
-			}else {
-				setTabSelection(2);			
-			}		
+				Intent intent = new Intent("com.nightfair.buyer.action.login");
+				startActivityForResult(intent, 2);
+			} else {
+				setTabSelection(2);
+			}
 			break;
 		case R.id.id_tab_bottom_personal:
 			setTabSelection(3);
@@ -113,7 +122,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void setTabSelection(int index) {
-	
+
 		// 重置按钮
 		resetBtn();
 		// 开启一个Fragment事务
@@ -178,7 +187,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		}
 		transaction.commit();
 	}
-
 
 	/**
 	 * 清除掉所有的选中状态。
@@ -246,11 +254,11 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		LogUtils.e("requestCode---"+requestCode+"resultCode--------"+resultCode);
+		LogUtils.e("requestCode---" + requestCode + "resultCode--------" + resultCode);
 		switch (requestCode) {
 		case 2:
-			if (resultCode == Activity.RESULT_OK){
-				setTabSelection(2);	
+			if (resultCode == Activity.RESULT_OK) {
+				setTabSelection(2);
 				ActivityUtils.showShortToast(mContext, "登录成功");
 			}
 			break;
@@ -258,5 +266,21 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		mApplication = BaseApplication.getInstance();
+		mSharedUtil = mApplication.getSpUtil();
+		allowBackIndex = mSharedUtil.isAllowBackIndex();
+	    allowBackSecond=mSharedUtil.isAllowBackSecond();
+		if (allowBackIndex) {
+			setTabSelection(0);
+			mSharedUtil.setAllowBackIndex(false);
+		}else if (allowBackSecond) {
+			setTabSelection(1);
+			mSharedUtil.setAllowBackSecond(false);
+		}
+		super.onResume();
 	}
 }

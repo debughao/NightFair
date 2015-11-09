@@ -29,7 +29,7 @@
 	<string name="tv_login_register">登录/注册</string>
 	<string name="tv_logout">退出登录</string>
 	<string name="user_nickname">请输入昵称</string>
-	<string name="personal_item_coupon">我的优惠券</string>
+	<string name="personal_item_coupon">我的订单</string>
 	<string name="personal_item_collectiion">我的收藏</string>
 	<string name="personal_item_comment">我的评价</string>
 	<string name="personal_item_wallet">我的钱包</string>
@@ -249,5 +249,30 @@
 	<string name="text_total_amount">总计</string>
 	<string name="text_coupon_price">单价</string>
 	<string name="coupon_order_num">1</string>
+	<string name="text_order_all_order">查看全部订单</string>
+	<string name="text_order_unpaid">待付款</string>
+	<string name="text_order_unused">待使用</string>
+	<string name="text_order_needfeedback">待评价</string>
+	<string name="text_order_order_refund">退款/售后</string>
+	<string name="title_activity_order_manage">OrderManageActivity</string>
+	<string name="text_order_manseg_num">数量:</string>
+	<string name="text_ordermanage_amount">总价：</string>
+	<string name="title_activity_order_detail">OrderDetailActivity</string>
+	<string name="actionbar_title_orderdetail">订单详情</string>
+	<string name="text_seller_name">商家信息</string>
+	<string name="coupon">夜夜通券</string>
+	<string name="orderdetail">订单详情</string>
+	<string name="title_activity_look_coupon_num">LookCouponNumActivity</string>
+	<string name="actionbar_title_coupon">优惠券</string>
+	<string name="title_activity_comment">CommentActivity</string>
+	<string name="actionbar_title_comment">评价</string>
+	<string name="text_taste">口味：</string>
+	<string name="text_services">服务：</string>
+	<string name="text_environment">环境：</string>
+	<string name="text_order_all">全部订单</string>
+	<string name="title_activity_my_comment">MyCommentActivity</string>
+	<string name="actionbar_title_mycomment">我的评论</string>
+	<string name="title_activity_my_colltction">MyColltctionActivity</string>
+	<string name="actionbar_title_mycollection">我的收藏</string>
 
 </resources>

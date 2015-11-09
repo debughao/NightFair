@@ -50,6 +50,7 @@
 				android:layout_gravity="center_vertical"
 				android:background="@null"
 				android:button="@null"
+				android:checked="false"
 				android:drawableLeft="@drawable/selector_btn_collect"
 				android:drawableStart="@drawable/selector_btn_collect"
 				android:padding="15dip"

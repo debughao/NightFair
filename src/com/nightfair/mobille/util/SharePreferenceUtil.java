@@ -30,7 +30,8 @@ public class SharePreferenceUtil {
 	private String LOCATION_CITYNAME = "cityName";
 	private String SHARED_KEY_LOCATION = "location";
 	private String SHARED_KEY_PUSH = "shared_key_push";
-
+	private String SHARED_KEY_INDEX = "shared_key_index";
+	private String SHARED_KEY_SECOND = "shared_key_Second";
 	// 是否允许推送通知
 	public boolean isAllowPushNotify() {
 		return mSharedPreferences.getBoolean(SHARED_KEY_NOTIFY, true);
@@ -88,6 +89,23 @@ public class SharePreferenceUtil {
 
 	public void setAllowPushEnable(boolean isChecked) {
 		editor.putBoolean(SHARED_KEY_PUSH, isChecked);
+		editor.commit();
+	}
+
+	public boolean isAllowBackIndex() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_INDEX, false);
+	}
+
+	public void setAllowBackIndex(Boolean isChecked) {
+		editor.putBoolean(SHARED_KEY_INDEX, isChecked);
+		editor.commit();
+	}
+	public boolean isAllowBackSecond() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_SECOND, false);
+	}
+
+	public void setAllowBackSecond(Boolean isChecked) {
+		editor.putBoolean(SHARED_KEY_SECOND, isChecked);
 		editor.commit();
 	}
 }

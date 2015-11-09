@@ -1,16 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-	-->
-	<style name="AppBaseTheme" parent="android:Theme.Light">
-		<!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-		-->
-	</style>
+	<style name="AppBaseTheme" parent="android:Theme.Light"></style>
 
 	<!-- Application theme. -->
 	<style name="AppTheme" parent="AppBaseTheme">
@@ -374,6 +364,12 @@
 		<item name="android:progressDrawable">@drawable/room_rating_bar</item>
 		<item name="android:minHeight">22dp</item>
 		<item name="android:maxHeight">22dp</item>
+	</style>
+
+	<style name="roomRatingBar2" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/room_rating_bar2</item>
+		<item name="android:minHeight">50dp</item>
+		<item name="android:maxHeight">50dp</item>
 	</style>
 	<!-- check圆形框 -->
 	<style name="custom_checkbox" parent="@android:style/Widget.CompoundButton.CheckBox">

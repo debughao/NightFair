@@ -16,7 +16,6 @@ import com.nightfair.mobille.adapter.BusTranferSegAdapter;
 import com.nightfair.mobille.bean.Bus;
 import com.nightfair.mobille.bean.Buses;
 import com.nightfair.mobille.bean.SegParm;
-import com.nightfair.mobille.bean.Segment;
 import com.nightfair.mobille.util.ToastUtil;
 
 import android.annotation.SuppressLint;
@@ -43,7 +42,7 @@ public class TranferDetaiFragment extends Fragment {
 	private AibangApi mAibang;
 	private AibangAsyncTask mAsyncTask;
 	// 这里请使用您申请的API KEY
-	private static final String API_KEY = "f41c8afccc586de03a99c86097e98ccb";
+	private static final String API_KEY = "8ac76173c6c65209f67d3f667ac202af";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +75,7 @@ public class TranferDetaiFragment extends Fragment {
 	}
 
 	public class AibangAsyncTask extends AsyncTask<Void, Void, JSONObject> {
-		private String mAction;
+		 String mAction;
 
 		public AibangAsyncTask(String action) {
 			mAction = action;

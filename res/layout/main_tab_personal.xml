@@ -56,8 +56,10 @@
 	</LinearLayout>
 
 	<com.nightfair.mobille.widget.ReboundScrollView
+		android:id="@+id/reboundScrollView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:focusable="false"
 		android:scrollbars="none" >
 
 		<LinearLayout
@@ -68,9 +70,14 @@
 			<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="1dp"
+				android:layout_marginTop="10dp"
 				android:background="@drawable/bg"
 				android:orientation="vertical" >
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="1px"
+					android:background="@color/divider" />
 
 				<RelativeLayout
 					android:id="@+id/personal_item_coupon"
@@ -80,18 +87,130 @@
 						android:id="@+id/personal_item_image_coupon"
 						style="@style/personal_item_image_left"
 						android:contentDescription="@null"
-						android:src="@drawable/ic_order_my" />
+						android:src="@drawable/order_all_order" />
 
 					<TextView
 						style="@style/personal_item_text"
+						android:layout_toEndOf="@id/personal_item_image_coupon"
 						android:layout_toRightOf="@id/personal_item_image_coupon"
 						android:text="@string/personal_item_coupon" />
 
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_centerVertical="true"
+						android:layout_toLeftOf="@+id/iv_order_all_order"
+						android:layout_toStartOf="@+id/iv_order_all_order"
+						android:text="@string/text_order_all_order"
+						android:textColor="@color/tab_title_normal_color"
+						android:textSize="@dimen/a_text_size" />
+
 					<ImageView
+						android:id="@+id/iv_order_all_order"
 						style="@style/personal_item_image_right"
 						android:contentDescription="@null"
 						android:src="@drawable/personal_itme_right" />
 				</RelativeLayout>
+
+				<View
+					android:layout_width="fill_parent"
+					android:layout_height="1px"
+					android:background="@color/divider" />
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="80dp"
+					android:baselineAligned="false"
+					android:orientation="horizontal" >
+
+					<LinearLayout
+						android:id="@+id/ll_order_unpaid"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:background="@drawable/menu_option_bg"
+						android:clickable="true"
+						android:gravity="center"
+						android:orientation="vertical" >
+
+						<ImageView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:contentDescription="@null"
+							android:src="@drawable/order_unpaid" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/text_order_unpaid" />
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/ll_order_unused"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:background="@drawable/menu_option_bg"
+						android:clickable="true"
+						android:gravity="center"
+						android:orientation="vertical" >
+
+						<ImageView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:contentDescription="@null"
+							android:src="@drawable/order_unused" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/text_order_unused" />
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/ll_order_needfeedback"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:background="@drawable/menu_option_bg"
+						android:clickable="true"
+						android:gravity="center"
+						android:orientation="vertical" >
+
+						<ImageView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:contentDescription="@null"
+							android:src="@drawable/order_needfeedback" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/text_order_needfeedback" />
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/ll_order_refund"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:background="@drawable/menu_option_bg"
+						android:clickable="true"
+						android:gravity="center"
+						android:orientation="vertical" >
+
+						<ImageView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:contentDescription="@null"
+							android:src="@drawable/order_refund" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/text_order_order_refund" />
+					</LinearLayout>
+				</LinearLayout>
 			</LinearLayout>
 
 			<LinearLayout

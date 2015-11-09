@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/bg"
+	android:orientation="vertical" >
+
+	<LinearLayout
+		android:id="@+id/ll_order_parent"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dp"
+		android:background="@drawable/menu_option_bg"
+		android:clickable="true"
+		android:orientation="vertical" >
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="1px"
+			android:background="@color/divider" />
+
+		<TextView
+			android:id="@+id/tv_order_msg"
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:gravity="end|center_vertical"
+			android:text="@string/text_order_unpaid"
+			android:textColor="@color/blue"
+			android:textSize="@dimen/a_text_size" />
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="1px"
+			android:background="@color/divider" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:padding="8dp" >
+
+			<ImageView
+				android:id="@+id/iv_order_img"
+				android:layout_width="100dp"
+				android:layout_height="80dp"
+				android:contentDescription="@null"
+				android:padding="5dp"
+				android:scaleType="fitXY"
+				android:src="@drawable/ic_head_default" />
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="3dp" >
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"
+					android:orientation="horizontal"
+					android:padding="3dp" >
+
+					<TextView
+						android:id="@+id/tv_order_couponname"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"
+					android:orientation="horizontal"
+					android:padding="3dp" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_order_manseg_num"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+
+					<TextView
+						android:id="@+id/tv_order_manseg_num"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="1"
+					android:orientation="horizontal"
+					android:padding="3dp" >
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/text_ordermanage_amount"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+
+					<TextView
+						android:id="@+id/tv_order_amount"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textColor="@color/black_text"
+						android:textSize="@dimen/a_text_size" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="1px"
+			android:background="@color/divider" />
+
+		<RelativeLayout
+			android:id="@+id/rl_msg"
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:padding="5dp" >
+
+			<Button
+				android:id="@+id/tv_order_bt_msg_b"
+				android:layout_width="80dp"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentRight="true"
+				android:background="@drawable/button_order_selector_shape_orange"
+				android:gravity="center"
+				android:textSize="@dimen/a_text_size" />
+
+			<Button
+				android:id="@+id/tv_order_bt_msg_a"
+				android:layout_width="80dp"
+				android:layout_height="wrap_content"
+				android:layout_marginEnd="8dp"
+				android:layout_marginRight="8dp"
+				android:layout_toLeftOf="@+id/tv_order_bt_msg_b"
+				android:layout_toStartOf="@+id/tv_order_bt_msg_b"
+				android:background="@drawable/button_order_selector_shape_gray"
+				android:gravity="center"
+				android:textSize="@dimen/a_text_size" />
+		</RelativeLayout>
+
+		<View
+			android:layout_width="fill_parent"
+			android:layout_height="1px"
+			android:background="@color/divider" />
+	</LinearLayout>
+
+</LinearLayout>

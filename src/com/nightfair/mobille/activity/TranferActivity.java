@@ -8,7 +8,6 @@ import com.nightfair.mobille.R;
 import com.nightfair.mobille.bean.SegParm;
 import com.nightfair.mobille.fragment.TranferDetaiFragment;
 import com.nightfair.mobille.util.ActivityUtils;
-import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.ViewPagerIndicator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -60,7 +59,7 @@ public class TranferActivity extends FragmentActivity implements OnClickListener
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				ToastUtil.showCenter(TranferActivity.this, "arg0" + arg0);
+				//ToastUtil.showCenter(TranferActivity.this, "arg0" + arg0);
 
 			}
 

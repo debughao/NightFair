@@ -40,7 +40,7 @@ public class MainTab_Chat extends Fragment implements OnClickListener, EventList
 	/**
 	 * 用于对Fragment进行管理
 	 */
-	private FragmentManager fragmentManager2;
+	private FragmentManager fragmentManager;
 	private ContactFragment contactFragment;
 	private RecentFragment recentFragment;
 
@@ -66,7 +66,7 @@ public class MainTab_Chat extends Fragment implements OnClickListener, EventList
 		// 开启广播
 		initNewMessageBroadCast();
 		initTagMessageBroadCast();
-		fragmentManager2 = getFragmentManager();
+		fragmentManager = getFragmentManager();
 		initChatTitleBarViews();
 		setTabSelection(0);
 		return rootView;
@@ -87,7 +87,7 @@ public class MainTab_Chat extends Fragment implements OnClickListener, EventList
 	private void setTabSelection(int index) {
 		// 重置按钮
 		// 开启一个Fragment事务
-		FragmentTransaction transaction = fragmentManager2.beginTransaction();
+		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		// 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
 		hideFragments(transaction);
 		switch (index) {

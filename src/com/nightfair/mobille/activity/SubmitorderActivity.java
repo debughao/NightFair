@@ -20,6 +20,7 @@ import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.NetUtils;
 import com.nightfair.mobille.util.ToastUtil;
 
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -41,18 +42,22 @@ public class SubmitorderActivity extends BaseActivity implements OnClickListener
 	private int n = 1;
 	private double pricae;
 	private double total_money;
-	private String coupon_name, currentPrice, seller_id, coupon_id, amount;
- private String num;
+	private String coupon_name, currentPrice, seller_id,action ,coupon_id, amount;
+    private String num;
+	private Intent intent;
+	DecimalFormat df = new DecimalFormat("#.00");// 保留2位小数
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_submitorder);
 		mContext = this;
 		ActivityUtils.setActionBarLayout(getActionBar(), mContext, R.layout.title_bar_recharge);
-		Intent intent = getIntent();
+		intent = getIntent();
+		action= intent.getStringExtra("action");
 		coupon_name = intent.getStringExtra("coupon_name");
 		currentPrice = intent.getStringExtra("currentPrice");
 		seller_id = intent.getStringExtra("seller_id");
+		LogUtils.e("--------------"+seller_id);
 		coupon_id = intent.getStringExtra("coupon_id");
 		pricae = Double.parseDouble(currentPrice);
 		total_money = pricae;
@@ -79,6 +84,18 @@ public class SubmitorderActivity extends BaseActivity implements OnClickListener
 		ib_coupon_num_add.setOnClickListener(this);
 		tv_wallet_ok.setOnClickListener(this);
 		mTv_title.setOnClickListener(this);
+		if ("resubmint".equals(action)) {
+			num=intent.getStringExtra("num");
+			n=Integer.parseInt(num);
+			tv_coupon_num.setText(num);
+			total_money = pricae * n;
+			amount = df.format(total_money);
+			tv_coupon_totalamount.setText("￥" + amount);
+		}
+		if (n>1) {
+			ib_coupon_num_sub.setEnabled(true);
+			ib_coupon_num_sub.setImageDrawable(getResources().getDrawable(R.drawable.ic_coupon_num_sub));
+		}
 		tv_coupon_num.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -102,7 +119,7 @@ public class SubmitorderActivity extends BaseActivity implements OnClickListener
 					ib_coupon_num_sub.setImageDrawable(getResources().getDrawable(R.drawable.ic_coupon_num_sub_gray));
 
 				}
-				DecimalFormat df = new DecimalFormat("#.00");// 保留2位小数
+			
 
 				if (n == 0) {
 					total_money = 0;

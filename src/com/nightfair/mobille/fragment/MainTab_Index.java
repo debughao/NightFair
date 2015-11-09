@@ -2,10 +2,8 @@ package com.nightfair.mobille.fragment;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -20,9 +18,8 @@ import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.BusActivity;
-import com.nightfair.mobille.activity.CouponDetailActivity;
-import com.nightfair.mobille.activity.FoodsActivity;
 import com.nightfair.mobille.activity.LocationIndexActivity;
+import com.nightfair.mobille.activity.MainActivity;
 import com.nightfair.mobille.activity.MessageActivity;
 import com.nightfair.mobille.activity.MoviesActivity;
 import com.nightfair.mobille.activity.RecommendationActivity;
@@ -42,8 +39,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -65,7 +60,8 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 	private ArrayList<SellerAndCoupon> list = new ArrayList<SellerAndCoupon>();
 	private GuessCouponAdapter adapter;
 	private PullToRefreshScrollView mPullRefreshScrollView;
-
+	public SharePreferenceUtil mSharedUtil;
+	public BaseApplication mApplication;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -78,6 +74,8 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 		if (parent != null) {
 			parent.removeView(indexView);
 		}
+		mApplication = BaseApplication.getInstance();
+		mSharedUtil = mApplication.getSpUtil();
 		initView();
 		initData();
 		adapter = new GuessCouponAdapter(list, getActivity());
@@ -120,8 +118,8 @@ public class MainTab_Index extends Fragment implements OnClickListener, OnRefres
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_food:
-			intent = new Intent(getActivity(), FoodsActivity.class);
-			intent.putExtra("text", "美食");
+			mSharedUtil.setAllowBackSecond(true);			
+			intent = new Intent(getActivity(), MainActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.tv_movies:
