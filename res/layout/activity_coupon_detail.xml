@@ -166,6 +166,7 @@
 						android:src="@drawable/ic_seller_phone" />
 
 					<View
+						android:id="@+id/line3"
 						android:layout_width="0.5dp"
 						android:layout_height="35dp"
 						android:layout_centerVertical="true"
@@ -180,6 +181,8 @@
 						android:layout_marginBottom="5dp"
 						android:layout_marginLeft="15dp"
 						android:layout_marginTop="5dp"
+						android:layout_toLeftOf="@id/line3"
+						android:layout_toStartOf="@id/line3"
 						android:orientation="vertical" >
 
 						<TextView

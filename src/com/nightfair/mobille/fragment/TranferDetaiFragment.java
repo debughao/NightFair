@@ -87,7 +87,7 @@ public class TranferDetaiFragment extends Fragment {
 		}
 
 		protected void onPostExecute(JSONObject result) {
-			LogUtils.e("-------------JSONObject result"+result.toString());
+		//	LogUtils.e("-------------JSONObject result"+result.toString());
 			if (null!=result){
 				String buses = result.optString("buses");
 				String result_num=result.optString("result_num");

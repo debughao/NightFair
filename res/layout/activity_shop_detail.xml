@@ -7,7 +7,7 @@
 
 	<com.handmark.pulltorefresh.library.PullToRefreshScrollView
 		xmlns:ptr="http://schemas.android.com/apk/res-auto"
-		android:id="@+id/sv_coupon_detail"
+		android:id="@+id/sv_shop_detail"
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:focusable="true"
@@ -22,7 +22,7 @@
 			android:orientation="vertical" >
 
 			<ImageView
-				android:id="@+id/iv_coupon_img"
+				android:id="@+id/iv_shop_img"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:background="@color/action_write"
@@ -38,7 +38,7 @@
 				android:padding="10dp" >
 
 				<TextView
-					android:id="@+id/tv_seller_name"
+					android:id="@+id/tv_sellerdetail_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="8dp"
@@ -51,7 +51,7 @@
 					android:orientation="horizontal" >
 
 					<RatingBar
-						android:id="@+id/seller_ratingbar"
+						android:id="@+id/sellerdetail_ratingbar"
 						style="@style/roomRatingBar"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
@@ -60,10 +60,11 @@
 					</RatingBar>
 
 					<TextView
-						android:id="@+id/tv_seller_rank"
+						android:id="@+id/tv_sellerdetail_rank"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:layout_marginTop="2dp"
+						android:layout_marginLeft="5dp"
+						android:layout_marginRight="5dp"
 						android:textColor="@color/d_yellow"
 						android:textSize="@dimen/a_text_size" />
 				</LinearLayout>
@@ -76,31 +77,22 @@
 
 			<RelativeLayout
 				android:layout_width="match_parent"
-				android:layout_height="40dp"
-				android:background="@color/white" >
+				android:layout_height="wrap_content"
+				android:background="@color/white"
+				android:padding="6dp" >
 
 				<ImageView
 					android:id="@+id/iv_location"
-					android:layout_width="22dp"
-					android:layout_height="22dp"
+					android:layout_width="20dp"
+					android:layout_height="20dp"
 					android:layout_centerVertical="true"
+					android:layout_marginLeft="10dp"
 					android:contentDescription="@null"
 					android:scaleType="fitXY"
 					android:src="@drawable/ic_sellerinfo_ocation" />
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:layout_marginLeft="5dp"
-					android:layout_marginRight="5dp"
-					android:layout_toEndOf="@id/iv_location"
-					android:layout_toRightOf="@id/iv_location"
-					android:textColor="@color/black_text"
-					android:textSize="@dimen/c_text_size" />
-
 				<ImageView
-					android:id="@+id/iv_sellerinfo_tell"
+					android:id="@+id/iv_sellerdetail_tell"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_alignParentEnd="true"
@@ -114,14 +106,32 @@
 					android:contentDescription="@null"
 					android:src="@drawable/ic_seller_phone" />
 
+				<TextView
+					android:id="@+id/tv_sellerdetailadress"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="5dp"
+					android:layout_marginRight="5dp"
+					android:layout_toLeftOf="@id/iv_sellerdetail_tell"
+					android:layout_toRightOf="@id/iv_location"
+					android:textColor="@color/black_text"
+					android:textSize="@dimen/c_text_size" />
+
 				<View
 					android:layout_width="0.5dp"
 					android:layout_height="20dp"
 					android:layout_centerVertical="true"
 					android:layout_toLeftOf="@id/iv_sellerinfo_tell"
+					android:layout_toRightOf="@id/tv_sellerdetailadress"
 					android:layout_toStartOf="@id/iv_sellerinfo_tell"
 					android:background="@color/divider" />
 			</RelativeLayout>
+
+			<View
+				android:layout_width="wrap_content"
+				android:layout_height="0.5dp"
+				android:background="@color/divider" />
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -141,7 +151,7 @@
 					android:layout_marginLeft="16dp"
 					android:layout_marginStart="16dp"
 					android:gravity="center_vertical"
-					android:text="@string/text_detail_coupon_comment"
+					android:text="@string/text_seller_coupon"
 					android:textColor="@color/tab_title_normal_color"
 					android:textSize="@dimen/a_text_size" />
 
@@ -151,7 +161,7 @@
 					android:background="@color/divider" />
 
 				<com.nightfair.mobille.view.FullyListView
-					android:id="@+id/lv_coupon_comment"
+					android:id="@+id/lv_sellerdetail_coupon"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:background="@null"
@@ -170,6 +180,7 @@
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_marginBottom="15dp"
 				android:layout_marginTop="8dp"
 				android:background="@color/white"
 				android:orientation="vertical" >
@@ -194,13 +205,26 @@
 					android:layout_height="0.5dp"
 					android:background="@color/divider" />
 
+				<TextView
+					android:id="@+id/tv_nomore_comment"
+					android:layout_width="fill_parent"
+					android:layout_height="50dp"
+					android:gravity="center"
+					android:text="暂无更多评论"
+					android:textColor="@color/black_text"
+					android:textSize="@dimen/c_text_size"
+					android:visibility="gone" />
+
 				<LinearLayout
+					android:id="@+id/ll_seller_comments"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"
 					android:orientation="horizontal" >
 
 					<com.nightfair.mobille.widget.CircleImageView
-						android:id="@+id/iv_commenter_face"
+						android:id="@+id/iv_sellerdetail_face"
 						android:layout_width="35dp"
 						android:layout_height="35dp"
 						android:layout_marginBottom="5dp"
@@ -218,7 +242,7 @@
 						android:orientation="vertical" >
 
 						<TextView
-							android:id="@+id/tv_commenter_nick"
+							android:id="@+id/tv_commenter_nicks"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginBottom="3dp"
@@ -232,7 +256,7 @@
 							android:orientation="horizontal" >
 
 							<RatingBar
-								android:id="@+id/comment_ratingbar"
+								android:id="@+id/sellerdetail_comment_ratingbar"
 								style="@style/roomRatingBar"
 								android:layout_width="wrap_content"
 								android:layout_height="wrap_content"
@@ -242,7 +266,7 @@
 							</RatingBar>
 
 							<TextView
-								android:id="@+id/tv_comment_time"
+								android:id="@+id/tv_seller_time"
 								android:layout_width="wrap_content"
 								android:layout_height="wrap_content"
 								android:layout_marginBottom="1.5dp"
@@ -256,10 +280,12 @@
 				</LinearLayout>
 
 				<TextView
-					android:id="@+id/tv_comment_cotent"
+					android:id="@+id/tv_seller_comment_cotents"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginBottom="3dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"
 					android:lineSpacingMultiplier="1.2"
 					android:textColor="@color/black_text"
 					android:textSize="@dimen/a_text_size" />
@@ -269,6 +295,37 @@
 					android:layout_height="0.5dp"
 					android:background="@color/divider" />
 			</LinearLayout>
+
+			<RelativeLayout
+				android:id="@+id/rl_seller_detail_comment"
+				android:layout_width="wrap_content"
+				android:layout_height="45dp"
+				android:layout_marginBottom="25dp"
+				android:background="@drawable/menu_option_bg"
+				android:clickable="true"
+				android:visibility="gone" >
+
+				<TextView
+					android:id="@+id/tv_look_morecomment"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					android:layout_centerVertical="true"
+					android:layout_marginLeft="16dp"
+					android:textColor="@color/title_color"
+					android:textSize="@dimen/c_text_size" />
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_alignParentEnd="true"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:layout_marginRight="16dp"
+					android:contentDescription="@null"
+					android:src="@drawable/ic_detail_right" />
+			</RelativeLayout>
 		</LinearLayout>
 	</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 

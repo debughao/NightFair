@@ -13,6 +13,7 @@ import com.amap.api.services.geocoder.GeocodeSearch.OnGeocodeSearchListener;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.util.ActivityUtils;
+import com.nightfair.mobille.util.KeyBoardUtils;
 import com.nightfair.mobille.util.ToastUtil;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,6 +31,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -128,6 +130,8 @@ public class BusActivity extends Activity implements OnClickListener, AMapLocati
 			showPopUp(et_startstation);
 			break;
 		case R.id.bt_serach_check:
+			KeyBoardUtils.closeKeybord(et_endstation, mContext);
+			KeyBoardUtils.closeKeybord(et_startstation, mContext);
 			mEndstation = et_endstation.getText().toString();
 			if (TextUtils.isEmpty(et_startstation.getText())) {
 				ToastUtil.show(mContext, "起始站不能为空");

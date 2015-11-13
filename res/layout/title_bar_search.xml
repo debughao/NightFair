@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="50dp"
+	android:background="@color/white"
+	android:orientation="vertical" >
+
+	<RelativeLayout
+		android:layout_width="fill_parent"
+		android:layout_height="match_parent"
+		android:background="@color/action_write" >
+
+		<ImageButton
+			android:id="@+id/iv_actionbar_back"
+			android:layout_width="50dp"
+			android:layout_height="50dp"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/actionbar_selector_gray"
+			android:clickable="true"
+			android:contentDescription="@null"
+			android:src="@drawable/ic_detail_back" />
+
+		<TextView
+			android:id="@+id/tv_serach"
+			android:layout_width="60dp"
+			android:layout_height="match_parent"
+			android:layout_alignParentRight="true"
+			android:layout_marginLeft="16dp"
+			android:background="@drawable/actionbar_selector_gray"
+			android:clickable="true"
+			android:gravity="center"
+			android:text="搜索"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/c_text_size"
+			android:visibility="gone" />
+
+		<com.nightfair.mobille.view.ClearEditText
+			android:id="@+id/ce_serach"
+			android:layout_width="match_parent"
+			android:layout_height="30dp"
+			android:layout_centerVertical="true"
+			android:layout_marginRight="25dp"
+			android:layout_toLeftOf="@id/tv_serach"
+			android:layout_toRightOf="@id/iv_actionbar_back"
+			android:background="@drawable/search_bg"
+			android:hint="请输入商家名称"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:textSize="@dimen/c_text_size" />
+	</RelativeLayout>
+
+	<View
+		android:layout_width="fill_parent"
+		android:layout_height="0.5px"
+		android:background="@color/divider" />
+
+</LinearLayout>

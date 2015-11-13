@@ -2,6 +2,7 @@ package com.nightfair.mobille.adapter;
 
 import java.util.ArrayList;
 
+import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
 import com.nightfair.mobille.activity.CouponDetailActivity;
 import com.nightfair.mobille.base.BaseApplication;
@@ -66,16 +67,17 @@ public class CollectionAdapter extends BaseAdapter {
 			holder.tv_sellr_name = (TextView) convertView
 					.findViewById(R.id.tv_name);
 			holder.iv_index_item = (ImageView) convertView
-					.findViewById(R.id.iv_index_item);
+					.findViewById(R.id.iv_collection_items);
 			holder.tv_money = (TextView) convertView
 					.findViewById(R.id.tv_money);
 			holder.tv_detail = (TextView) convertView
-					.findViewById(R.id.tv_detail);
+					.findViewById(R.id.tv_detail_colection);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		BaseApplication.bitmapUtils.display(holder.iv_index_item, AppConstants.SERVERIP+list.get(position).getSellerInfo().getImg());	
+		BaseApplication.bitmapUtils.display(holder.iv_index_item, AppConstants.SERVERIP+list.get(position).getSellerInfo().getImg());
+		LogUtils.e(AppConstants.SERVERIP+list.get(position).getSellerInfo().getImg());
 		String currentPrice=list.get(position).getCoupon().getCurrent_price();
 		String originalPrice=list.get(position).getCoupon().getOriginal_price();
 		String price="￥ "+currentPrice+"  ￥"+originalPrice;

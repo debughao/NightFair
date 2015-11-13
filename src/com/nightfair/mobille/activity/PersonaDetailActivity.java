@@ -54,6 +54,7 @@ import com.nightfair.mobille.widget.adapter.ArrayWheelAdapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -126,6 +127,7 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 	private String autograph;
 	private String image;
 	private BuyerInfo buyerInfo;
+	private ProgressDialog dialog1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -368,6 +370,7 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 					int status = jsonObject.getInt("status");
 					String result = jsonObject.getString("result");
 					if (status == 200) {
+						updateUsernick(tv_nickname.getText().toString().trim());
 						BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo, BaseApplication.userid);
 						ToastUtil.show(mContext, result);
 						Intent intent = new Intent();
@@ -817,6 +820,7 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 		case 3:
 			// ActivityUtils.showShortToast(mContent, "裁剪成功");
 			if (resultCode == RESULT_OK) {
+				showDialog("头像上传中...");
 				final byte[] b = data.getByteArrayExtra("data");
 				final String picStr = new String(Base64Coder.encodeLines(b));
 				RequestParams params = new RequestParams();// 默认utf-8 编码
@@ -831,6 +835,7 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 				http.send(HttpMethod.POST, AppConstants.USERUPDATE, params, new RequestCallBack<String>() {
 					@Override
 					public void onFailure(HttpException arg0, String arg1) {
+						hideDialog();
 						NetUtils.coonFairException(arg1, mContext);
 					}
 
@@ -847,12 +852,13 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 								String imageurl = jsonObject.getString("imageurl");
 								Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
 								if (null != bitmap) {
+									hideDialog();
 									iv_face.setImageBitmap(bitmap);
 									FileUtils.writeSDCard(FilePathConfig.getTemp(mContext),
 											MD5Util.MD5("headface") + ".png", bitmap);
 
 									BaseApplication.buyerInfo.setImage(imageurl);
-									updateUserAvatar(AppConstants.SERVERIP+imageurl);
+									updateUserAvatar(AppConstants.SERVERIP + imageurl);
 									BaseApplication.mBuyerDao.insertInfo(BaseApplication.buyerInfo,
 											BaseApplication.userid);
 								}
@@ -876,27 +882,67 @@ public class PersonaDetailActivity extends CascadeCityActivity implements OnClic
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 	private void updateUserAvatar(final String url) {
 		User u = new User();
 		u.setAvatar(url);
 		updateUserData(u, new UpdateListener() {
 			@Override
 			public void onSuccess() {
-				
-				
+
 			}
 
 			@Override
 			public void onFailure(int code, String msg) {
-				
+
 			}
 		});
 	}
+
+	private void updateUsernick(final String nick) {
+		User u = new User();
+		u.setNick(nick);
+		updateUserData(u, new UpdateListener() {
+			@Override
+			public void onSuccess() {
+
+			}
+
+			@Override
+			public void onFailure(int code, String msg) {
+
+			}
+		});
+	}
+
 	private void updateUserData(User user, UpdateListener listener) {
 		BmobUserManager userManager = BmobUserManager.getInstance(this);
 		User current = (User) userManager.getCurrentUser(User.class);
 		user.setObjectId(current.getObjectId());
 		user.update(this, listener);
+	}
+
+	public void showDialog(String message) {
+		try {
+			if (dialog1 == null) {
+				dialog1 = new ProgressDialog(this);
+				dialog1.setCancelable(false);
+			}
+			dialog1.setCanceledOnTouchOutside(false);
+			dialog1.setCancelable(true);
+			dialog1.setMessage(message);
+			dialog1.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
+
+	public void hideDialog() {
+		if (dialog1 != null && dialog1.isShowing())
+			try {
+				dialog1.dismiss();
+			} catch (Exception e) {
+			}
 	}
 
 	@Override

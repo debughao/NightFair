@@ -24,6 +24,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.util.LogUtils;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.activity.SerachActivity;
 import com.nightfair.mobille.adapter.LeftAdapter;
 import com.nightfair.mobille.adapter.NearbyShopAdapter;
 import com.nightfair.mobille.adapter.RightAdapter;
@@ -37,6 +38,8 @@ import com.nightfair.mobille.util.ToastUtil;
 
 import android.annotation.SuppressLint;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.drawable.PaintDrawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -53,9 +56,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageButton;
 import android.widget.PopupWindow.OnDismissListener;
 
-public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLocationListener, OnRefreshListener<ListView>{
+public class MainTab_Nearby extends Fragment
+		implements OnClickListener, AMapLocationListener, OnRefreshListener<ListView> {
 	PopupWindow popupWindow;
 	View popupView, popupView_around, popupView_sort;
 	List<LeftItem> leftList;
@@ -80,7 +85,8 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 	private LocationManagerProxy mLocationManagerProxy;
 	public static double geoLat, geoLng;
 	private View NearbyView;
- 
+	private ImageButton ib_serach, ib_map;
+	private ProgressDialog dialog;
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		if (NearbyView == null) {
 			NearbyView = inflater.inflate(R.layout.main_tab_nearby, container, false);
@@ -99,15 +105,20 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 		return NearbyView;
 
 	}
+
 	private void initview() {
 		listView = (PullToRefreshListView) NearbyView.findViewById(R.id.lv_recommendation_nearby);
 		recommendationLayout = (RelativeLayout) NearbyView.findViewById(R.id.rl_nearby_details);
 		aroundLayout = (RelativeLayout) NearbyView.findViewById(R.id.rl_around_details_nearby);
 		sortLayout = (RelativeLayout) NearbyView.findViewById(R.id.rl_sort_details_nearby);
+		ib_serach = (ImageButton) NearbyView.findViewById(R.id.ib_serach);
+		ib_map = (ImageButton) NearbyView.findViewById(R.id.ib_map);
 		recommendationLayout.setOnClickListener(this);
 		aroundLayout.setOnClickListener(this);
 		sortLayout.setOnClickListener(this);
 		listView.setOnRefreshListener(this);
+		ib_serach.setOnClickListener(this);
+		//ib_map.setOnClickListener(this);
 		newTextView = (TextView) NearbyView.findViewById(R.id.tv_rm_nearby);
 		aroundTextView = (TextView) NearbyView.findViewById(R.id.tv_around_nearby);
 		sorTextView = (TextView) NearbyView.findViewById(R.id.tv_sort_nearby);
@@ -149,6 +160,7 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 	}
 
 	private void initData() {
+		showDialog("加载中...");
 		leftList = new ArrayList<LeftItem>();
 		ArrayList<RightItem> r1 = new ArrayList<RightItem>();
 		r1.add(new RightItem("全部美食"));
@@ -157,11 +169,13 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 		leftList.add(new LeftItem(R.drawable.ic_recommendation_food, "全部美食", r1));
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
+		params.addBodyParameter("action", "neaby");
 		HttpUtils httpUtils = new HttpUtils();
 		httpUtils.send(HttpMethod.POST, AppConstants.GETNEARBY, params, new RequestCallBack<String>() {
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
+				hideDialog();
 				listView.onRefreshComplete();
 			}
 
@@ -173,18 +187,19 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 					jsonObject = new JSONObject(result);
 					int state = jsonObject.optInt("state");
 					String results = jsonObject.optString("result");
-					if (state == 200) {				
+					if (state == 200) {
 						String data = jsonObject.optString("data");
 						Gson gson = new Gson();
 						Type typeOfT = new TypeToken<ArrayList<Nearby>>() {
 						}.getType();
 						LogUtils.e("sdsds---------" + data);
 						ArrayList<Nearby> nearbies = gson.fromJson(data, typeOfT);
+						hideDialog();
 						listView.onRefreshComplete();
 						list.clear();
 						list.addAll(nearbies);
 						adapter.notifyDataSetChanged();
-					}else {
+					} else {
 						ToastUtil.show(getActivity(), results);
 					}
 				} catch (JSONException e) {
@@ -212,6 +227,13 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 			showOrClose();
 			init(v);
 			break;
+		case R.id.ib_serach:
+			Intent intent = new Intent(getActivity(), SerachActivity.class);
+			startActivity(intent);
+			break;
+//		case R.id.ib_map:
+//			ToastUtil.show(getActivity(), "saaa");
+//			break;
 		default:
 			break;
 		}
@@ -299,7 +321,30 @@ public class MainTab_Nearby extends Fragment implements OnClickListener, AMapLoc
 			});
 		}
 	}
+	
 
+	public void showDialog(String message) {
+		try {
+			if (dialog == null) {
+				dialog = new ProgressDialog(getActivity());
+				dialog.setCancelable(false);
+			}
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.setCancelable(true);
+			dialog.setMessage(message);
+			dialog.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
+
+	public void hideDialog() {
+		if (dialog != null && dialog.isShowing())
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
+	}
 	private void updateSecondListView(List<RightItem> r3, RightAdapter secondAdapter) {
 		rightList.clear();
 		rightList.addAll(r3);

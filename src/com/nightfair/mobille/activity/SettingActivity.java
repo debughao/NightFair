@@ -53,7 +53,7 @@ public class SettingActivity extends Activity implements OnClickListener, OnSwit
 	private TextView mTv_title, mTvVersionName, mTvCacheSize, tv_location_open;
 	private ImageView iv_back;
 	protected Context mContext;
-	private RelativeLayout rl_update, rl_cache, rl_photo, rl_chat;
+	private RelativeLayout rl_update, rl_cache, /*rl_photo,*/ rl_chat;
 	private SlideSwitchView mSs_Location, mSs_Push;
 	private PushAgent mPushAgent;
 	public SharePreferenceUtil mSharedUtil;
@@ -83,7 +83,7 @@ public class SettingActivity extends Activity implements OnClickListener, OnSwit
 		iv_back = (ImageView) findViewById(R.id.iv_actionbar_back);
 		rl_update = (RelativeLayout) findViewById(R.id.rl_setting_update);
 		rl_cache = (RelativeLayout) findViewById(R.id.rl_setting_remove_photo);
-		rl_photo = (RelativeLayout) findViewById(R.id.rl_setting_wifi_photo);
+		//rl_photo = (RelativeLayout) findViewById(R.id.rl_setting_wifi_photo);
 		rl_chat = (RelativeLayout) findViewById(R.id.rl_setting_chat);
 		mTvVersionName = (TextView) findViewById(R.id.tv_setting_version);
 		mTvCacheSize = (TextView) findViewById(R.id.tv_cache_size);
@@ -97,7 +97,7 @@ public class SettingActivity extends Activity implements OnClickListener, OnSwit
 		allowPush=mSharedUtil.isAllowPush();
 		mSs_Push.setChecked(!allowPush);
 		mSs_Location.setChecked(allowLocation);		
-		mySetOnClickListener(iv_back, rl_update, rl_cache, rl_photo, rl_chat);
+		mySetOnClickListener(iv_back, rl_update, rl_cache, /*rl_photo*/ rl_chat);
 	}
 
 	private void mySetOnClickListener(View... v) {
@@ -119,12 +119,10 @@ public class SettingActivity extends Activity implements OnClickListener, OnSwit
 		case R.id.rl_setting_remove_photo:
 			clearCache();
 			break;
-		case R.id.rl_setting_wifi_photo:
-			ToastUtil.show(mContext, "点击了2");
-			break;
-		case R.id.rl_setting_location:
-			ToastUtil.show(mContext, "点击了3");
-			break;
+//		case R.id.rl_setting_wifi_photo:
+//			ToastUtil.show(mContext, "点击了2");
+//			break;
+	
 		case R.id.rl_setting_chat:
 			ActivityUtils.startActivity(mContext, ChatSetActivity.class);
 			break;

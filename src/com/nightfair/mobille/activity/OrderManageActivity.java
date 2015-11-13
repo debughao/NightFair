@@ -28,6 +28,7 @@ import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.XListView;
 import com.nightfair.mobille.view.XListView.IXListViewListener;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -49,7 +50,7 @@ public class OrderManageActivity extends BaseActivity implements OnClickListener
 	public SharePreferenceUtil mSharedUtil;
 	public BaseApplication mApplication;
 	private String type;
-
+	private ProgressDialog dialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,6 +113,7 @@ public class OrderManageActivity extends BaseActivity implements OnClickListener
 
 	private void initData() {
 		// TODO Auto-generated method stub
+		showDialog("加载中...");
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("action", "select");
@@ -122,11 +124,13 @@ public class OrderManageActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				mListView.stopRefresh();
+				hideDialog();
 				NetUtils.coonFairException(arg1, mContext);
 			}
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
+				hideDialog();
 				mListView.stopRefresh();
 				String result = arg0.result;
 				JSONObject jsonObject;
@@ -163,7 +167,28 @@ public class OrderManageActivity extends BaseActivity implements OnClickListener
 			}
 		});
 	}
+	public void showDialog(String message) {
+		try {
+			if (dialog == null) {
+				dialog = new ProgressDialog(this);
+				dialog.setCancelable(false);
+			}
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.setCancelable(true);
+			dialog.setMessage(message);
+			dialog.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
 
+	public void hideDialog() {
+		if (dialog != null && dialog.isShowing())
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
+	}
 	private void initXListView() {
 		// 首先不允许加载更多
 

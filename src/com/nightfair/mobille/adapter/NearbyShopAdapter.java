@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.model.LatLng;
 import com.nightfair.mobille.R;
+import com.nightfair.mobille.activity.ShopDetailActivity;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.bean.Nearby;
 import com.nightfair.mobille.config.AppConstants;
 import com.nightfair.mobille.fragment.MainTab_Nearby;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,7 +69,9 @@ public class NearbyShopAdapter extends BaseAdapter {
 			convertView.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-
+	                 Intent intent =new Intent(context, ShopDetailActivity.class);
+	                 intent.putExtra("seller_id", String.valueOf(list.get(position).getSeller_id()));
+	                 context.startActivity(intent);
 				}
 			});
 		} else {
@@ -88,14 +92,15 @@ public class NearbyShopAdapter extends BaseAdapter {
 			distance = AMapUtils.calculateLineDistance(p1, p2);
 			if (distance < 500.0) {
 				viewHolder.distance.setText("< 500m");
-			} else if (distance > 500 && distance < 1000.0) {
+			} else if (distance > 500 && distance < 1000) {
 				DecimalFormat decimalFormat = new DecimalFormat("#.0");
 				viewHolder.distance.setText(decimalFormat.format(distance) + "km");
 			} else if (distance > 1000.0) {
 				DecimalFormat decimalFormat = new DecimalFormat("#.0");
-				viewHolder.distance.setText(decimalFormat.format("> " + distance / 1000.0) + "km");
+				viewHolder.distance.setText("> " +decimalFormat.format( distance / 1000) + "km");
 			}
 		}
+	
 		return convertView;
 	}
 

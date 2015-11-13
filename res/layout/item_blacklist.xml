@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
 
-    <com.nightfair.mobille.widget.CircleImageView
-        android:id="@+id/img_friend_avatar"
-        style="@style/Smile.ImageView.Photo_Middle"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="6.0dip"
-        android:contentDescription="@string/action_settings"
-        android:padding="5dp"
-        android:src="@drawable/my_dd_icon_default"
-        app:border_color="@color/transparent3"
-        app:border_width="1dp" >
-    </com.nightfair.mobille.widget.CircleImageView>
+	<com.nightfair.mobille.widget.CircleImageView
+		android:id="@+id/img_friend_avatar"
+		style="@style/Smile.ImageView.Photo_Middle"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="6.0dip"
+		android:contentDescription="@string/action_settings"
+		android:padding="5dp"
+		android:src="@drawable/my_dd_icon_default"
+		app:border_color="@color/transparent3"
+		app:border_width="1dp" >
+	</com.nightfair.mobille.widget.CircleImageView>
 
-    <TextView
-        android:id="@+id/tv_friend_name"
-        style="@style/Smile.TextView._Black"
-        android:layout_alignTop="@id/img_friend_avatar"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="6.0dip"
-        android:layout_toRightOf="@id/img_friend_avatar"
-        android:padding="5dp"
-        android:singleLine="true"
-        android:textSize="20sp" />
+	<TextView
+		android:id="@+id/tv_friend_name"
+		android:layout_alignTop="@id/img_friend_avatar"
+		android:layout_centerVertical="true"
+		android:layout_marginLeft="10dp"
+		android:layout_marginTop="6dp"
+		android:layout_toRightOf="@id/img_friend_avatar"
+		android:padding="5dp"
+		android:singleLine="true"
+		android:textColor="@color/black_text"
+		android:textSize="@dimen/c_text_size" />
 
 </RelativeLayout>

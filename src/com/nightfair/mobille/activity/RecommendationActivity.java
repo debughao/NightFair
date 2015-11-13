@@ -36,6 +36,7 @@ import com.nightfair.mobille.util.ActivityUtils;
 import com.nightfair.mobille.util.ToastUtil;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.drawable.PaintDrawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -83,7 +84,7 @@ public class RecommendationActivity extends BaseActivity
 	// 高德地图
 	private LocationManagerProxy mLocationManagerProxy;	
 	public static double geoLat, geoLng;
-
+	private ProgressDialog dialog;
 	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,7 @@ public class RecommendationActivity extends BaseActivity
 	private void initLocation() {
 		mLocationManagerProxy = LocationManagerProxy.getInstance(this);
 		mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 60 * 1000, 15, this);
-		mLocationManagerProxy.setGpsEnable(false);
+		mLocationManagerProxy.setGpsEnable(true);
 	}
 
 	@SuppressLint("InflateParams")
@@ -157,7 +158,7 @@ public class RecommendationActivity extends BaseActivity
 		r1.add(new RightItem("中餐"));
 		r1.add(new RightItem("西餐"));
 		leftList.add(new LeftItem(R.drawable.ic_recommendation_food, "全部美食", r1));
-
+		showDialog("加载中...");
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("action", "getRecommandCoupon");
@@ -166,11 +167,13 @@ public class RecommendationActivity extends BaseActivity
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
+				hideDialog();
 				listView.onRefreshComplete();
 			}
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
+				hideDialog();
 				String result = arg0.result;
 				JSONObject jsonObject;
 				try {
@@ -197,10 +200,35 @@ public class RecommendationActivity extends BaseActivity
 			}
 		});
 	}
+	public void showDialog(String message) {
+		try {
+			if (dialog == null) {
+				dialog = new ProgressDialog(this);
+				dialog.setCancelable(false);
+			}
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.setCancelable(true);
+			dialog.setMessage(message);
+			dialog.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
 
+	public void hideDialog() {
+		if (dialog != null && dialog.isShowing())
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		
+		case R.id.iv_actionbar_back:
+			finish();
+			break;
 		case R.id.rl_recommendation_details:
 			initPopupWindow(R.layout.popupwindow);
 			showOrClose();

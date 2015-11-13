@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/ll_neaby_parent"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
 	android:background="@drawable/menu_option_bg"
 	android:baselineAligned="false"
 	android:clickable="true"
-	android:descendantFocusability="blocksDescendants"
 	android:orientation="horizontal" >
 
 	<RelativeLayout
@@ -17,9 +15,9 @@
 		android:layout_weight="2" >
 
 		<ImageView
-			android:id="@+id/iv_nearby_img"
+			android:id="@+id/iv_index_item"
 			android:layout_width="130dp"
-			android:layout_height="75dp"
+			android:layout_height="80dp"
 			android:background="@drawable/ic_head_default"
 			android:contentDescription="@null"
 			android:focusable="false"
@@ -34,72 +32,41 @@
 		android:layout_marginRight="10dp"
 		android:layout_weight="5" >
 
-		<RelativeLayout
-			android:id="@+id/rl_index_item_text_top"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="5dp" >
-
-			<TextView
-				android:id="@+id/tv_name"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="10dp"
-				android:gravity="center_vertical"
-				android:textSize="@dimen/c_text_size" />
-		</RelativeLayout>
-
-		<LinearLayout
-			android:layout_width="wrap_content"
+		<TextView
+			android:id="@+id/tv_detail"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/rl_index_item_text_top"
-			android:orientation="horizontal" >
-
-			<RatingBar
-				android:id="@+id/comment_ratingbar"
-				style="@style/roomRatingBar"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:clickable="false"
-				android:isIndicator="true"
-				android:numStars="5" >
-			</RatingBar>
-
-			<TextView
-				android:id="@+id/tv_near_commentnum"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:textColor="@color/tab_title_normal_color"
-				android:textSize="@dimen/a_text_size" />
-		</LinearLayout>
+			android:layout_marginEnd="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginTop="12dp"
+			android:textColor="@color/black_text"
+			android:textSize="@dimen/c_text_size" />
 
 		<RelativeLayout
+			android:id="@+id/rl_index_item_text_bottom"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
 			android:layout_marginBottom="5dp" >
 
 			<TextView
-				android:id="@+id/tv_nearby_address"
+				android:id="@+id/tv_money"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="10dp"
 				android:gravity="center_vertical"
 				android:textColor="@color/tab_title_normal_color"
-				android:textSize="@dimen/c_text_size" />
+				android:textSize="@dimen/b_text_size" />
 
 			<TextView
-				android:id="@+id/tv_nearby_distance"
+				android:id="@+id/tv_count"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentEnd="true"
 				android:layout_alignParentRight="true"
-				android:layout_marginTop="10dp"
-				android:gravity="center_vertical"
-				android:textColor="@color/tab_title_normal_color"
-				android:textSize="@dimen/a_text_size" />
+				android:layout_centerVertical="true"
+				android:textColor="@color/sub_color"
+				android:textSize="@dimen/b_text_size" />
 		</RelativeLayout>
 	</RelativeLayout>
 

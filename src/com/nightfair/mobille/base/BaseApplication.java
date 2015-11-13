@@ -23,6 +23,7 @@ import com.nightfair.mobille.db.BuyerDao;
 import com.nightfair.mobille.db.DaoFactory;
 import com.nightfair.mobille.db.PushMessageDao;
 import com.nightfair.mobille.service.CustomNotificationHandler;
+import com.nightfair.mobille.util.ACache;
 import com.nightfair.mobille.util.CollectionUtils;
 import com.nightfair.mobille.util.SharePreferenceUtil;
 import com.nightfair.mobille.util.TimesGet;
@@ -78,6 +79,7 @@ public class BaseApplication extends Application {
 	private PushAgent mPushAgent;
 	public static HttpUtils httpUtils;
 	public static BitmapUtils bitmapUtils;
+	public static ACache  mCache;
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 	public static BmobGeoPoint lastPoint = null;// 上一次定位到的经纬度
@@ -102,6 +104,7 @@ public class BaseApplication extends Application {
 		bitmapUtils=new BitmapUtils(getApplicationContext(),FilePathConfig.getTemp(getApplicationContext()));
         bitmapUtils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
         bitmapUtils.configDefaultBitmapMaxSize(BitmapCommonUtils.getScreenSize(this));
+        mCache = ACache.get(this);
 		init();
 		umengPush();
 	}

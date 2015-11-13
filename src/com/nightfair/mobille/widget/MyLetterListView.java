@@ -1,5 +1,7 @@
 package com.nightfair.mobille.widget;
 
+import com.nightfair.mobille.util.PixelUtil;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -41,7 +43,7 @@ public class MyLetterListView extends View {
 		int singleHeight = height / b.length;
 		for (int i = 0; i < b.length; i++) {
 			paint.setColor(Color.parseColor("#8c8c8c"));
-			paint.setTextSize(26);
+			paint.setTextSize(PixelUtil.sp2px(12));
 			// paint.setTypeface(Typeface.DEFAULT_BOLD);
 			paint.setAntiAlias(true);
 			/*if (i == choose) {
@@ -91,6 +93,7 @@ public class MyLetterListView extends View {
 		return true;
 	}
 
+	@SuppressLint("ClickableViewAccessibility")
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return super.onTouchEvent(event);

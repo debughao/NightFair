@@ -15,7 +15,7 @@
 		android:layout_weight="2" >
 
 		<ImageView
-			android:id="@+id/iv_index_item"
+			android:id="@+id/iv_index_img"
 			android:layout_width="130dp"
 			android:layout_height="80dp"
 			android:background="@drawable/ic_head_default"
@@ -58,13 +58,13 @@
 		</RelativeLayout>
 
 		<TextView
-			android:id="@+id/tv_detail"
+			android:id="@+id/tv_detail_index"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/rl_index_item_text_top"
 			android:layout_marginEnd="20dp"
 			android:layout_marginRight="20dp"
-			android:layout_marginTop="8dp"
+			android:layout_marginTop="3dp"
 			android:textColor="@color/tab_title_normal_color"
 			android:textSize="@dimen/a_text_size" />
 

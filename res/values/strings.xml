@@ -117,7 +117,7 @@
 	<string name="text_regiser_phone">请输入注册手机号</string>
 	<string name="text_regiser_password">请输入密码</string>
 	<string name="text_regiser_code">请输入验证码</string>
-	<string name="btn_register">立即注册</string>
+	<string name="btn_register">同意服务条款并注册</string>
 	<string name="text_regiser_getcode">获取验证码</string>
 	<string name="text_register_agreement_b">夜夜通《使用协议》</string>
 	<string name="text_register_agreement_a">点击【立即注册】，即表示您同意</string>
@@ -282,5 +282,7 @@
 	<string name="text_noncommenrt">你还没有发表过评论</string>
 	<string name="text_try">去下一单试试吧</string>
 	<string name="text_see_see">随便逛一逛</string>
+	<string name="text_seller_coupon">优惠券</string>
+	<string name="title_activity_serach">SerachActivity</string>
 
 </resources>

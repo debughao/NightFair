@@ -15,7 +15,7 @@
 		android:layout_weight="2" >
 
 		<ImageView
-			android:id="@+id/iv_nearby_img"
+			android:id="@+id/iv_collection_items"
 			android:layout_width="130dp"
 			android:layout_height="80dp"
 			android:background="@drawable/ic_head_default"
@@ -47,12 +47,12 @@
 		</RelativeLayout>
 
 		<TextView
-			android:id="@+id/tv_detail"
+			android:id="@+id/tv_detail_colection"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_below="@id/rl_index_item_text_top"
-			android:paddingLeft="20dp"
-			android:paddingRight="20dp"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
 			android:textColor="@color/tab_title_normal_color"
 			android:textSize="@dimen/a_text_size" />
 
@@ -61,7 +61,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true"
-			android:layout_marginBottom="5dp" >
+			android:layout_marginBottom="3dp" >
 
 			<TextView
 				android:id="@+id/tv_money"

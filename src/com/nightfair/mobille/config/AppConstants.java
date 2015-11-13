@@ -5,22 +5,22 @@ public class AppConstants {
 	/**
 	 * 夜夜通基础地址
 	 */
-	public final static String SERVERIP="http://172.28.112.1:8080";
+	public final static String SERVERIP="http://115.28.70.177";
 	/**
 	 * 夜夜通服务器端接口地址
 	 */
 	public final static String  KEY="a2e22c742b952403";
-	public final static String LOGINAPIURL = SERVERIP+"/NightFair/buyer/login";
-	public final static String USERUPDATE=SERVERIP+"/NightFair/buyer/update";
-	public final static String REGISTER=SERVERIP+"/NightFair/buyer/register";
-	public final static String INDEXSHOP=SERVERIP+"/NightFair/GetGoodsServlet";
-	public final static String GETFRAENDINFO=SERVERIP+"/NightFair/buyer/getbuyerinfo";
-	public final static String GETCOUPON=SERVERIP+"/NightFair/buyer/getcoupons";
-	public final static String GETCOMMENTS=SERVERIP+"/NightFair/buyer/getcomments";
-	public final static String GETWALLET=SERVERIP+"/NightFair/buyer/opeartionaccount";
-	public final static String GETORDER=SERVERIP+"/NightFair/buyer/getorder";
-	public final static String GETCOLLECTION=SERVERIP+"/NightFair/buyer/getcollection";
-	public final static String GETNEARBY=SERVERIP+"/NightFair/buyer/getNearbyshop";
+	public final static String LOGINAPIURL = SERVERIP+"/buyer/login";
+	public final static String USERUPDATE=SERVERIP+"/buyer/update";
+	public final static String REGISTER=SERVERIP+"/buyer/register";
+	public final static String INDEXSHOP=SERVERIP+"/GetGoodsServlet";
+	public final static String GETFRAENDINFO=SERVERIP+"/buyer/getbuyerinfo";
+	public final static String GETCOUPON=SERVERIP+"/buyer/getcoupons";
+	public final static String GETCOMMENTS=SERVERIP+"/buyer/getcomments";
+	public final static String GETWALLET=SERVERIP+"/buyer/opeartionaccount";
+	public final static String GETORDER=SERVERIP+"/buyer/getorder";
+	public final static String GETCOLLECTION=SERVERIP+"/buyer/getcollection";
+	public final static String GETNEARBY=SERVERIP+"/buyer/getNearbyshop";
 	/**
 	 * 全国公交查询
 	 * 

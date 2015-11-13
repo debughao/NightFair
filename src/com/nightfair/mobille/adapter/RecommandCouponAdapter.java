@@ -113,7 +113,7 @@ public class RecommandCouponAdapter extends BaseAdapter {
 				viewHolder.distance.setText(decimalFormat.format(distance)+"km");
 			}else if (distance>1000.0) {
 				DecimalFormat decimalFormat=new DecimalFormat("#.0");
-				viewHolder.distance.setText(decimalFormat.format("> "+distance/1000.0)+"km");
+				viewHolder.distance.setText("> "+decimalFormat.format(distance/1000.0)+"km");
 			}
 		}
 		viewHolder.introduction.setText(list.get(position).getCoupons().get(0).getDescription());

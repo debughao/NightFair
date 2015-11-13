@@ -28,6 +28,7 @@ import com.nightfair.mobille.activity.MainActivity;
 import com.nightfair.mobille.activity.MessageActivity;
 import com.nightfair.mobille.activity.MoviesActivity;
 import com.nightfair.mobille.activity.RecommendationActivity;
+import com.nightfair.mobille.activity.SerachActivity;
 import com.nightfair.mobille.adapter.GuessCouponAdapter;
 import com.nightfair.mobille.base.BaseApplication;
 import com.nightfair.mobille.bean.SellerAndCoupon;
@@ -53,7 +54,8 @@ import android.widget.TextView;
 import krelve.view.Kanner;
 
 @SuppressLint("ResourceAsColor")
-public class MainTab_Index extends Fragment implements OnClickListener,AMapLocationListener, OnRefreshListener<ScrollView> {
+public class MainTab_Index extends Fragment
+		implements OnClickListener, AMapLocationListener, OnRefreshListener<ScrollView> {
 
 	private View indexView;
 
@@ -61,7 +63,7 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 	private FullyListView listView;
 	private TextView recommendationTextView, tv_loaction, transitTextView, moviesTextView, foodTextView;
 	private Intent intent;
-	private RelativeLayout rl_loaction;
+	private RelativeLayout rl_loaction, rl_search;
 	private String cityName;
 	private ImageButton iv_message;
 	private ArrayList<SellerAndCoupon> list = new ArrayList<SellerAndCoupon>();
@@ -69,8 +71,9 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 	private PullToRefreshScrollView mPullRefreshScrollView;
 	public SharePreferenceUtil mSharedUtil;
 	public BaseApplication mApplication;
-	private LocationManagerProxy mLocationManagerProxy;	
+	private LocationManagerProxy mLocationManagerProxy;
 	public static double geoLat, geoLng;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -102,12 +105,13 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 		tv_loaction = (TextView) indexView.findViewById(R.id.tv_title_bar_loaction);
 		recommendationTextView = (TextView) indexView.findViewById(R.id.tv_recommendation);
 		rl_loaction = (RelativeLayout) indexView.findViewById(R.id.rl_title_bar_loaction);
+		rl_search = (RelativeLayout) indexView.findViewById(R.id.rl_title_bar_search);
 		iv_message = (ImageButton) indexView.findViewById(R.id.iv_index_title_bar_message);
 		mPullRefreshScrollView = (PullToRefreshScrollView) indexView.findViewById(R.id.sv_index_detail);
 		mPullRefreshScrollView.setOnRefreshListener(this);
 		// mPullRefreshScrollView.setFocusable(false);
-		mySetOnClickListener(rl_loaction, foodTextView, moviesTextView, transitTextView, recommendationTextView,
-				iv_message);
+		mySetOnClickListener(rl_loaction, rl_search, foodTextView, moviesTextView, transitTextView,
+				recommendationTextView, iv_message);
 		// 默认显示的首项是ListView，需要手动把ScrollView滚动至最顶端
 		listView.setFocusable(true);
 		// listView.setParentScrollView(mPullRefreshScrollView);
@@ -120,11 +124,13 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 		}
 
 	}
+
 	private void initLocation() {
 		mLocationManagerProxy = LocationManagerProxy.getInstance(getActivity());
 		mLocationManagerProxy.requestLocationData(LocationProviderProxy.AMapNetwork, 60 * 1000, 15, this);
 		mLocationManagerProxy.setGpsEnable(false);
 	}
+
 	/**
 	 * 导航单击事件
 	 */
@@ -132,7 +138,7 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.tv_food:
-			mSharedUtil.setAllowBackSecond(true);			
+			mSharedUtil.setAllowBackSecond(true);
 			intent = new Intent(getActivity(), MainActivity.class);
 			startActivity(intent);
 			break;
@@ -151,7 +157,11 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 			startActivity(intent);
 			break;
 		case R.id.rl_title_bar_loaction:
-			Intent intent = new Intent(getActivity(), LocationIndexActivity.class);
+			intent = new Intent(getActivity(), LocationIndexActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.rl_title_bar_search:
+			intent = new Intent(getActivity(), SerachActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.iv_index_title_bar_message:
@@ -166,11 +176,9 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 	 * 广告栏和ListView数据来源
 	 */
 	private void initData() {
-		kanner.setImagesUrl(new String[] { "http://img04.muzhiwan.com/2015/06/16/upload_557fd293326f5.jpg",
-				"http://img03.muzhiwan.com/2015/06/05/upload_557165f4850cf.png",
-				"http://img02.muzhiwan.com/2015/06/11/upload_557903dc0f165.jpg",
-				"http://img04.muzhiwan.com/2015/06/05/upload_5571659957d90.png",
-				"http://img03.muzhiwan.com/2015/06/16/upload_557fd2a8da7a3.jpg" });
+		kanner.setImagesUrl(new String[] { "http://115.28.70.177/image/i1.jpg", "http://115.28.70.177/image/i3.jpg",
+				"http://115.28.70.177/image/i4.jpg", "http://115.28.70.177/image/i5.jpg",
+				"http://115.28.70.177/image/i7.jpg" });
 		// 从数据库下载数据
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
@@ -233,25 +241,25 @@ public class MainTab_Index extends Fragment implements OnClickListener,AMapLocat
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

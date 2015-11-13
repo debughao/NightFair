@@ -4,7 +4,26 @@
     android:layout_height="50dp"
     android:background="#e75858"
     android:orientation="horizontal" >
+	
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp" >
 
+        <ImageView
+            android:id="@+id/iv_recent_tips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/msg_tips12"
+            android:contentDescription="@string/action_settings"
+            android:gravity="center"
+            android:visibility="visible" />
+    </LinearLayout>
+    
     <RadioGroup
         android:id="@+id/chat_title_radiogroup"
         android:layout_width="120dp"
@@ -33,17 +52,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="16dp" >
-
-        <ImageView
-            android:id="@+id/iv_recent_tips"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/msg_tips12"
-            android:contentDescription="@string/action_settings"
-            android:gravity="center"
-            android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/chat_title_bar_iv_add"

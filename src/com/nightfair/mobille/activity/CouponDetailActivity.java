@@ -42,6 +42,7 @@ import com.nightfair.mobille.util.ToastUtil;
 import com.nightfair.mobille.view.FullyListView;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -66,7 +67,7 @@ import android.widget.ToggleButton;
 
 public class CouponDetailActivity extends BaseActivity implements OnClickListener, OnRefreshListener<ScrollView>, AMapLocationListener {
 	private Context mContext;
-	private RelativeLayout rl_head, rl_comment_detail;
+	private RelativeLayout rl_head, rl_comment_detail,rl_sellerinfo_detail;
 	private ImageView iv_img, iv_seller_tell;
 	private int height, couponposition;
 	private SellerAndCoupon mAndCoupon;
@@ -85,14 +86,19 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 	private LocationManagerProxy mLocationManagerProxy;	
 	public  double geoLat, geoLng, mlatitude,mlongitude,distance;
 	LatLng p1,p2;
+	private ProgressDialog dialog;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_coupon_detail);
 		mContext = this;
 		Intent intent = getIntent();
-		mAndCoupon = (SellerAndCoupon) intent.getSerializableExtra("seller");
+		mAndCoupon = (SellerAndCoupon) intent.getSerializableExtra("seller");	
 		couponposition = intent.getIntExtra("couponposition", 0);
+		boolean get=intent.getBooleanExtra("get", false);
+		if (get) {
+			mAndCoupon=(SellerAndCoupon) BaseApplication.mCache.getAsObject("seller");
+		}
 		way = "select";
 		mlatitude=Double.parseDouble(mAndCoupon.getLatitude());
 		mlongitude=Double.parseDouble(mAndCoupon.getLongitude());
@@ -143,12 +149,14 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 		tv_nomore_comment = (TextView) findViewById(R.id.tv_nomore_comment);
 		tv_look_morecomment = (TextView) findViewById(R.id.tv_look_morecomment);
 		tv_coupondetail_buy = (TextView) findViewById(R.id.tv_coupondetail_buy);
+		rl_sellerinfo_detail= (RelativeLayout) findViewById(R.id.rl_sellerinfo_detail);
 		mPullRefreshScrollView = (PullToRefreshScrollView) findViewById(R.id.sv_coupon_detail);
 		mPullRefreshScrollView.setOnRefreshListener(this);
 		listView = (FullyListView) findViewById(R.id.lv_coupon_comment);
 		iv_seller_tell.setOnClickListener(this);
 		rl_comment_detail.setOnClickListener(this);
 		tv_coupondetail_buy.setOnClickListener(this);
+		rl_sellerinfo_detail.setOnClickListener(this);
 		if (mAndCoupon != null) {
 			tv_name.setText(seller_name);
 			tv_description.setText(mAndCoupon.getCoupons().get(couponposition).getDescription());
@@ -172,7 +180,6 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 				@Override
 				public void onLoadStarted(ImageView container, String uri, BitmapDisplayConfig config) {
 					super.onLoadStarted(container, uri, config);
-					inintCollection();
 				}
 
 				@Override
@@ -236,9 +243,11 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 							ToastUtil.showCenter(mContext, results);
 						}
 					}else if (state == 405) {
-						ToastUtil.show(mContext, results);
-						Intent intent = new Intent("com.nightfair.buyer.action.login");
-						startActivityForResult(intent, 2);								
+						if (!"select".equals(way)) {
+							ToastUtil.show(mContext, results);
+							Intent intent = new Intent("com.nightfair.buyer.action.login");
+							startActivityForResult(intent, 2);
+						}														
 				}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -250,6 +259,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 
 	private void inintData() {
 		// TODO Auto-generated method stub
+		showDialog("加载中...");
 		RequestParams params = new RequestParams();
 		params.addBodyParameter("key", AppConstants.KEY);
 		params.addBodyParameter("seller_id", mAndCoupon.getId());
@@ -261,11 +271,13 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
 				LogUtils.e("网络异常");
+				hideDialog();
 				mPullRefreshScrollView.onRefreshComplete();
 			}
 
 			@Override
 			public void onSuccess(ResponseInfo<String> arg0) {
+				hideDialog();
 				String result = arg0.result;
 				JSONObject jsonObject;
 				try {
@@ -305,7 +317,28 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 			}
 		});
 	}
+	public void showDialog(String message) {
+		try {
+			if (dialog == null) {
+				dialog = new ProgressDialog(this);
+				dialog.setCancelable(false);
+			}
+			dialog.setCanceledOnTouchOutside(false);
+			dialog.setCancelable(true);
+			dialog.setMessage(message);
+			dialog.show();
+		} catch (Exception e) {
+			// 在其他线程调用dialog会报错
+		}
+	}
 
+	public void hideDialog() {
+		if (dialog != null && dialog.isShowing())
+			try {
+				dialog.dismiss();
+			} catch (Exception e) {
+			}
+	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -336,6 +369,11 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 			intent.putExtra("seller_id", mAndCoupon.getId());
 			intent.putExtra("coupon_id", coupon_id);
 			startActivity(intent);
+			break;
+		case R.id.rl_sellerinfo_detail:
+			Intent intent2 =new Intent(mContext, ShopDetailActivity.class);
+			intent2.putExtra("seller_id", mAndCoupon.getId());
+            startActivity(intent2);
 			break;
 		default:
 			break;
@@ -436,7 +474,7 @@ public class CouponDetailActivity extends BaseActivity implements OnClickListene
 				tv_seller_location.setText(decimalFormat.format(distance)+"km");
 			}else if (distance>1000.0) {
 				DecimalFormat decimalFormat=new DecimalFormat("#.0");
-				tv_seller_location.setText(decimalFormat.format("> "+distance/1000.0)+"km");
+				tv_seller_location.setText("> "+decimalFormat.format(distance/1000.0)+"km");
 			}
 		}
 	}

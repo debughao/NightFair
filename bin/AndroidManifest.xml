@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.nightfair.mobille"
-	android:versionCode="3"
-	android:versionName="1.0.2" >
+	android:versionCode="10"
+	android:versionName="1.1.8" >
 
 	<uses-sdk
 		android:minSdkVersion="14"
@@ -539,7 +539,12 @@
 			android:theme="@style/AppTheme" >
 		</activity>
 		<activity
-			android:name="com.nightfair.mobille.activity.MyColltctionActivity"
+			android:name=".activity.MyColltctionActivity"
+			android:screenOrientation="portrait"
+			android:theme="@style/AppTheme" >
+		</activity>
+		<activity
+			android:name="com.nightfair.mobille.activity.SerachActivity"
 			android:screenOrientation="portrait"
 			android:theme="@style/AppTheme" >
 		</activity>
